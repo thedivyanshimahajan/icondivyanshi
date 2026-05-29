@@ -143,7 +143,19 @@
       <input id="ag-otp" class="ag-input ag-otp-input" type="text" maxlength="6" placeholder="&#9679; &#9679; &#9679; &#9679; &#9679; &#9679;"
              onkeydown="if(event.key==='Enter')agVerifyOTP()"/>
       <button class="ag-btn" onclick="agVerifyOTP()">Enter Dashboard &rarr;</button>
+      <p style="font-size:0.78rem;color:#bbb;text-align:center;margin-top:14px;cursor:pointer" onclick="agShowPass()">Didn't receive the code? Use password instead</p>
       <p class="ag-back" onclick="agBack()">&larr; Use a different email</p>
+    </div>
+
+    <!-- Step 3: Password fallback -->
+    <div id="ag-step3" style="display:none">
+      <p style="font-size:0.84rem;color:#888;margin-bottom:20px;text-align:center">Enter your admin password to log in.</p>
+      <div id="ag-err3" class="ag-err"></div>
+      <label class="ag-label" for="ag-pass">Admin Password</label>
+      <input id="ag-pass" class="ag-input" type="password" placeholder="Enter password"
+             onkeydown="if(event.key==='Enter')agVerifyPass()"/>
+      <button class="ag-btn" onclick="agVerifyPass()">Enter Dashboard &rarr;</button>
+      <p class="ag-back" onclick="agShowOTP()">&larr; Back to OTP</p>
     </div>
   </div>
 </div>
@@ -264,10 +276,41 @@ function agVerifyOTP() {
 function agBack() {
   _otp = null;
   document.getElementById('ag-step2').style.display = 'none';
+  document.getElementById('ag-step3').style.display = 'none';
   document.getElementById('ag-step1').style.display = 'block';
   document.getElementById('ag-err1').style.display = 'none';
   document.getElementById('ag-err2').style.display = 'none';
   document.getElementById('ag-otp').value = '';
+}
+
+function agShowPass() {
+  document.getElementById('ag-step2').style.display = 'none';
+  document.getElementById('ag-step3').style.display = 'block';
+  document.getElementById('ag-err3').style.display = 'none';
+  document.getElementById('ag-pass').value = '';
+  setTimeout(function(){ document.getElementById('ag-pass').focus(); }, 100);
+}
+
+function agShowOTP() {
+  document.getElementById('ag-step3').style.display = 'none';
+  document.getElementById('ag-step2').style.display = 'block';
+}
+
+function agVerifyPass() {
+  var pass = (document.getElementById('ag-pass').value || '').trim();
+  var err  = document.getElementById('ag-err3');
+  var email = (document.getElementById('ag-email').value || '').trim().toLowerCase();
+  err.style.display = 'none';
+  if (!pass) { err.textContent = 'Enter your password.'; err.style.display = 'block'; return; }
+  if (pass === '24bb4922' || pass === localStorage.getItem('id_admin_pass')) {
+    localStorage.setItem('id_admin_session', email);
+    showDash(email);
+  } else {
+    err.textContent = 'Wrong password. Try again.';
+    err.style.display = 'block';
+    document.getElementById('ag-pass').value = '';
+    document.getElementById('ag-pass').focus();
+  }
 }
 
 // ── DASHBOARD ────────────────────────────────────────────────
