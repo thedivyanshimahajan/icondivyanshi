@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 220" width="400" height="220">
+  <defs>
+    <radialGradient id="ng" cx="78%" cy="50%" r="45%">
+      <stop offset="0%" stop-color="#C0182C" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#1A0608" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Dark background -->
+  <rect width="400" height="220" fill="#1A0608"/>
+  <rect width="400" height="220" fill="url(#ng)"/>
+
+  <!-- Grid -->
+  <g stroke="#C0182C" stroke-opacity="0.07" stroke-width="1">
+    <line x1="0" y1="55" x2="400" y2="55"/>
+    <line x1="0" y1="110" x2="400" y2="110"/>
+    <line x1="0" y1="165" x2="400" y2="165"/>
+    <line x1="100" y1="0" x2="100" y2="220"/>
+    <line x1="200" y1="0" x2="200" y2="220"/>
+    <line x1="300" y1="0" x2="300" y2="220"/>
+  </g>
+
+  <!-- Neon circles right side -->
+  <g transform="translate(312,110)">
+    <circle cx="0" cy="0" r="88" fill="none" stroke="#C0182C" stroke-width="0.7" stroke-opacity="0.2" stroke-dasharray="5 4"/>
+    <circle cx="0" cy="0" r="68" fill="none" stroke="#C0182C" stroke-width="1" stroke-opacity="0.3"/>
+    <circle cx="0" cy="0" r="50" fill="none" stroke="#C0182C" stroke-width="1.5" stroke-opacity="0.55"/>
+    <circle cx="0" cy="0" r="34" fill="#C0182C" fill-opacity="0.1"/>
+    <circle cx="0" cy="0" r="34" fill="none" stroke="#C0182C" stroke-width="2.5" stroke-opacity="0.85"/>
+    <polygon points="0,-18 10,0 4.5,0 4.5,16 -4.5,16 -4.5,0 -10,0" fill="#C0182C"/>
+    <circle cx="0" cy="-50" r="3" fill="#C0182C"/>
+    <circle cx="35" cy="-35" r="1.5" fill="#C0182C" fill-opacity="0.5"/>
+  </g>
+
+  <!-- Top + bottom red bars -->
+  <rect width="400" height="3" fill="#C0182C"/>
+  <rect y="217" width="400" height="3" fill="#C0182C"/>
+
+  <!-- FREE badge -->
+  <rect x="18" y="13" width="54" height="20" rx="10" fill="#C0182C"/>
+  <text x="45" y="27" text-anchor="middle" font-family="Arial,sans-serif" font-size="9.5" font-weight="900" fill="white" letter-spacing="1.5">FREE</text>
+
+  <!-- Eyebrow -->
+  <text x="18" y="64" font-family="Arial,sans-serif" font-size="9" font-weight="700" fill="#C0182C" letter-spacing="3">EBOOK</text>
+
+  <!-- Title -->
+  <text x="18" y="97" font-family="Georgia,'Times New Roman',serif" font-size="27" font-weight="900" fill="white">GUIDE TO</text>
+  <text x="18" y="129" font-family="Georgia,'Times New Roman',serif" font-size="27" font-weight="900" fill="white">YOUR DIGITAL</text>
+  <text x="18" y="162" font-family="Georgia,'Times New Roman',serif" font-size="27" font-weight="900" fill="#C0182C">FUTURE.</text>
+
+  <!-- Divider -->
+  <rect x="18" y="174" width="34" height="2.5" rx="1.2" fill="#C0182C"/>
+
+  <!-- Author -->
+  <text x="18" y="200" font-family="Georgia,serif" font-size="12.5" font-weight="700" fill="rgba(255,255,255,0.65)">Icon Divyanshi</text>
+</svg>

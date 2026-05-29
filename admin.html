@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Admin — Icon Divyanshi</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{--red:#C0182C;--dark:#1A0608;--cream:#FAF7F7;--border:rgba(192,24,44,0.12)}
+    body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--dark);min-height:100vh}
+
+    /* ── GATE ── */
+    #admin-gate{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--dark)}
+    .ag-box{background:#fff;border-radius:20px;padding:40px 36px;width:100%;max-width:420px;margin:20px;box-shadow:0 20px 60px rgba(0,0,0,0.5)}
+    .ag-logo{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:900;color:var(--red);letter-spacing:3px;text-align:center;margin-bottom:4px}
+    .ag-subtitle{text-align:center;font-size:0.8rem;color:#aaa;margin-bottom:28px}
+    .ag-label{font-size:0.78rem;font-weight:700;color:#888;display:block;margin-bottom:6px;letter-spacing:0.5px}
+    .ag-input{width:100%;padding:12px 16px;border:2px solid #f0e0e2;border-radius:10px;font-size:0.95rem;font-family:'Inter',sans-serif;margin-bottom:14px;outline:none;transition:border 0.2s}
+    .ag-input:focus{border-color:var(--red)}
+    .ag-btn{width:100%;padding:13px;background:var(--red);color:#fff;border:none;border-radius:10px;font-size:0.95rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:opacity 0.2s}
+    .ag-btn:disabled{opacity:0.6;cursor:not-allowed}
+    .ag-err{background:#fdecea;color:var(--red);border-radius:8px;padding:10px 14px;font-size:0.82rem;margin-bottom:14px;display:none}
+    .ag-back{font-size:0.8rem;color:#aaa;text-align:center;margin-top:14px;cursor:pointer}
+    .ag-back:hover{color:var(--red)}
+    .ag-otp-input{text-align:center;letter-spacing:8px;font-size:1.4rem;font-weight:700}
+    .ag-sending{display:none;text-align:center;color:#aaa;font-size:0.82rem;margin-bottom:12px}
+
+    /* ── DASHBOARD ── */
+    #admin-dash{display:none}
+    .ad-topbar{background:var(--red);padding:14px 32px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;position:sticky;top:0;z-index:100;box-shadow:0 2px 16px rgba(192,24,44,0.3)}
+    .ad-brand{font-family:'Playfair Display',serif;font-size:1rem;font-weight:900;color:#fff;letter-spacing:2px}
+    .ad-brand span{font-size:0.7rem;font-weight:400;opacity:0.7;letter-spacing:1px;display:block;margin-top:1px;font-family:'Inter',sans-serif}
+    .ad-topbar-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+    .ad-welcome{font-size:0.82rem;color:rgba(255,255,255,0.75)}
+    .ad-logout{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.3);color:#fff;padding:7px 16px;border-radius:8px;cursor:pointer;font-size:0.8rem;font-family:'Inter',sans-serif}
+    .ad-student-link{background:#fff;color:var(--red);padding:7px 16px;border-radius:8px;font-size:0.8rem;font-weight:700;text-decoration:none;display:inline-block}
+
+    .ad-body{max-width:1100px;margin:0 auto;padding:28px 24px}
+
+    /* Stats */
+    .ad-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:28px}
+    .ad-stat{background:#fff;border-radius:14px;padding:20px 18px;border:1px solid var(--border);text-align:center;box-shadow:0 2px 8px rgba(0,0,0,0.04)}
+    .ad-stat strong{font-size:2.2rem;color:var(--red);display:block;font-weight:900;line-height:1}
+    .ad-stat span{font-size:0.73rem;color:#888;display:block;margin-top:6px}
+
+    /* Tabs */
+    .ad-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+    .ad-tab{padding:9px 20px;border-radius:10px;cursor:pointer;font-size:0.83rem;font-weight:600;border:2px solid var(--border);background:#fff;color:#888;transition:all 0.15s;font-family:'Inter',sans-serif}
+    .ad-tab.active{background:var(--red);color:#fff;border-color:var(--red)}
+    .ad-tab:not(.active):hover{border-color:var(--red);color:var(--red)}
+
+    /* Cards */
+    .ad-card{background:#fff;border-radius:14px;padding:22px 20px;border:1px solid var(--border);margin-bottom:20px;box-shadow:0 2px 8px rgba(0,0,0,0.04)}
+    .ad-card h3{font-family:'Playfair Display',serif;font-size:1rem;color:var(--dark);margin-bottom:8px}
+    .ad-card-sub{font-size:0.8rem;color:#aaa;margin-bottom:14px}
+
+    /* Tables */
+    .ad-table-wrap{overflow-x:auto;border-radius:12px;border:1px solid var(--border)}
+    table{width:100%;border-collapse:collapse;font-size:0.82rem;background:#fff}
+    th{background:#f8e8ea;color:var(--dark);font-weight:700;padding:10px 14px;text-align:left;white-space:nowrap}
+    td{padding:9px 14px;border-bottom:1px solid #faf0f0;vertical-align:middle}
+    tr:last-child td{border-bottom:none}
+    tr:nth-child(even) td{background:#fdfafa}
+
+    /* Forms */
+    .ad-form-grid{display:grid;gap:10px;margin-bottom:12px}
+    .ad-form-2{grid-template-columns:1fr 1fr}
+    .ad-form-3{grid-template-columns:1fr 1fr 1fr}
+    .ad-finput{padding:9px 12px;border:1px solid #f0e0e2;border-radius:8px;font-family:'Inter',sans-serif;font-size:0.85rem;outline:none;width:100%}
+    .ad-finput:focus{border-color:var(--red)}
+    .ad-btn-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}
+
+    /* Buttons */
+    .ad-btn{padding:9px 20px;border:none;border-radius:8px;cursor:pointer;font-size:0.83rem;font-weight:600;font-family:'Inter',sans-serif;display:inline-flex;align-items:center;gap:6px}
+    .ad-btn-red{background:var(--red);color:#fff}
+    .ad-btn-light{background:#f8e8ea;color:var(--red)}
+    .ad-btn-green{background:#1B7A34;color:#fff}
+    .ad-btn-sm{padding:5px 12px;font-size:0.75rem}
+
+    /* Status badges */
+    .badge{padding:3px 9px;border-radius:20px;font-size:0.72rem;font-weight:700;display:inline-block}
+    .badge-new{background:#f8e8ea;color:var(--red)}
+    .badge-contacted{background:#e8f5e9;color:#1a6e2a}
+    .badge-skip{background:#f5f5f5;color:#999}
+    .badge-cat{background:#f8e8ea;color:var(--red)}
+
+    /* Section header */
+    .ad-sec-hdr{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px}
+    .ad-sec-hdr h3{font-family:'Playfair Display',serif;font-size:1.05rem}
+    .ad-count{background:#f8e8ea;color:var(--red);font-size:0.75rem;font-weight:700;padding:4px 12px;border-radius:20px}
+    .ad-count-green{background:#e8f5e9;color:#1B7A34;font-size:0.75rem;font-weight:700;padding:4px 12px;border-radius:20px}
+
+    /* Empty state */
+    .ad-empty{color:#aaa;background:#fff;padding:28px;border-radius:12px;text-align:center;border:1px dashed #f0d8da;font-size:0.88rem}
+
+    /* Blog textarea */
+    .ad-textarea{width:100%;min-height:200px;padding:12px;border:1px solid #f0e0e2;border-radius:8px;font-family:'Inter',sans-serif;font-size:0.85rem;resize:vertical;outline:none;margin-bottom:10px}
+    .ad-textarea:focus{border-color:var(--red)}
+
+    /* Select */
+    .ad-select{padding:9px 12px;border:1px solid #f0e0e2;border-radius:8px;font-family:'Inter',sans-serif;font-size:0.85rem;outline:none;background:#fff;cursor:pointer}
+    .ad-select:focus{border-color:var(--red)}
+
+    /* Mobile */
+    @media(max-width:700px){
+      .ad-topbar{padding:12px 16px}
+      .ad-body{padding:14px 12px}
+      .ad-form-2,.ad-form-3{grid-template-columns:1fr}
+      .ag-box{padding:28px 20px}
+      .ad-stats{grid-template-columns:repeat(2,1fr)}
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════
+     LOGIN GATE
+════════════════════════════════ -->
+<div id="admin-gate">
+  <div class="ag-box">
+    <div class="ag-logo">ICON DIVYANSHI</div>
+    <div class="ag-subtitle">Admin Portal &mdash; Restricted Access</div>
+
+    <!-- Step 1: Email -->
+    <div id="ag-step1">
+      <div id="ag-err1" class="ag-err"></div>
+      <label class="ag-label" for="ag-email">Admin Email</label>
+      <input id="ag-email" class="ag-input" type="email" placeholder="your@gmail.com" autocomplete="email"
+             onkeydown="if(event.key==='Enter')agSendOTP()"/>
+      <div id="ag-sending" class="ag-sending">&#9201; Sending code to your email...</div>
+      <button class="ag-btn" id="ag-send-btn" onclick="agSendOTP()">Send OTP &rarr;</button>
+      <p style="font-size:0.75rem;color:#ccc;text-align:center;margin-top:12px">Only authorised admin emails can log in.</p>
+    </div>
+
+    <!-- Step 2: OTP -->
+    <div id="ag-step2" style="display:none">
+      <p style="font-size:0.84rem;color:#888;margin-bottom:16px;text-align:center">Code sent to <strong id="ag-email-shown" style="color:var(--dark)"></strong></p>
+      <p style="font-size:0.75rem;color:#aaa;margin-bottom:14px;text-align:center">Check your inbox &amp; spam folder.</p>
+      <div id="ag-err2" class="ag-err"></div>
+      <label class="ag-label" for="ag-otp">Enter 6-Digit Code</label>
+      <input id="ag-otp" class="ag-input ag-otp-input" type="text" maxlength="6" placeholder="&#9679; &#9679; &#9679; &#9679; &#9679; &#9679;"
+             onkeydown="if(event.key==='Enter')agVerifyOTP()"/>
+      <button class="ag-btn" onclick="agVerifyOTP()">Enter Dashboard &rarr;</button>
+      <p class="ag-back" onclick="agBack()">&larr; Use a different email</p>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════
+     ADMIN DASHBOARD
+════════════════════════════════ -->
+<div id="admin-dash">
+
+  <!-- Top Bar -->
+  <div class="ad-topbar">
+    <div class="ad-brand">ICON DIVYANSHI <span>ADMIN PORTAL</span></div>
+    <div class="ad-topbar-right">
+      <span id="ad-welcome" class="ad-welcome"></span>
+      <a href="index.html#students" target="_blank" class="ad-student-link">&#128065; Student Portal</a>
+      <button class="ad-logout" onclick="adLogout()">Log Out</button>
+    </div>
+  </div>
+
+  <div class="ad-body">
+
+    <!-- Stats Row -->
+    <div class="ad-stats" id="ad-stats-row"></div>
+
+    <!-- Tabs -->
+    <div class="ad-tabs">
+      <button class="ad-tab active" onclick="adTab('leads',this)">&#128203; Contacts</button>
+      <button class="ad-tab" onclick="adTab('students',this)">&#127891; Students</button>
+      <button class="ad-tab" onclick="adTab('ebook',this)">&#128229; Ebook Leads</button>
+      <button class="ad-tab" onclick="adTab('blog',this)">&#9997; Blog Manager</button>
+    </div>
+
+    <!-- Tab Panel -->
+    <div id="ad-panel"></div>
+
+  </div>
+</div>
+
+<script>
+// ── CONFIG ──────────────────────────────────────────────────
+var ADMIN_EMAILS  = ['thedivyanshimahajan@gmail.com','msdivyanshimahajan@gmail.com'];
+var EJS_KEY       = '2KQdxpDM9snNeR0QJ';
+var EJS_SERVICE   = 'service_044iism';
+var EJS_TEMPLATE  = 'template_eo5tb8g';
+var _otp = null;
+
+// ── INIT ────────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', function() {
+  if (typeof emailjs !== 'undefined') emailjs.init({ publicKey: EJS_KEY });
+  var sess = localStorage.getItem('id_admin_session');
+  if (sess && ADMIN_EMAILS.indexOf(sess) !== -1) {
+    showDash(sess);
+  }
+});
+
+// ── LOGIN ────────────────────────────────────────────────────
+function agSendOTP() {
+  var email = (document.getElementById('ag-email').value || '').trim().toLowerCase();
+  var err = document.getElementById('ag-err1');
+  err.style.display = 'none';
+  if (!email || !email.includes('@gmail.com')) {
+    err.textContent = 'Enter a valid Gmail address.';
+    err.style.display = 'block'; return;
+  }
+  if (ADMIN_EMAILS.indexOf(email) === -1) {
+    err.textContent = 'This email does not have admin access.';
+    err.style.display = 'block'; return;
+  }
+  _otp = (Math.floor(100000 + Math.random() * 900000)).toString();
+  document.getElementById('ag-sending').style.display = 'block';
+  document.getElementById('ag-send-btn').disabled = true;
+
+  if (typeof emailjs === 'undefined') {
+    err.textContent = 'Email service not loaded. Check your internet connection.';
+    err.style.display = 'block';
+    document.getElementById('ag-sending').style.display = 'none';
+    document.getElementById('ag-send-btn').disabled = false; return;
+  }
+
+  emailjs.send(EJS_SERVICE, EJS_TEMPLATE, {
+    email: email,
+    to_name: 'Divyanshi',
+    otp_code: _otp
+  }).then(function() {
+    document.getElementById('ag-sending').style.display = 'none';
+    document.getElementById('ag-send-btn').disabled = false;
+    document.getElementById('ag-step1').style.display = 'none';
+    document.getElementById('ag-step2').style.display = 'block';
+    document.getElementById('ag-email-shown').textContent = email;
+    setTimeout(function(){ document.getElementById('ag-otp').focus(); }, 120);
+  }).catch(function(e) {
+    document.getElementById('ag-sending').style.display = 'none';
+    document.getElementById('ag-send-btn').disabled = false;
+    err.textContent = 'Could not send OTP. Check internet and try again.';
+    err.style.display = 'block';
+  });
+}
+
+function agVerifyOTP() {
+  var entered = (document.getElementById('ag-otp').value || '').trim();
+  var err = document.getElementById('ag-err2');
+  err.style.display = 'none';
+  if (!entered) { err.textContent = 'Enter the 6-digit code.'; err.style.display = 'block'; return; }
+  if (!_otp)    { err.textContent = 'Session expired. Go back and request a new code.'; err.style.display = 'block'; return; }
+  if (entered === _otp) {
+    var email = (document.getElementById('ag-email').value || '').trim().toLowerCase();
+    localStorage.setItem('id_admin_session', email);
+    _otp = null;
+    showDash(email);
+  } else {
+    err.textContent = 'Incorrect code. Please check and try again.';
+    err.style.display = 'block';
+    document.getElementById('ag-otp').value = '';
+    document.getElementById('ag-otp').focus();
+  }
+}
+
+function agBack() {
+  _otp = null;
+  document.getElementById('ag-step2').style.display = 'none';
+  document.getElementById('ag-step1').style.display = 'block';
+  document.getElementById('ag-err1').style.display = 'none';
+  document.getElementById('ag-err2').style.display = 'none';
+  document.getElementById('ag-otp').value = '';
+}
+
+// ── DASHBOARD ────────────────────────────────────────────────
+function showDash(email) {
+  document.getElementById('admin-gate').style.display = 'none';
+  document.getElementById('admin-dash').style.display = 'block';
+  var name = email.split('@')[0];
+  name = name.charAt(0).toUpperCase() + name.slice(1);
+  document.getElementById('ad-welcome').textContent = 'Hi, ' + name + ' 👋';
+  renderStats();
+  adTab('leads', document.querySelector('.ad-tab'));
+}
+
+function adLogout() {
+  localStorage.removeItem('id_admin_session');
+  location.reload();
+}
+
+// ── TABS ─────────────────────────────────────────────────────
+function adTab(tab, el) {
+  document.querySelectorAll('.ad-tab').forEach(function(t){ t.classList.remove('active'); });
+  if (el) el.classList.add('active');
+  var panel = document.getElementById('ad-panel');
+  if      (tab === 'leads')    panel.innerHTML = renderLeadsPanel();
+  else if (tab === 'students') panel.innerHTML = renderStudentsPanel();
+  else if (tab === 'ebook')    panel.innerHTML = renderEbookPanel();
+  else if (tab === 'blog')     panel.innerHTML = renderBlogPanel();
+}
+
+// ── STATS ────────────────────────────────────────────────────
+function renderStats() {
+  var leads    = JSON.parse(localStorage.getItem('id_leads')        || '[]');
+  var visits   = parseInt(localStorage.getItem('id_visit_count')    || '0');
+  var videos   = JSON.parse(localStorage.getItem('id_video_watches')|| '[]');
+  var ebooks   = JSON.parse(localStorage.getItem('ebook_leads')     || '[]');
+  var students = JSON.parse(localStorage.getItem('sp_students')     || '[]');
+  var stats = [
+    { n: leads.length,    label: 'Form Contacts' },
+    { n: ebooks.length,   label: 'Ebook Downloads' },
+    { n: students.length, label: 'Enrolled Students' },
+    { n: visits,          label: 'Website Visits' },
+    { n: videos.length,   label: 'Video Clicks' }
+  ];
+  document.getElementById('ad-stats-row').innerHTML = stats.map(function(s){
+    return '<div class="ad-stat"><strong>'+s.n+'</strong><span>'+s.label+'</span></div>';
+  }).join('');
+}
+
+// ════════════════════════════════
+// CONTACTS / LEADS PANEL
+// ════════════════════════════════
+function renderLeadsPanel() {
+  var leads = JSON.parse(localStorage.getItem('id_leads') || '[]');
+
+  var html = '<div class="ad-card">'
+    + '<h3>&#10133; Add Contact Manually</h3>'
+    + '<p class="ad-card-sub">Someone DM\'d you on Instagram or WhatsApp? Add them here to keep your list complete.</p>'
+    + '<div class="ad-form-grid ad-form-3">'
+    + '<input class="ad-finput" id="ml-name" placeholder="Name"/>'
+    + '<input class="ad-finput" id="ml-email" placeholder="Email"/>'
+    + '<input class="ad-finput" id="ml-phone" placeholder="Phone / WhatsApp"/>'
+    + '</div>'
+    + '<div class="ad-form-grid ad-form-2">'
+    + '<input class="ad-finput" id="ml-city" placeholder="City"/>'
+    + '<input class="ad-finput" id="ml-note" placeholder="Note (interest level, how they found you)"/>'
+    + '</div>'
+    + '<button class="ad-btn ad-btn-red" onclick="manualAddLead()">Save Contact &rarr;</button>'
+    + '</div>';
+
+  html += '<div class="ad-sec-hdr"><h3>All Contacts</h3><span class="ad-count">'+leads.length+' total</span></div>';
+
+  if (leads.length === 0) {
+    html += '<div class="ad-empty">No contacts yet. Share your website and they\'ll appear here automatically!</div>';
+  } else {
+    html += '<div class="ad-btn-row" style="margin-bottom:14px">'
+      + '<button class="ad-btn ad-btn-green" onclick="downloadLeadsCSV()">&#11015; Download CSV</button>'
+      + '<button class="ad-btn ad-btn-light" onclick="clearLeads()">&#128465; Clear All</button>'
+      + '</div>'
+      + '<div class="ad-table-wrap"><table>'
+      + '<tr><th>#</th><th>Name</th><th>Email</th><th>Phone</th><th>City</th><th>Age</th><th>What They Said</th><th>Status</th><th>Date</th><th>Update</th></tr>';
+    leads.forEach(function(l, i) {
+      var status = l.status || 'New';
+      var sc = status === 'Contacted' ? 'badge-contacted' : status === 'Not interested' ? 'badge-skip' : 'badge-new';
+      html += '<tr>'
+        + '<td style="color:#ccc;font-size:0.73rem">'+(i+1)+'</td>'
+        + '<td style="font-weight:600">'+(l.name||'—')+'</td>'
+        + '<td>'+(l.email||'—')+'</td>'
+        + '<td>'+(l.phone||'—')+'</td>'
+        + '<td>'+(l.city||'—')+'</td>'
+        + '<td>'+(l.age||'—')+'</td>'
+        + '<td style="max-width:160px;color:#666;font-size:0.78rem">'+(l.why||l.note||'—')+'</td>'
+        + '<td><span class="badge '+sc+'">'+status+'</span></td>'
+        + '<td style="font-size:0.75rem;color:#aaa;white-space:nowrap">'+(l.date||'—')+'</td>'
+        + '<td><select onchange="updateLeadStatus('+i+',this.value)" class="ad-select" style="font-size:0.75rem;padding:4px 8px">'
+        + '<option value="New"'+(status==='New'?' selected':'')+'>New</option>'
+        + '<option value="Contacted"'+(status==='Contacted'?' selected':'')+'>Contacted</option>'
+        + '<option value="Not interested"'+(status==='Not interested'?' selected':'')+'>Not interested</option>'
+        + '</select></td>'
+        + '</tr>';
+    });
+    html += '</table></div>';
+  }
+  return html;
+}
+
+function manualAddLead() {
+  var name  = (document.getElementById('ml-name').value||'').trim();
+  var email = (document.getElementById('ml-email').value||'').trim();
+  var phone = (document.getElementById('ml-phone').value||'').trim();
+  var city  = (document.getElementById('ml-city').value||'').trim();
+  var note  = (document.getElementById('ml-note').value||'').trim();
+  if (!name && !email && !phone) { alert('Please fill in at least Name, Email, or Phone.'); return; }
+  var leads = JSON.parse(localStorage.getItem('id_leads') || '[]');
+  leads.unshift({ name:name, email:email, phone:phone, city:city, note:note, date:new Date().toLocaleString('en-IN'), status:'New', source:'Manual' });
+  localStorage.setItem('id_leads', JSON.stringify(leads));
+  renderStats();
+  adTab('leads', document.querySelector('.ad-tab.active'));
+}
+
+function updateLeadStatus(idx, status) {
+  var leads = JSON.parse(localStorage.getItem('id_leads') || '[]');
+  if (leads[idx]) { leads[idx].status = status; localStorage.setItem('id_leads', JSON.stringify(leads)); }
+}
+
+function clearLeads() {
+  if (!confirm('Delete ALL contacts permanently? This cannot be undone.')) return;
+  localStorage.removeItem('id_leads');
+  renderStats();
+  adTab('leads', document.querySelector('.ad-tab.active'));
+}
+
+function downloadLeadsCSV() {
+  var leads = JSON.parse(localStorage.getItem('id_leads') || '[]');
+  if (!leads.length) { alert('No contacts yet.'); return; }
+  var csv = 'Name,Email,Phone,City,Age,Note,Status,Date\n';
+  leads.forEach(function(l) {
+    csv += '"'+(l.name||'')+'","'+(l.email||'')+'","'+(l.phone||'')+'","'+(l.city||'')+'","'+(l.age||'')+'","'+(l.why||l.note||'')+'","'+(l.status||'')+'","'+(l.date||'')+'"\n';
+  });
+  var a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+  a.download = 'icon-divyanshi-contacts.csv'; a.click();
+}
+
+// ════════════════════════════════
+// STUDENTS PANEL
+// ════════════════════════════════
+function renderStudentsPanel() {
+  var stored = JSON.parse(localStorage.getItem('sp_students') || '[]');
+
+  var html = '<div class="ad-card">'
+    + '<h3>&#10133; Enroll a Student</h3>'
+    + '<p class="ad-card-sub">Add a student\'s Gmail — they\'ll be able to log in to the Student Portal using OTP.</p>'
+    + '<div style="display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end">'
+    + '<input class="ad-finput" id="enroll-email" placeholder="student@gmail.com" style="max-width:320px" onkeydown="if(event.key===\'Enter\')enrollStudent()"/>'
+    + '<button class="ad-btn ad-btn-red" onclick="enrollStudent()">Enroll Student &rarr;</button>'
+    + '</div>'
+    + '<div id="enroll-msg" style="font-size:0.82rem;margin-top:10px;color:var(--red)"></div>'
+    + '</div>';
+
+  html += '<div class="ad-sec-hdr"><h3>Enrolled Students</h3><span class="ad-count">'+stored.length+' enrolled</span></div>';
+
+  if (stored.length === 0) {
+    html += '<div class="ad-empty">No students enrolled yet. Add your first student above.</div>';
+  } else {
+    html += '<div class="ad-table-wrap"><table>'
+      + '<tr><th>#</th><th>Email</th><th>Enrolled On</th><th>Action</th></tr>';
+    stored.forEach(function(s, i) {
+      var email = typeof s === 'object' ? s.email : s;
+      var date  = typeof s === 'object' ? (s.date||'—') : '—';
+      html += '<tr>'
+        + '<td style="color:#ccc;font-size:0.73rem">'+(i+1)+'</td>'
+        + '<td style="font-weight:600">'+email+'</td>'
+        + '<td style="font-size:0.78rem;color:#aaa">'+date+'</td>'
+        + '<td><button class="ad-btn ad-btn-light ad-btn-sm" onclick="removeStudent('+i+')">Remove</button></td>'
+        + '</tr>';
+    });
+    html += '</table></div>';
+  }
+  return html;
+}
+
+function enrollStudent() {
+  var email = (document.getElementById('enroll-email').value || '').trim().toLowerCase();
+  var msg = document.getElementById('enroll-msg');
+  if (!email || !email.includes('@')) { msg.textContent = 'Enter a valid email address.'; return; }
+  var stored = JSON.parse(localStorage.getItem('sp_students') || '[]');
+  var emails = stored.map(function(s){ return typeof s==='object' ? s.email : s; });
+  if (emails.indexOf(email) !== -1) { msg.textContent = 'This student is already enrolled.'; return; }
+  stored.push({ email: email, date: new Date().toLocaleDateString('en-IN') });
+  localStorage.setItem('sp_students', JSON.stringify(stored));
+  msg.style.color = '#1B7A34';
+  msg.textContent = '✅ ' + email + ' enrolled successfully!';
+  document.getElementById('enroll-email').value = '';
+  renderStats();
+  setTimeout(function(){ adTab('students', document.querySelector('.ad-tab.active')); }, 900);
+}
+
+function removeStudent(idx) {
+  if (!confirm('Remove this student? They will lose access to the portal.')) return;
+  var stored = JSON.parse(localStorage.getItem('sp_students') || '[]');
+  stored.splice(idx, 1);
+  localStorage.setItem('sp_students', JSON.stringify(stored));
+  renderStats();
+  adTab('students', document.querySelector('.ad-tab.active'));
+}
+
+// ════════════════════════════════
+// EBOOK LEADS PANEL
+// ════════════════════════════════
+function renderEbookPanel() {
+  var eLeads = JSON.parse(localStorage.getItem('ebook_leads') || '[]');
+
+  var html = '<div class="ad-sec-hdr"><h3>&#128229; Ebook Download Leads</h3><span class="ad-count-green">'+eLeads.length+' leads</span></div>'
+    + '<p style="font-size:0.8rem;color:#aaa;margin-bottom:16px">These people downloaded your free ebook — they already trust you enough to give their info. Hot leads!</p>';
+
+  if (eLeads.length === 0) {
+    html += '<div class="ad-empty">No ebook leads yet. Share your website to start collecting!</div>';
+  } else {
+    html += '<div class="ad-btn-row" style="margin-bottom:14px">'
+      + '<button class="ad-btn ad-btn-green" onclick="downloadEbookCSV()">&#11015; Download CSV</button>'
+      + '<button class="ad-btn ad-btn-light" onclick="if(confirm(\'Delete all ebook leads?\'))localStorage.removeItem(\'ebook_leads\');renderStats();adTab(\'ebook\',document.querySelector(\'.ad-tab.active\'))">&#128465; Clear</button>'
+      + '</div>'
+      + '<div class="ad-table-wrap"><table>'
+      + '<tr><th>#</th><th>Name</th><th>Email</th><th>WhatsApp</th><th>Date</th></tr>';
+    eLeads.forEach(function(l, i) {
+      html += '<tr>'
+        + '<td style="color:#ccc;font-size:0.73rem">'+(i+1)+'</td>'
+        + '<td style="font-weight:600">'+(l.name||'—')+'</td>'
+        + '<td>'+(l.email||'—')+'</td>'
+        + '<td>'+(l.phone||'—')+'</td>'
+        + '<td style="font-size:0.78rem;color:#aaa">'+(l.date||'—')+'</td>'
+        + '</tr>';
+    });
+    html += '</table></div>';
+  }
+  return html;
+}
+
+function downloadEbookCSV() {
+  var eLeads = JSON.parse(localStorage.getItem('ebook_leads') || '[]');
+  if (!eLeads.length) { alert('No ebook leads yet.'); return; }
+  var csv = 'Name,Email,WhatsApp,Date\n';
+  eLeads.forEach(function(l) {
+    csv += '"'+(l.name||'')+'","'+(l.email||'')+'","'+(l.phone||'')+'","'+(l.date||'')+'"\n';
+  });
+  var a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+  a.download = 'ebook-leads.csv'; a.click();
+}
+
+// ════════════════════════════════
+// BLOG MANAGER PANEL
+// ════════════════════════════════
+function renderBlogPanel() {
+  var posts  = JSON.parse(localStorage.getItem('blog_posts') || '[]');
+  var editId = window._blogEditId || null;
+  var editPost = editId ? posts.find(function(p){ return p.id == editId; }) : null;
+  var ep = editPost || { title:'', category:'Brand Strategy', tags:'', body:'', featured:false };
+  var cats = ['Brand Strategy','Digital Skills','Income Tips','Content Creation','Mindset','My Story'];
+
+  var html = '<div class="ad-card">'
+    + '<h3>'+(editPost ? '&#9999; Edit Post' : '&#9997; New Blog Post')+'</h3>'
+    + '<div class="ad-form-grid ad-form-2" style="margin-bottom:10px">'
+    + '<input class="ad-finput" id="blog-title" placeholder="Post Title *" value="'+esc(ep.title||'')+'"/>'
+    + '<select class="ad-finput ad-select" id="blog-cat">'+cats.map(function(c){ return '<option'+(ep.category===c?' selected':'')+'>'+c+'</option>'; }).join('')+'</select>'
+    + '</div>'
+    + '<input class="ad-finput" id="blog-tags" placeholder="Tags (comma-separated: Instagram, Freelancing, Income)" value="'+esc(ep.tags||'')+'" style="margin-bottom:10px"/>'
+    + '<textarea class="ad-textarea" id="blog-body" placeholder="Write your blog post here...">'+esc(ep.body||'')+'</textarea>'
+    + '<div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">'
+    + '<label style="display:flex;align-items:center;gap:8px;font-size:0.83rem;cursor:pointer;user-select:none"><input type="checkbox" id="blog-featured"'+(ep.featured?' checked':'')+' style="accent-color:var(--red)"/> Set as Featured Post (shows at top)</label>'
+    + '<button class="ad-btn ad-btn-red" onclick="blogSave(\''+(editPost?ep.id:'')+'\')">'+( editPost ? 'Save Changes &rarr;' : 'Publish Post &rarr;')+'</button>'
+    + (editPost ? '<button class="ad-btn ad-btn-light" onclick="window._blogEditId=null;adTab(\'blog\',document.querySelector(\'.ad-tab.active\'))">Cancel</button>' : '')
+    + '</div>'
+    + '</div>';
+
+  if (posts.length > 0) {
+    html += '<div class="ad-sec-hdr"><h3>Published Posts</h3><span class="ad-count">'+posts.length+' posts</span></div>'
+      + '<div class="ad-table-wrap"><table>'
+      + '<tr><th>Title</th><th>Category</th><th>Date</th><th>Featured</th><th>Actions</th></tr>';
+    posts.forEach(function(p) {
+      html += '<tr>'
+        + '<td style="font-weight:600;max-width:220px">'+esc(p.title||'Untitled')+'</td>'
+        + '<td><span class="badge badge-cat">'+esc(p.category||'—')+'</span></td>'
+        + '<td style="font-size:0.78rem;color:#aaa;white-space:nowrap">'+(p.date||'—')+'</td>'
+        + '<td style="text-align:center">'+(p.featured?'&#11088;':'—')+'</td>'
+        + '<td style="display:flex;gap:8px;padding:9px 14px">'
+        + '<button class="ad-btn ad-btn-light ad-btn-sm" onclick="blogEdit(\''+p.id+'\')">Edit</button>'
+        + '<button class="ad-btn ad-btn-sm" style="background:#fdecea;color:var(--red)" onclick="blogDelete(\''+p.id+'\')">Delete</button>'
+        + '</td>'
+        + '</tr>';
+    });
+    html += '</table></div>';
+  } else if (!editPost) {
+    html += '<div class="ad-empty">No blog posts yet. Write your first post above and hit Publish!</div>';
+  }
+  return html;
+}
+
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function blogSave(editId) {
+  var title = (document.getElementById('blog-title').value||'').trim();
+  var body  = (document.getElementById('blog-body').value||'').trim();
+  if (!title || !body) { alert('Title and content are both required.'); return; }
+  var posts = JSON.parse(localStorage.getItem('blog_posts') || '[]');
+  var now = new Date();
+  var dateStr = now.toLocaleDateString('en-IN', { day:'numeric', month:'long', year:'numeric' });
+  if (editId) {
+    var idx = posts.findIndex(function(p){ return String(p.id) === String(editId); });
+    if (idx !== -1) {
+      posts[idx].title    = title;
+      posts[idx].category = document.getElementById('blog-cat').value;
+      posts[idx].tags     = document.getElementById('blog-tags').value;
+      posts[idx].body     = body;
+      posts[idx].featured = document.getElementById('blog-featured').checked;
+    }
+    alert('✅ Post updated successfully!');
+  } else {
+    posts.unshift({ id:now.getTime(), title:title, category:document.getElementById('blog-cat').value, tags:document.getElementById('blog-tags').value, body:body, date:dateStr, featured:document.getElementById('blog-featured').checked });
+    alert('✅ Post published! It will appear in the Blog section of your website.');
+  }
+  localStorage.setItem('blog_posts', JSON.stringify(posts));
+  window._blogEditId = null;
+  adTab('blog', document.querySelector('.ad-tab.active'));
+}
+
+function blogEdit(id) {
+  window._blogEditId = id;
+  adTab('blog', document.querySelector('.ad-tab.active'));
+  window.scrollTo(0, 0);
+}
+
+function blogDelete(id) {
+  if (!confirm('Delete this post permanently?')) return;
+  var posts = JSON.parse(localStorage.getItem('blog_posts') || '[]');
+  posts = posts.filter(function(p){ return String(p.id) !== String(id); });
+  localStorage.setItem('blog_posts', JSON.stringify(posts));
+  window._blogEditId = null;
+  adTab('blog', document.querySelector('.ad-tab.active'));
+}
+</script>
+</body>
+</html>

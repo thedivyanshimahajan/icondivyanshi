@@ -1,0 +1,1358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Your Real Career Guide – Icon Divyanshi</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --red:#C0182C;--dark:#2D0810;--maron:#8B0A1A;
+  --cream:#FDF8F8;--lgray:#E8E8E8;--gray:#666;
+  --green:#1B7A34;--blue:#1565C0;--orange:#C96000;
+  --purple:#6A1B9A;--teal:#00695C;
+}
+html{scroll-behavior:smooth;}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#f5f5f5;color:#222;}
+
+/* ── SIDEBAR TOC ─────────────────── */
+#toc-sidebar{
+  position:fixed;top:0;left:0;width:260px;height:100vh;
+  background:var(--dark);overflow-y:auto;z-index:100;
+  padding:0 0 40px;transform:translateX(-260px);
+  transition:transform .3s;
+}
+#toc-sidebar.open{transform:translateX(0);}
+#toc-sidebar h3{
+  background:var(--red);color:#fff;padding:18px 20px;
+  font-size:13px;letter-spacing:.08em;text-transform:uppercase;
+}
+#toc-sidebar a{
+  display:flex;align-items:center;gap:10px;padding:11px 20px;
+  color:#ccc;text-decoration:none;font-size:13px;border-bottom:1px solid rgba(255,255,255,.06);
+  transition:background .2s;
+}
+#toc-sidebar a:hover,#toc-sidebar a.active{background:var(--red);color:#fff;}
+#toc-sidebar a .n{
+  background:var(--red);color:#fff;min-width:24px;height:24px;
+  border-radius:4px;display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:700;
+}
+#toc-sidebar a:hover .n,#toc-sidebar a.active .n{background:rgba(255,255,255,.25);}
+
+/* ── TOP BAR ─────────────────────── */
+#topbar{
+  position:fixed;top:0;left:0;width:100%;height:52px;
+  background:var(--dark);display:flex;align-items:center;
+  padding:0 16px;z-index:200;gap:14px;
+}
+#menu-btn{
+  background:none;border:none;cursor:pointer;
+  display:flex;flex-direction:column;gap:5px;padding:4px;
+}
+#menu-btn span{display:block;width:22px;height:2px;background:#fff;border-radius:2px;}
+#topbar-title{color:#fff;font-size:13px;font-weight:700;letter-spacing:.05em;flex:1;}
+#topbar .progress-bar{
+  position:absolute;bottom:0;left:0;height:3px;
+  background:var(--red);transition:width .2s;width:0%;
+}
+
+/* ── OVERLAY ─────────────────────── */
+#overlay{
+  display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:99;
+}
+#overlay.show{display:block;}
+
+/* ── MAIN CONTENT ────────────────── */
+#main{margin-top:52px;max-width:820px;margin-left:auto;margin-right:auto;padding:0 0 80px;}
+
+/* ── COVER ───────────────────────── */
+#cover{
+  background:#FFFFFF;
+  padding:0;overflow:hidden;position:relative;
+}
+/* Top red band */
+.cover-topband{background:var(--red);padding:10px 40px;display:flex;align-items:center;gap:12px;}
+.cover-topband .free-badge{
+  background:var(--maron);color:#fff;font-size:9px;font-weight:800;
+  letter-spacing:.1em;padding:4px 12px;border-radius:20px;text-transform:uppercase;
+}
+.cover-topband span{color:rgba(255,255,255,.85);font-size:11px;}
+
+/* Title area — white bg, dark text */
+.cover-body{padding:40px 40px 28px;background:#fff;}
+.cover-body h1{
+  font-size:clamp(36px,7vw,56px);color:var(--dark);line-height:1.05;
+  font-weight:900;letter-spacing:-.02em;
+}
+.cover-body h1 span{color:var(--red);}
+.cover-sub{color:#888;font-size:13px;margin-top:10px;font-weight:500;}
+.cover-line{width:60px;height:3px;background:var(--red);margin:16px 0;}
+.cover-topics{
+  color:#555;font-size:12px;line-height:2;
+  display:flex;flex-wrap:wrap;gap:6px 24px;
+}
+.cover-topics span{display:flex;align-items:center;gap:5px;}
+.cover-topics span::before{content:'';width:6px;height:6px;background:var(--red);border-radius:50%;}
+
+/* Stat cards — all solid, clearly readable */
+.cover-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:24px 0;}
+.cstat{border-radius:8px;padding:16px 12px;text-align:center;}
+.cstat.r{background:var(--red);}
+.cstat.d{background:var(--dark);}
+.cstat.m{background:var(--maron);}
+.cstat .val{font-size:26px;font-weight:800;color:#fff;}
+.cstat .lbl{font-size:10px;color:rgba(255,255,255,.88);margin-top:4px;line-height:1.4;}
+
+/* Quote — light pink bg, dark text */
+.cover-quote{
+  border-left:4px solid var(--red);background:#FFF0F2;
+  padding:14px 20px;margin:20px 0;border-radius:0 8px 8px 0;
+  font-style:italic;color:var(--dark);font-size:14px;line-height:1.6;font-weight:600;
+}
+
+/* Author block — light card */
+.cover-author{
+  background:#FDF5F6;border:1px solid #F0D5D8;border-radius:10px;
+  padding:16px 20px;display:flex;align-items:center;gap:16px;margin:16px 0;
+}
+.author-dot{
+  width:50px;height:50px;border-radius:50%;background:var(--red);
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;font-weight:800;color:#fff;flex-shrink:0;
+}
+.cover-author .name{font-size:16px;font-weight:700;color:var(--dark);}
+.cover-author .role{font-size:11px;color:#666;margin-top:2px;}
+.cover-author .handle{font-size:11px;color:var(--red);margin-top:4px;font-weight:600;}
+
+/* Inside panel — light background */
+.cover-inside{background:#F7F7F7;padding:20px 40px 18px;border-top:3px solid var(--red);}
+.cover-inside h4{color:var(--red);font-size:10px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px;font-weight:800;}
+.chap-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
+.chap-item{
+  display:flex;align-items:center;gap:8px;cursor:pointer;
+  padding:7px 10px;border-radius:6px;transition:background .2s;
+  color:#444;font-size:11.5px;text-decoration:none;
+}
+.chap-item:hover{background:#F0D5D8;color:var(--dark);}
+.chap-item .num{
+  min-width:22px;height:22px;background:var(--red);color:#fff;
+  border-radius:4px;display:flex;align-items:center;justify-content:center;
+  font-size:9px;font-weight:800;
+}
+.cover-cta{
+  background:var(--red);padding:14px 40px;text-align:center;
+  color:#fff;font-size:12px;font-weight:700;letter-spacing:.05em;
+}
+
+/* ── CHAPTERS ────────────────────── */
+.chapter{background:#fff;margin-top:6px;padding:36px 40px 40px;}
+.ch-label{
+  display:inline-flex;align-items:center;gap:8px;margin-bottom:16px;
+}
+.ch-label .badge{
+  background:var(--red);color:#fff;font-size:9px;font-weight:800;
+  letter-spacing:.1em;padding:4px 12px;border-radius:4px;text-transform:uppercase;
+}
+.ch-label .num{color:var(--gray);font-size:11px;}
+.chapter h2{font-size:clamp(18px,3vw,24px);color:var(--dark);margin-bottom:8px;line-height:1.25;}
+.chapter .intro{font-size:13px;color:#555;line-height:1.7;margin-bottom:24px;}
+.ch-divider{height:2px;background:linear-gradient(90deg,var(--red),transparent);margin:20px 0;}
+
+/* Stat row */
+.stat-row{display:grid;gap:10px;margin:18px 0;}
+.stat-row.cols3{grid-template-columns:repeat(3,1fr);}
+.stat-row.cols4{grid-template-columns:repeat(4,1fr);}
+.stat-box{border-radius:8px;padding:14px 10px;text-align:center;}
+.stat-box .sv{font-size:20px;font-weight:800;color:#fff;}
+.stat-box .sl{font-size:9.5px;color:rgba(255,255,255,.85);margin-top:5px;line-height:1.4;}
+
+/* Pros/Cons */
+.proscons{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0;}
+.pros-box,.cons-box{border-radius:8px;overflow:hidden;}
+.pros-box .header{background:var(--green);color:#fff;padding:10px 14px;font-size:12px;font-weight:700;}
+.cons-box .header{background:#B71C1C;color:#fff;padding:10px 14px;font-size:12px;font-weight:700;}
+.pros-box .body{background:#F0FFF4;padding:12px 14px;}
+.cons-box .body{background:#FFF8F8;padding:12px 14px;}
+.pc-item{display:flex;align-items:flex-start;gap:8px;margin-bottom:8px;font-size:12px;color:#333;line-height:1.5;}
+.pc-item::before{content:'';min-width:7px;height:7px;border-radius:50%;margin-top:5px;flex-shrink:0;}
+.pros-box .pc-item::before{background:var(--green);}
+.cons-box .pc-item::before{background:#B71C1C;}
+
+/* Callout */
+.callout{border-radius:8px;overflow:hidden;margin:16px 0;}
+.callout .callout-head{padding:10px 16px;font-size:11px;font-weight:700;color:#fff;}
+.callout .callout-body{padding:12px 16px;font-size:12.5px;line-height:1.65;color:#333;}
+.callout .callout-body p+p{margin-top:6px;}
+
+/* Table */
+.tbl-wrap{overflow-x:auto;margin:16px 0;border-radius:8px;overflow:hidden;border:1px solid var(--lgray);}
+table{width:100%;border-collapse:collapse;font-size:12px;}
+thead{background:var(--dark);}
+thead th{color:#fff;padding:10px 12px;text-align:left;font-size:11px;}
+tbody tr:nth-child(odd){background:#F7F7F7;}
+tbody tr:nth-child(even){background:#fff;}
+tbody td{padding:9px 12px;color:#333;line-height:1.4;}
+tbody td:first-child{font-weight:600;}
+
+/* Two-column lists */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0;}
+.col-box{border-radius:8px;overflow:hidden;}
+.col-box .col-head{padding:10px 14px;font-size:11px;font-weight:700;color:#fff;}
+.col-box .col-body{padding:12px 14px;}
+.col-item{display:flex;align-items:flex-start;gap:7px;margin-bottom:7px;font-size:11.5px;color:#333;line-height:1.5;}
+.col-item::before{content:'';min-width:7px;height:7px;border-radius:50%;margin-top:5px;flex-shrink:0;}
+
+/* Skill cards */
+.skill-card{
+  display:flex;gap:0;margin-bottom:8px;border-radius:8px;overflow:hidden;
+  border:1px solid var(--lgray);
+}
+.skill-num{
+  min-width:52px;display:flex;align-items:center;justify-content:center;
+  font-size:20px;font-weight:800;color:#fff;
+}
+.skill-body{padding:12px 16px;flex:1;}
+.skill-body h4{font-size:13px;color:var(--dark);margin-bottom:4px;}
+.skill-body p{font-size:11.5px;color:#555;line-height:1.5;margin-bottom:6px;}
+.skill-meta{display:flex;gap:20px;flex-wrap:wrap;}
+.skill-earn{font-size:11px;font-weight:700;color:var(--green);}
+.skill-time{font-size:11px;color:var(--gray);}
+
+/* Steps */
+.step-card{
+  display:flex;gap:0;margin-bottom:8px;border-radius:8px;overflow:hidden;
+  border:1px solid var(--lgray);
+}
+.step-num{
+  min-width:52px;display:flex;align-items:center;justify-content:center;
+  font-size:22px;font-weight:800;color:#fff;
+}
+.step-body{padding:14px 18px;flex:1;background:#FAFAFA;}
+.step-body h4{font-size:13px;color:var(--dark);margin-bottom:8px;}
+.step-pts li{font-size:11.5px;color:#444;line-height:1.6;margin-bottom:4px;padding-left:14px;position:relative;}
+.step-pts li::before{content:'';position:absolute;left:0;top:7px;width:6px;height:6px;border-radius:50%;background:var(--red);}
+.step-pts{list-style:none;}
+
+/* Bullet list */
+.bul-list{list-style:none;margin:12px 0;}
+.bul-list li{
+  padding-left:18px;position:relative;margin-bottom:8px;
+  font-size:12.5px;color:#333;line-height:1.6;
+}
+.bul-list li::before{
+  content:'';position:absolute;left:0;top:8px;
+  width:7px;height:7px;border-radius:50%;background:var(--red);
+}
+
+/* Section header inside chapter */
+.sec-head{
+  display:flex;align-items:center;gap:8px;margin:20px 0 10px;
+}
+.sec-head::before{content:'';width:4px;height:22px;background:var(--red);border-radius:2px;}
+.sec-head span{font-size:14px;font-weight:700;color:var(--dark);}
+
+/* ── CTA PAGE ────────────────────── */
+#cta{background:#fff;margin-top:6px;}
+.cta-top{background:var(--red);padding:40px;text-align:center;}
+.cta-top h2{font-size:28px;color:#fff;font-weight:800;margin-bottom:6px;}
+.cta-top p{color:rgba(255,255,255,.85);font-size:13px;line-height:1.6;}
+.cta-body{padding:36px 40px;}
+.contact-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0;}
+.contact-box{
+  border-radius:10px;padding:20px 14px;text-align:center;
+  border:2px solid var(--lgray);transition:border-color .2s,transform .2s;
+  cursor:pointer;text-decoration:none;display:block;
+}
+.contact-box:hover{transform:translateY(-3px);}
+.contact-box .icon{
+  width:46px;height:46px;border-radius:50%;margin:0 auto 12px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:15px;font-weight:800;color:#fff;
+}
+.contact-box h4{font-size:13px;font-weight:700;color:var(--dark);margin-bottom:4px;}
+.contact-box p{font-size:11px;color:var(--gray);}
+.quote-block{
+  background:var(--cream);border-left:4px solid var(--red);
+  padding:18px 20px;border-radius:0 8px 8px 0;margin:24px 0;
+}
+.quote-block p{font-style:italic;font-size:14px;color:var(--dark);line-height:1.6;}
+.quote-block cite{font-size:12px;color:var(--red);font-weight:700;margin-top:6px;display:block;}
+
+/* Products */
+.products-head{
+  font-size:20px;font-weight:800;color:var(--dark);margin:32px 0 6px;
+}
+.products-sub{font-size:12.5px;color:var(--gray);margin-bottom:20px;}
+.pkg-card{
+  border-radius:10px;border:2px solid var(--lgray);overflow:hidden;
+  margin-bottom:12px;transition:border-color .2s,transform .2s;
+}
+.pkg-card:hover{transform:translateY(-2px);}
+.pkg-head{padding:10px 16px;display:flex;align-items:center;justify-content:space-between;}
+.pkg-head .tag{font-size:10px;font-weight:800;color:#fff;letter-spacing:.05em;}
+.pkg-head .enroll{
+  background:rgba(255,255,255,.2);color:#fff;font-size:10px;font-weight:700;
+  padding:4px 12px;border-radius:20px;text-decoration:none;white-space:nowrap;
+}
+.pkg-head .enroll:hover{background:rgba(255,255,255,.35);}
+.pkg-body{padding:14px 16px;display:flex;gap:14px;}
+.pkg-info{flex:1;}
+.pkg-info h4{font-size:14px;font-weight:700;color:var(--dark);margin-bottom:8px;}
+.pkg-pts{list-style:none;}
+.pkg-pts li{
+  font-size:11.5px;color:#444;line-height:1.6;margin-bottom:4px;
+  padding-left:14px;position:relative;
+}
+.pkg-pts li::before{content:'';position:absolute;left:0;top:7px;width:6px;height:6px;border-radius:50%;}
+.cta-note{
+  background:#FDF5F5;border-radius:8px;padding:14px 16px;text-align:center;
+  font-size:12px;color:var(--gray);margin-top:8px;
+}
+.cta-note strong{color:var(--dark);}
+
+/* ── TOC PAGE ────────────────────── */
+#toc-page{background:#fff;margin-top:6px;padding:36px 40px 40px;}
+#toc-page h2{font-size:22px;color:var(--dark);margin-bottom:6px;}
+#toc-page .sub{font-size:12px;color:var(--gray);margin-bottom:20px;}
+.toc-grid{display:grid;gap:6px;}
+.toc-row{
+  display:flex;align-items:center;gap:12px;padding:12px 14px;
+  border-radius:8px;background:#FAFAFA;cursor:pointer;text-decoration:none;
+  transition:background .2s;border-left:3px solid transparent;
+}
+.toc-row:hover{background:var(--cream);border-left-color:var(--red);}
+.toc-row .tn{
+  min-width:30px;height:30px;border-radius:6px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:800;color:#fff;flex-shrink:0;
+}
+.toc-row .tt{flex:1;}
+.toc-row .tt strong{display:block;font-size:12.5px;color:var(--dark);}
+.toc-row .tt span{font-size:11px;color:var(--gray);}
+.toc-row .pg{font-size:11px;color:var(--gray);font-weight:600;}
+
+/* ── RESPONSIVE ──────────────────── */
+@media(max-width:600px){
+  .cover-body,.chapter,#toc-page,.cta-body,.cta-top{padding-left:20px;padding-right:20px;}
+  .cover-stats,.stat-row.cols4{grid-template-columns:repeat(2,1fr);}
+  .proscons,.two-col{grid-template-columns:1fr;}
+  .chap-grid{grid-template-columns:1fr;}
+  .contact-row{grid-template-columns:1fr;}
+  .cover-inside{padding:16px;}
+  #toc-sidebar{width:80vw;transform:translateX(-80vw);}
+}
+
+/* ── COMMUNITY RESULTS MARQUEE ───── */
+#guide-testi{background:var(--cream);padding:52px 0;overflow:hidden;}
+.gt-header{text-align:center;padding:0 20px 36px;}
+.gt-header .gt-label{display:inline-block;background:var(--red);color:#fff;font-size:11px;font-weight:700;letter-spacing:2px;padding:5px 16px;border-radius:50px;margin-bottom:14px;}
+.gt-header h2{font-size:clamp(22px,4vw,32px);font-weight:800;color:var(--dark);margin-bottom:8px;}
+.gt-header p{font-size:14px;color:var(--gray);max-width:520px;margin:0 auto;}
+.gt-tape{overflow:hidden;padding:8px 0;-webkit-mask-image:linear-gradient(to right,transparent 0,black 5%,black 95%,transparent 100%);mask-image:linear-gradient(to right,transparent 0,black 5%,black 95%,transparent 100%);}
+.gt-tape+.gt-tape{margin-top:16px;}
+@keyframes gt-scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.gt-inner{display:inline-flex;gap:16px;animation:gt-scroll 38s linear infinite;width:max-content;}
+.gt-inner:hover{animation-play-state:paused}
+.gt-inner.rev{animation-direction:reverse;animation-duration:44s;}
+.gt-card{flex-shrink:0;width:300px;background:#fff;border-radius:16px;padding:20px 18px;border:1px solid rgba(192,24,44,0.09);box-shadow:0 2px 16px rgba(0,0,0,0.05);display:flex;flex-direction:column;gap:12px;}
+.gt-top{display:flex;align-items:center;gap:12px;}
+.gt-avatar{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:800;color:#fff;flex-shrink:0;letter-spacing:0;}
+.gt-name{font-size:14px;font-weight:700;color:var(--dark);line-height:1.2;}
+.gt-tag{font-size:11px;color:var(--gray);margin-top:2px;}
+.gt-quote{font-size:12.5px;color:#444;line-height:1.7;flex:1;}
+.gt-stat{display:inline-flex;align-items:center;gap:6px;background:rgba(192,24,44,0.06);border-radius:50px;padding:5px 12px;font-size:11.5px;font-weight:700;color:var(--red);}
+</style>
+<style>
+/* ── LEAD GATE ───────────────────── */
+#lead-gate{
+  position:fixed;inset:0;z-index:9999;
+  background:rgba(45,8,16,0.92);
+  display:flex;align-items:center;justify-content:center;
+  padding:20px;
+}
+#lead-gate.hidden{display:none;}
+.gate-box{
+  background:#fff;border-radius:16px;padding:40px 36px;
+  max-width:440px;width:100%;text-align:center;
+  box-shadow:0 20px 60px rgba(0,0,0,0.4);
+}
+.gate-box .gate-badge{
+  background:#FFF0F2;color:#C0182C;font-size:10px;font-weight:800;
+  letter-spacing:.1em;padding:5px 14px;border-radius:20px;
+  text-transform:uppercase;display:inline-block;margin-bottom:16px;
+}
+.gate-box h2{font-size:22px;font-weight:800;color:#2D0810;margin-bottom:8px;line-height:1.3;}
+.gate-box p{font-size:13px;color:#666;line-height:1.6;margin-bottom:24px;}
+.gate-highlights{
+  display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:24px;
+}
+.gate-highlights span{
+  background:#FFF0F2;color:#C0182C;font-size:11px;font-weight:600;
+  padding:5px 12px;border-radius:20px;
+}
+.gate-form{display:flex;flex-direction:column;gap:12px;}
+.gate-form input{
+  border:1.5px solid #E0E0E0;border-radius:8px;padding:12px 14px;
+  font-size:13px;color:#222;font-family:inherit;outline:none;
+  transition:border-color .2s;
+}
+.gate-form input:focus{border-color:#C0182C;}
+.gate-form input::placeholder{color:#aaa;}
+.gate-btn{
+  background:#C0182C;color:#fff;border:none;border-radius:8px;
+  padding:14px;font-size:14px;font-weight:700;cursor:pointer;
+  font-family:inherit;transition:background .2s;margin-top:4px;
+}
+.gate-btn:hover{background:#8B0A1A;}
+.gate-btn:disabled{background:#ccc;cursor:not-allowed;}
+.gate-note{font-size:11px;color:#aaa;margin-top:10px;}
+.gate-success{display:none;padding:16px 0;}
+.gate-success .tick{font-size:40px;margin-bottom:8px;}
+.gate-success p{font-size:14px;color:#1B7A34;font-weight:600;}
+</style>
+</head>
+<body>
+
+<!-- LEAD GATE -->
+<div id="lead-gate">
+  <div class="gate-box">
+    <div class="gate-badge">Free Ebook — Get Instant Access</div>
+    <h2>Your Real Career Guide<br>is Ready for You</h2>
+    <p>Enter your details below to get free access. No spam, ever — just the guide that could change your direction.</p>
+    <div class="gate-highlights">
+      <span>10 Chapters</span>
+      <span>Real Numbers</span>
+      <span>Digital Skills</span>
+      <span>Affiliate Marketing</span>
+      <span>Action Plan</span>
+    </div>
+    <form class="gate-form" onsubmit="submitLead(event)">
+      <input type="text" id="lead-name" placeholder="Your Full Name *" required/>
+      <input type="email" id="lead-email" placeholder="Your Email Address *" required/>
+      <input type="tel" id="lead-phone" placeholder="WhatsApp Number (optional)"/>
+      <button type="submit" class="gate-btn" id="gate-submit-btn">Get Free Access →</button>
+    </form>
+    <div class="gate-success" id="gate-success">
+      <div class="tick">✓</div>
+      <p>Welcome! Opening your ebook now...</p>
+    </div>
+    <p class="gate-note">By Divyanshi Mahajan &nbsp;|&nbsp; divyanshimahajan.in</p>
+  </div>
+</div>
+
+<!-- TOP BAR -->
+<div id="topbar">
+  <button id="menu-btn" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
+  <div id="topbar-title">YOUR REAL CAREER GUIDE — Divyanshi Mahajan</div>
+  <div class="progress-bar" id="progress"></div>
+</div>
+
+<!-- SIDEBAR TOC -->
+<div id="overlay" onclick="closeMenu()"></div>
+<nav id="toc-sidebar">
+  <h3>Chapters</h3>
+  <a href="#cover"><span class="n">0</span> Cover</a>
+  <a href="#toc-page"><span class="n">—</span> Table of Contents</a>
+  <a href="#ch1"><span class="n">01</span> The Real Numbers</a>
+  <a href="#ch2"><span class="n">02</span> Engineering</a>
+  <a href="#ch3"><span class="n">03</span> Medicine</a>
+  <a href="#ch4"><span class="n">04</span> Banking & Govt</a>
+  <a href="#ch5"><span class="n">05</span> Commerce & MBA</a>
+  <a href="#ch6"><span class="n">06</span> The Digital Shift</a>
+  <a href="#ch7"><span class="n">07</span> Digital Skills</a>
+  <a href="#ch8"><span class="n">08</span> Content Niches</a>
+  <a href="#ch9"><span class="n">09</span> Affiliate Marketing</a>
+  <a href="#ch10"><span class="n">10</span> How to Start</a>
+  <a href="#cta"><span class="n">CTA</span> Get Guidance</a>
+</nav>
+
+<div id="main">
+
+<!-- COVER -->
+<section id="cover">
+  <div class="cover-topband">
+    <span class="free-badge">Free Ebook</span>
+    <span>By Divyanshi Mahajan &nbsp;|&nbsp; divyanshimahajan.in</span>
+  </div>
+  <div class="cover-body">
+    <h1>YOUR REAL<br><span>CAREER GUIDE</span></h1>
+    <div class="cover-sub">2026 Edition &nbsp;|&nbsp; For Students After Class 10, 11, 12 &amp; Graduation</div>
+    <div class="cover-line"></div>
+    <div class="cover-topics">
+      <span>Engineering</span><span>Medicine</span><span>Banking &amp; Govt</span>
+      <span>Digital Skills</span><span>Affiliate Marketing</span><span>How to Start</span>
+    </div>
+    <div class="cover-stats">
+      <div class="cstat r">
+        <div class="val">1.5 Crore+</div>
+        <div class="lbl">Students graduate each year in India</div>
+      </div>
+      <div class="cstat d">
+        <div class="val">4.5 Lakh</div>
+        <div class="lbl">Engineering seats available yearly</div>
+      </div>
+      <div class="cstat m">
+        <div class="val">93%</div>
+        <div class="lbl">Graduates who miss campus placements</div>
+      </div>
+    </div>
+    <div class="cover-quote">"Nobody told you the truth about careers. This guide will."</div>
+    <div class="cover-author">
+      <div class="author-dot">D</div>
+      <div>
+        <div class="name">Divyanshi Mahajan</div>
+        <div class="role">Business Strategist &nbsp;|&nbsp; Content Creator &nbsp;|&nbsp; Career Mentor</div>
+        <div class="handle">@icondivyanshi &nbsp;|&nbsp; divyanshimahajan.in</div>
+      </div>
+    </div>
+  </div>
+  <div class="cover-inside">
+    <h4>What is inside</h4>
+    <div class="chap-grid">
+      <a class="chap-item" href="#ch1"><span class="num">01</span> The Real Numbers</a>
+      <a class="chap-item" href="#ch6"><span class="num">06</span> The Digital Shift</a>
+      <a class="chap-item" href="#ch2"><span class="num">02</span> Engineering</a>
+      <a class="chap-item" href="#ch7"><span class="num">07</span> Digital Skills</a>
+      <a class="chap-item" href="#ch3"><span class="num">03</span> Medicine</a>
+      <a class="chap-item" href="#ch8"><span class="num">08</span> Content Niches</a>
+      <a class="chap-item" href="#ch4"><span class="num">04</span> Banking &amp; Govt</a>
+      <a class="chap-item" href="#ch9"><span class="num">09</span> Affiliate Marketing</a>
+      <a class="chap-item" href="#ch5"><span class="num">05</span> Commerce &amp; MBA</a>
+      <a class="chap-item" href="#ch10"><span class="num">10</span> How to Start</a>
+    </div>
+  </div>
+  <div class="cover-cta">Read this before you decide anything about your future.</div>
+</section>
+
+<!-- TABLE OF CONTENTS -->
+<section id="toc-page">
+  <h2>Table of Contents</h2>
+  <p class="sub">Click on any chapter to go there directly.</p>
+  <div class="toc-grid">
+    <a class="toc-row" href="#ch1">
+      <div class="tn" style="background:var(--red)">01</div>
+      <div class="tt"><strong>The Numbers Nobody Talks About</strong><span>Indian job market stats — what they never tell you</span></div>
+    </a>
+    <a class="toc-row" href="#ch2">
+      <div class="tn" style="background:var(--blue)">02</div>
+      <div class="tt"><strong>Engineering</strong><span>Honest pros, cons, streams and salary data</span></div>
+    </a>
+    <a class="toc-row" href="#ch3">
+      <div class="tn" style="background:var(--teal)">03</div>
+      <div class="tt"><strong>Medicine (MBBS / NEET Path)</strong><span>Costs, competition, life after MBBS</span></div>
+    </a>
+    <a class="toc-row" href="#ch4">
+      <div class="tn" style="background:var(--purple)">04</div>
+      <div class="tt"><strong>Banking &amp; Government Jobs</strong><span>Which exams, how long, how many seats</span></div>
+    </a>
+    <a class="toc-row" href="#ch5">
+      <div class="tn" style="background:var(--orange)">05</div>
+      <div class="tt"><strong>Commerce &amp; MBA</strong><span>When it works and when it does not</span></div>
+    </a>
+    <a class="toc-row" href="#ch6">
+      <div class="tn" style="background:var(--teal)">06</div>
+      <div class="tt"><strong>The Digital Shift</strong><span>What is growing and what is shrinking right now</span></div>
+    </a>
+    <a class="toc-row" href="#ch7">
+      <div class="tn" style="background:var(--red)">07</div>
+      <div class="tt"><strong>Digital Skills That Actually Pay</strong><span>6 categories with earning range and time to learn</span></div>
+    </a>
+    <a class="toc-row" href="#ch8">
+      <div class="tn" style="background:var(--blue)">08</div>
+      <div class="tt"><strong>Content Creation Niches</strong><span>Which niche earns the most in 2026</span></div>
+    </a>
+    <a class="toc-row" href="#ch9">
+      <div class="tn" style="background:var(--green)">09</div>
+      <div class="tt"><strong>Affiliate Marketing</strong><span>Earn without a product — real income numbers</span></div>
+    </a>
+    <a class="toc-row" href="#ch10">
+      <div class="tn" style="background:var(--maron)">10</div>
+      <div class="tt"><strong>How to Start</strong><span>Your 6-step action plan — from zero</span></div>
+    </a>
+    <a class="toc-row" href="#cta">
+      <div class="tn" style="background:var(--red)">CTA</div>
+      <div class="tt"><strong>Get Guidance &amp; Packages</strong><span>Reach out directly + course options</span></div>
+    </a>
+  </div>
+</section>
+
+<!-- LETTER -->
+<section class="chapter">
+  <div class="ch-label"><div class="badge">Letter</div></div>
+  <h2>A Letter From Me to You</h2>
+  <p class="intro">"This is the guide I wish I had when I was confused about my future."</p>
+  <div class="ch-divider"></div>
+  <p style="font-size:13px;line-height:1.8;color:#333;margin-bottom:12px;">Dear Reader,</p>
+  <p style="font-size:13px;line-height:1.8;color:#444;margin-bottom:10px;">If you are reading this, chances are you are at a crossroads. Maybe someone in your family is pushing you towards engineering or medicine. Maybe everyone around you is talking about competitive exams and you are not sure if that is even the right path for you. Maybe you have already graduated and nothing is working the way you expected.</p>
+  <p style="font-size:13px;line-height:1.8;color:#444;margin-bottom:10px;">I have been there. I know exactly how that confusion feels — the pressure, the comparison, the silence when you ask "what should I actually do with my life?" and nobody has a real answer.</p>
+  <p style="font-size:13px;line-height:1.8;color:#444;margin-bottom:10px;">This guide is not going to tell you what to do. It is going to show you the real numbers, the real picture, and the real options that most people never talk about. Traditional paths. Digital paths. What pays. What does not. What the market actually needs right now.</p>
+  <p style="font-size:13px;line-height:1.8;color:#444;margin-bottom:10px;">By the end of this guide, you will have a clear picture — not just of where opportunities exist, but of what skills actually matter in 2026 and beyond.</p>
+  <p style="font-size:13px;line-height:1.8;color:#444;margin-bottom:16px;">Read it honestly. Take notes. And if you need personal guidance, my door is always open.</p>
+  <p style="font-size:14px;font-weight:700;color:var(--dark);">— Divyanshi Mahajan</p>
+</section>
+
+<!-- CH 1: NUMBERS -->
+<section class="chapter" id="ch1">
+  <div class="ch-label"><div class="badge">Chapter 01</div></div>
+  <h2>The Numbers Nobody Talks About</h2>
+  <p class="intro">Every year, millions of Indian students graduate with big dreams. Here is what actually happens after that degree.</p>
+  <div class="stat-row cols3">
+    <div class="stat-box" style="background:var(--red)"><div class="sv">1.5 Crore+</div><div class="sl">Students graduate each year in India</div></div>
+    <div class="stat-box" style="background:var(--blue)"><div class="sv">4.5 Lakh</div><div class="sl">Engineering seats (JEE + state boards)</div></div>
+    <div class="stat-box" style="background:var(--maron)"><div class="sv">93%</div><div class="sl">Graduates who do NOT get campus placements</div></div>
+  </div>
+  <div class="stat-row cols3">
+    <div class="stat-box" style="background:var(--orange)"><div class="sv">72%</div><div class="sl">Engineers end up in non-engineering jobs</div></div>
+    <div class="stat-box" style="background:var(--purple)"><div class="sv">Only 7%</div><div class="sl">MBA graduates get jobs above Rs. 5 LPA</div></div>
+    <div class="stat-box" style="background:var(--green)"><div class="sv">60,000+</div><div class="sl">Digital marketing jobs posted every month</div></div>
+  </div>
+  <div class="sec-head"><span>What These Numbers Mean For You</span></div>
+  <ul class="bul-list">
+    <li>Having a degree is no longer enough. The market has more graduates than it has jobs for them.</li>
+    <li>Most "good job" paths are blocked by extreme competition — crores competing for lakhs of seats.</li>
+    <li>The people winning right now have marketable skills — not just certificates.</li>
+    <li>Digital skills do not require rank, entrance exams, or expensive colleges to get started.</li>
+  </ul>
+  <div class="callout">
+    <div class="callout-head" style="background:var(--red)">Reality Check</div>
+    <div class="callout-body">
+      <p>This is not said to discourage you. This is said so you go in with open eyes.</p>
+      <p>Every path is possible — but you need to choose the right one for YOU.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CH 2: ENGINEERING -->
+<section class="chapter" id="ch2">
+  <div class="ch-label"><div class="badge">Chapter 02</div><span class="num">Engineering</span></div>
+  <h2>Engineering — The Full Truth</h2>
+  <p class="intro">Engineering is the dream of millions of Indian families. But before you spend 4 years and Rs. 5–20 lakhs on it, read this.</p>
+  <div class="stat-row cols4">
+    <div class="stat-box" style="background:var(--blue)"><div class="sv">4+ Yrs</div><div class="sl">Duration of B.Tech</div></div>
+    <div class="stat-box" style="background:var(--dark)"><div class="sv">Rs.5–20L</div><div class="sl">Average total cost</div></div>
+    <div class="stat-box" style="background:var(--red)"><div class="sv">72%</div><div class="sl">Work outside their field</div></div>
+    <div class="stat-box" style="background:var(--teal)"><div class="sv">Top IITs</div><div class="sl">Get the really good packages</div></div>
+  </div>
+  <div class="proscons">
+    <div class="pros-box">
+      <div class="header">Advantages</div>
+      <div class="body">
+        <div class="pc-item">High social respect in Indian families</div>
+        <div class="pc-item">Core engineering (ISRO, L&amp;T, Infosys) is genuinely rewarding</div>
+        <div class="pc-item">Good path if you genuinely love the subject</div>
+        <div class="pc-item">IIT/NIT grads get top packages (Rs. 10–50 LPA)</div>
+      </div>
+    </div>
+    <div class="cons-box">
+      <div class="header">Challenges</div>
+      <div class="body">
+        <div class="pc-item">Most private colleges have poor placement records</div>
+        <div class="pc-item">Huge investment — often 10–15 years to recover cost</div>
+        <div class="pc-item">72% end up working outside engineering field</div>
+        <div class="pc-item">Constant upskilling needed — degree alone is not enough</div>
+      </div>
+    </div>
+  </div>
+  <div class="sec-head"><span>Engineering Streams — Honest Breakdown</span></div>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Stream</th><th>Demand</th><th>Salary Range</th><th>The Reality</th></tr></thead>
+      <tbody>
+        <tr><td>Computer Science</td><td>High</td><td>Rs. 4–50 LPA</td><td>Best stream — rewarding if you love coding</td></tr>
+        <tr><td>Electronics / ECE</td><td>Medium</td><td>Rs. 3–12 LPA</td><td>Limited core jobs — most move to IT sector</td></tr>
+        <tr><td>Mechanical / Civil</td><td>Low–Med</td><td>Rs. 2.5–8 LPA</td><td>Govt jobs are good, core market is tough</td></tr>
+        <tr><td>Other Streams</td><td>Low</td><td>Rs. 2–5 LPA</td><td>Usually ends up in unrelated work</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout">
+    <div class="callout-head" style="background:var(--blue)">The Truth About Private Engineering Colleges</div>
+    <div class="callout-body">
+      <p>Only 50–60 colleges in India have genuinely strong placement records. The remaining 3,000+ produce graduates who mostly end up in unrelated jobs.</p>
+      <p>Before choosing a college, research the actual median placement salary — not the highest package.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CH 3: MEDICINE -->
+<section class="chapter" id="ch3">
+  <div class="ch-label"><div class="badge">Chapter 03</div><span class="num">Medicine</span></div>
+  <h2>Medicine (MBBS / NEET Path)</h2>
+  <p class="intro">Medicine is respected, secure, and impactful. But it is also the longest and most expensive academic journey in India. Know what you are committing to.</p>
+  <div class="stat-row cols4">
+    <div class="stat-box" style="background:var(--teal)"><div class="sv">5.5+ Yrs</div><div class="sl">MBBS + 1 yr internship</div></div>
+    <div class="stat-box" style="background:var(--dark)"><div class="sv">Rs.10–80L</div><div class="sl">Total cost (Govt vs Private)</div></div>
+    <div class="stat-box" style="background:var(--red)"><div class="sv">23 Lakh+</div><div class="sl">Students appear in NEET yearly</div></div>
+    <div class="stat-box" style="background:var(--maron)"><div class="sv">~1 Lakh</div><div class="sl">Govt MBBS seats available</div></div>
+  </div>
+  <div class="proscons">
+    <div class="pros-box">
+      <div class="header">Advantages</div>
+      <div class="body">
+        <div class="pc-item">Lifelong respected profession</div>
+        <div class="pc-item">Job security — doctors are always needed</div>
+        <div class="pc-item">Rs. 10–50 LPA possible after specialisation</div>
+        <div class="pc-item">Genuinely impactful — you save lives</div>
+      </div>
+    </div>
+    <div class="cons-box">
+      <div class="header">Challenges</div>
+      <div class="body">
+        <div class="pc-item">23 lakh students compete for 1 lakh govt seats</div>
+        <div class="pc-item">Private college = Rs. 50–80 lakh investment</div>
+        <div class="pc-item">First real income arrives at age 26–28</div>
+        <div class="pc-item">PG (MD/MS) adds another 3 years</div>
+      </div>
+    </div>
+  </div>
+  <div class="callout">
+    <div class="callout-head" style="background:var(--teal)">Who Should Choose Medicine?</div>
+    <div class="callout-body">
+      <p>If you genuinely want to serve people through healthcare AND can handle 10+ years of study, medicine is the right call.</p>
+      <p>If you are choosing it only for family pressure or social status — think again.</p>
+    </div>
+  </div>
+  <div class="sec-head"><span>After MBBS — Your Career Paths</span></div>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Path</th><th>What It Means</th></tr></thead>
+      <tbody>
+        <tr><td>PG Specialisation (MD/MS)</td><td>3 more years, NEET PG required. Leads to Rs. 20–50 LPA as specialist.</td></tr>
+        <tr><td>General Practice (GP)</td><td>Start clinic after internship. Stable income, slower growth.</td></tr>
+        <tr><td>Hospital Job</td><td>Rs. 5–12 LPA starting salary in private hospitals. Good exposure.</td></tr>
+        <tr><td>Research / Teaching</td><td>Academic path. Fulfilling but not the highest-paying route.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- CH 4: BANKING -->
+<section class="chapter" id="ch4">
+  <div class="ch-label"><div class="badge">Chapter 04</div><span class="num">Banking &amp; Govt</span></div>
+  <h2>Banking &amp; Government Jobs</h2>
+  <p class="intro">Government jobs offer something engineering and medicine cannot guarantee — stability. But the journey to get there is harder and longer than most people realise.</p>
+  <div class="stat-row cols4">
+    <div class="stat-box" style="background:var(--purple)"><div class="sv">2–5 Yrs</div><div class="sl">Average prep time for top exams</div></div>
+    <div class="stat-box" style="background:var(--dark)"><div class="sv">1 Crore+</div><div class="sl">Aspirants per exam (UPSC/SSC)</div></div>
+    <div class="stat-box" style="background:var(--red)"><div class="sv">~1,000</div><div class="sl">IAS seats per year in India</div></div>
+    <div class="stat-box" style="background:var(--blue)"><div class="sv">Rs.25–75K</div><div class="sl">Monthly salary (Grade B to IAS)</div></div>
+  </div>
+  <div class="proscons">
+    <div class="pros-box">
+      <div class="header">Advantages</div>
+      <div class="body">
+        <div class="pc-item">Extreme job security — nearly impossible to lose</div>
+        <div class="pc-item">Full perks: pension, housing, medical</div>
+        <div class="pc-item">Social status in families and society</div>
+        <div class="pc-item">Opportunity to serve and make real change</div>
+      </div>
+    </div>
+    <div class="cons-box">
+      <div class="header">Challenges</div>
+      <div class="body">
+        <div class="pc-item">Crores compete for thousands of seats</div>
+        <div class="pc-item">2–5 years of preparation with no income</div>
+        <div class="pc-item">Salary growth is slow and fixed by pay commission</div>
+        <div class="pc-item">Life is essentially on hold during prep years</div>
+      </div>
+    </div>
+  </div>
+  <div class="sec-head"><span>Popular Exams and What They Lead To</span></div>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Exam</th><th>Post Offered</th><th>Prep Time</th><th>Vacancies/Year</th></tr></thead>
+      <tbody>
+        <tr><td>UPSC CSE (IAS/IPS)</td><td>IAS, IPS, IFS (Group A)</td><td>2–4 years</td><td>~1,000 seats</td></tr>
+        <tr><td>IBPS / SBI PO</td><td>Bank PO, Manager</td><td>6–18 months</td><td>10,000–15,000</td></tr>
+        <tr><td>SSC CGL</td><td>Income Tax, CBI, Auditor</td><td>1–2 years</td><td>5,000–10,000</td></tr>
+        <tr><td>RRB Railways</td><td>Station Master, TC, ALP</td><td>1–2 years</td><td>30,000+</td></tr>
+        <tr><td>State PSC</td><td>State civil services</td><td>2–3 years</td><td>Varies by state</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout">
+    <div class="callout-head" style="background:var(--purple)">The Honest Reality of Govt Exam Prep</div>
+    <div class="callout-body">
+      <p>Cracking a top govt exam is genuinely hard and takes years. Most aspirants try 3–5 times. If you love the work and have the patience — it is worth it.</p>
+      <p>If you are doing it only for stability — consider digital skills that give you stability AND freedom.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CH 5: COMMERCE -->
+<section class="chapter" id="ch5">
+  <div class="ch-label"><div class="badge">Chapter 05</div><span class="num">Commerce &amp; MBA</span></div>
+  <h2>Commerce &amp; MBA</h2>
+  <p class="intro">Commerce is the most versatile stream — it connects to finance, marketing, law, entrepreneurship, and digital careers. MBA can amplify it, but only from the right college.</p>
+  <div class="stat-row cols4">
+    <div class="stat-box" style="background:var(--orange)"><div class="sv">B.Com/BBA</div><div class="sl">3-year foundation, wide options</div></div>
+    <div class="stat-box" style="background:var(--green)"><div class="sv">CA / CMA</div><div class="sl">High earning, 5–7 year journey</div></div>
+    <div class="stat-box" style="background:var(--blue)"><div class="sv">IIM MBA</div><div class="sl">Rs. 15–50 LPA avg — top IIMs only</div></div>
+    <div class="stat-box" style="background:var(--dark)"><div class="sv">Other MBA</div><div class="sl">ROI questionable for 95% colleges</div></div>
+  </div>
+  <div class="proscons">
+    <div class="pros-box">
+      <div class="header">Advantages</div>
+      <div class="body">
+        <div class="pc-item">Very flexible — finance, marketing, law, HR, sales</div>
+        <div class="pc-item">CA is one of the highest-earning professions in India</div>
+        <div class="pc-item">MBA from top college opens massive doors</div>
+        <div class="pc-item">Commerce background fits perfectly into digital marketing</div>
+      </div>
+    </div>
+    <div class="cons-box">
+      <div class="header">Challenges</div>
+      <div class="body">
+        <div class="pc-item">MBA from average college: Rs. 5–15L for Rs. 3–4L salary</div>
+        <div class="pc-item">CA has very low pass rate (10–15% at final level)</div>
+        <div class="pc-item">B.Com alone no longer differentiates you</div>
+        <div class="pc-item">Without skills + degree, tough to stand out in market</div>
+      </div>
+    </div>
+  </div>
+  <div class="sec-head"><span>Commerce + Digital = A Powerful Combination</span></div>
+  <ul class="bul-list">
+    <li>Marketing knowledge + digital tools = complete digital marketer profile</li>
+    <li>Finance understanding + content creation = FinTech or personal finance creator (huge audience)</li>
+    <li>Business basics + affiliate marketing = multiple passive income streams</li>
+    <li>HR / Management knowledge + LinkedIn = personal brand consulting career</li>
+  </ul>
+</section>
+
+<!-- CH 6: DIGITAL SHIFT -->
+<section class="chapter" id="ch6">
+  <div class="ch-label"><div class="badge">Chapter 06</div><span class="num">The Digital Shift</span></div>
+  <h2>The Digital Shift — What is Growing Right Now</h2>
+  <p class="intro">The economy has changed. Many traditional paths are shrinking. New ones are exploding. Here is the honest picture of 2026.</p>
+  <div class="two-col">
+    <div class="col-box">
+      <div class="col-head" style="background:var(--green)">GROWING Fast in 2026</div>
+      <div class="col-body">
+        <div class="col-item" style="--c:var(--green)">Digital Marketing (30%+ growth per year)</div>
+        <div class="col-item">Content Creation (YouTube, Instagram Reels)</div>
+        <div class="col-item">Affiliate Marketing</div>
+        <div class="col-item">E-commerce and D2C brands</div>
+        <div class="col-item">UI / UX Design</div>
+        <div class="col-item">Data Analytics and AI tools</div>
+        <div class="col-item">Personal Branding</div>
+        <div class="col-item">Online Coaching and Courses</div>
+      </div>
+    </div>
+    <div class="col-box">
+      <div class="col-head" style="background:#B71C1C">SHRINKING / Getting Automated</div>
+      <div class="col-body">
+        <div class="col-item">Data entry and BPO jobs</div>
+        <div class="col-item">Traditional retail jobs</div>
+        <div class="col-item">Print media and journalism</div>
+        <div class="col-item">Mid-level banking clerical work</div>
+        <div class="col-item">Routine coding (AI tools replacing it)</div>
+        <div class="col-item">Travel agency jobs</div>
+        <div class="col-item">Call centre voice jobs</div>
+        <div class="col-item">Mid-management (AI replacing layers)</div>
+      </div>
+    </div>
+  </div>
+  <div class="callout">
+    <div class="callout-head" style="background:var(--green)">The Key Insight</div>
+    <div class="callout-body">
+      <p>Every category in the GROWING column can be started with very little investment — just a phone, internet, and the right knowledge. No large capital needed.</p>
+      <p>Every SHRINKING category requires years of education and large investment.</p>
+    </div>
+  </div>
+  <div class="sec-head"><span>Where Money is Actually Moving</span></div>
+  <ul class="bul-list">
+    <li>In 2015 — you needed a degree for a Rs. 30,000/month job. In 2026 — a 19-year-old with digital skills earns Rs. 50,000+ freelancing from home.</li>
+    <li>AI is replacing routine tasks but cannot replace creativity, trust, and personal connection.</li>
+    <li>Content creators with 10,000 engaged followers earn more than most MBA first-year salaries.</li>
+    <li>Affiliate marketers in India earn Rs. 50,000 to Rs. 5,00,000 per month — no product, no office.</li>
+  </ul>
+</section>
+
+<!-- CH 7: DIGITAL SKILLS -->
+<section class="chapter" id="ch7">
+  <div class="ch-label"><div class="badge">Chapter 07</div><span class="num">Digital Skills</span></div>
+  <h2>Digital Skills That Actually Pay in 2026</h2>
+  <p class="intro">You do not need all of these. Pick ONE, master it, then expand. These 6 categories are creating real income for people right now.</p>
+
+  <div class="skill-card"><div class="skill-num" style="background:var(--red)">01</div><div class="skill-body"><h4>Digital Marketing</h4><p>SEO, paid ads (Meta, Google), email marketing, funnels. Every business needs this.</p><div class="skill-meta"><span class="skill-earn">Earning: Rs. 25,000–1,50,000/month</span><span class="skill-time">Time: 3–6 months to learn</span></div></div></div>
+
+  <div class="skill-card"><div class="skill-num" style="background:var(--blue)">02</div><div class="skill-body"><h4>Content Creation</h4><p>YouTube, Instagram Reels, LinkedIn — build an audience and earn through brand deals, courses, affiliates.</p><div class="skill-meta"><span class="skill-earn">Earning: Rs. 10,000–5,00,000+/month</span><span class="skill-time">Time: 6–12 months</span></div></div></div>
+
+  <div class="skill-card"><div class="skill-num" style="background:var(--orange)">03</div><div class="skill-body"><h4>Copywriting &amp; Social Media</h4><p>Writing captions, ads, emails, and scripts that sell. Freelance or in-house.</p><div class="skill-meta"><span class="skill-earn">Earning: Rs. 20,000–80,000/month</span><span class="skill-time">Time: 2–4 months</span></div></div></div>
+
+  <div class="skill-card"><div class="skill-num" style="background:var(--green)">04</div><div class="skill-body"><h4>Graphic Design &amp; Video Editing</h4><p>Canva, Adobe, CapCut. Visual content demand is massive and growing every year.</p><div class="skill-meta"><span class="skill-earn">Earning: Rs. 15,000–60,000/month</span><span class="skill-time">Time: 2–3 months</span></div></div></div>
+
+  <div class="skill-card"><div class="skill-num" style="background:var(--purple)">05</div><div class="skill-body"><h4>Affiliate Marketing</h4><p>Promote others' products and earn commission per sale. No product required.</p><div class="skill-meta"><span class="skill-earn">Earning: Rs. 20,000–5,00,000+/month</span><span class="skill-time">Time: 3–6 months</span></div></div></div>
+
+  <div class="skill-card"><div class="skill-num" style="background:var(--teal)">06</div><div class="skill-body"><h4>E-Commerce / Dropshipping</h4><p>Sell products online without holding inventory. Amazon, Meesho, Shopify models.</p><div class="skill-meta"><span class="skill-earn">Earning: Rs. 15,000–2,00,000/month</span><span class="skill-time">Time: 2–4 months</span></div></div></div>
+</section>
+
+<!-- CH 8: CONTENT NICHES -->
+<section class="chapter" id="ch8">
+  <div class="ch-label"><div class="badge">Chapter 08</div><span class="num">Content Niches</span></div>
+  <h2>Content Creation — Which Niche Earns the Most?</h2>
+  <p class="intro">Content creation is not just about followers. Choosing the right niche is what separates creators who earn well from those who struggle.</p>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Niche</th><th>Earning Range</th><th>Income Potential</th><th>Competition</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Finance &amp; Investing</td><td>Rs. 50K–5L/mo</td><td>Very High</td><td>Medium</td><td>Best monetisation — brand deals + affiliates</td></tr>
+        <tr><td>Digital Marketing</td><td>Rs. 30K–2L/mo</td><td>High</td><td>Medium</td><td>B2B audience — courses and consulting convert</td></tr>
+        <tr><td>Health &amp; Fitness</td><td>Rs. 20K–1.5L/mo</td><td>High</td><td>Very High</td><td>Supplements, coaching, courses — big brands</td></tr>
+        <tr><td>Career Guidance</td><td>Rs. 20K–1L/mo</td><td>High</td><td>Low–Med</td><td>Trust-based — coaching converts very well</td></tr>
+        <tr><td>Cooking &amp; Food</td><td>Rs. 10K–80K/mo</td><td>Medium</td><td>Very High</td><td>Good brand deals but low affiliate income</td></tr>
+        <tr><td>Travel</td><td>Rs. 15K–1.5L/mo</td><td>Med–High</td><td>High</td><td>Brand trips and affiliates — needs big audience</td></tr>
+        <tr><td>Memes / Entertainment</td><td>Rs. 5K–50K/mo</td><td>Low</td><td>Very High</td><td>Hard to monetise — needs 100K+ followers first</td></tr>
+        <tr><td>Edutainment / Teaching</td><td>Rs. 20K–2L/mo</td><td>High</td><td>Medium</td><td>YouTube ads + sponsorships — long-term game</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout">
+    <div class="callout-head" style="background:var(--red)">Divyanshi's Recommendation</div>
+    <div class="callout-body">
+      <p>Career Guidance, Digital Marketing, and Finance niches have the best combination of high income potential, genuine audience need, and strong course or affiliate monetisation.</p>
+      <p>These niches also build trust fast — and trust is what converts followers into paying clients.</p>
+    </div>
+  </div>
+  <div class="sec-head"><span>What to Post to Grow Fast</span></div>
+  <ul class="bul-list">
+    <li>Share your own journey — people connect with real stories more than perfect advice</li>
+    <li>Solve one specific problem per post — do not try to cover everything in one video</li>
+    <li>Consistency beats virality — 1 post daily for 90 days outperforms 1 viral post</li>
+    <li>Use Reels for reach, carousels for saves, stories for connection — each format has a job</li>
+  </ul>
+</section>
+
+<!-- CH 9: AFFILIATE -->
+<section class="chapter" id="ch9">
+  <div class="ch-label"><div class="badge">Chapter 09</div><span class="num">Affiliate Marketing</span></div>
+  <h2>Affiliate Marketing — Earn Without a Product</h2>
+  <p class="intro">You recommend a product. Someone buys it. You earn a commission. No product. No inventory. No delivery. Just your content and your recommendation.</p>
+  <div class="two-col">
+    <div class="col-box">
+      <div class="col-head" style="background:var(--blue)">Physical Products (Amazon, Flipkart)</div>
+      <div class="col-body">
+        <div class="col-item">Commission: 1–10% per sale</div>
+        <div class="col-item">Amazon India pays 1–9% by category</div>
+        <div class="col-item">Need very high traffic to earn well</div>
+        <div class="col-item">Best for product review channels</div>
+        <div class="col-item">Rs. 5,000 phone = Rs. 250 commission</div>
+      </div>
+    </div>
+    <div class="col-box">
+      <div class="col-head" style="background:var(--red)">Digital Products (Courses, Software)</div>
+      <div class="col-body">
+        <div class="col-item">Commission: 20–75% per sale</div>
+        <div class="col-item" style="font-weight:600;color:var(--red)">iDigitalpreneur pays up to 70–75% commission</div>
+        <div class="col-item" style="font-weight:600;color:var(--red)">ONE sale = Rs. 5,000–25,000 commission</div>
+        <div class="col-item">Best for Instagram, YouTube, email audience</div>
+        <div class="col-item">Rs. 10,000 course = Rs. 5,000 earned</div>
+      </div>
+    </div>
+  </div>
+  <div class="sec-head"><span>Top Affiliate Programs in India</span></div>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Program</th><th>Commission</th><th>Type</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Amazon Associates</td><td>1–9%</td><td>Physical</td><td>Easy to join, low commissions, high volume needed</td></tr>
+        <tr><td>iDigitalpreneur</td><td>30–50%</td><td>Digital</td><td>High commission — Divyanshi's platform</td></tr>
+        <tr><td>Hostinger / Bluehost</td><td>40–60%</td><td>Digital</td><td>Rs. 2,000–5,000 per hosting signup</td></tr>
+        <tr><td>Course platforms</td><td>30%</td><td>Digital</td><td>Teachable, Thinkific — recurring commissions</td></tr>
+        <tr><td>Meesho / Glowroad</td><td>5–15%</td><td>Physical</td><td>Fashion, lifestyle — WhatsApp and social model</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout">
+    <div class="callout-head" style="background:var(--green)">The Real Maths of Affiliate Income</div>
+    <div class="callout-body">
+      <p>Digital product: Rs. 5,000 commission per sale. 10 sales per month = Rs. 50,000/month.</p>
+      <p>20 sales per month = Rs. 1,00,000/month. This scales without trading your time for money.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CH 10: HOW TO START -->
+<section class="chapter" id="ch10">
+  <div class="ch-label"><div class="badge">Chapter 10</div><span class="num">How to Start</span></div>
+  <h2>How to Start — Your 6-Step Digital Journey</h2>
+  <p class="intro">You do not need much money or a large investment. You do not need followers. You need clarity and action. Here is exactly what to do — step by step.</p>
+
+  <div class="step-card"><div class="step-num" style="background:var(--red)">01</div><div class="step-body"><h4>Choose ONE Skill to Learn First</h4><ul class="step-pts"><li>Pick ONE from: Digital Marketing, Content Creation, or Affiliate Marketing</li><li>Do not try to learn all of them at once — depth beats breadth at the start</li><li>Commit 60–90 days of focused learning before moving to the next skill</li></ul></div></div>
+
+  <div class="step-card"><div class="step-num" style="background:var(--blue)">02</div><div class="step-body"><h4>Learn From a Structured Source</h4><ul class="step-pts"><li>Random YouTube videos give concepts but not strategy or a complete system</li><li>Invest in a proper course that gives you step-by-step guidance and community</li><li>iDigitalpreneur courses (by Divyanshi) give you exactly this — with mentorship</li></ul></div></div>
+
+  <div class="step-card"><div class="step-num" style="background:var(--orange)">03</div><div class="step-body"><h4>Build Your Personal Brand</h4><ul class="step-pts"><li>Start one social media account around your niche — Instagram or YouTube</li><li>Post consistently for 90 days even if you have zero followers at the start</li><li>Your personal brand is your most valuable long-term digital asset</li></ul></div></div>
+
+  <div class="step-card"><div class="step-num" style="background:var(--green)">04</div><div class="step-body"><h4>Create Your First Income Stream</h4><ul class="step-pts"><li>Apply your skill as a freelancer or start affiliate marketing immediately</li><li>Your first Rs. 5,000 earned online will change how you see money forever</li><li>Reinvest early earnings into better tools or marketing — not lifestyle yet</li></ul></div></div>
+
+  <div class="step-card"><div class="step-num" style="background:var(--purple)">05</div><div class="step-body"><h4>Grow Your Audience and Build Trust</h4><ul class="step-pts"><li>Share real value — your knowledge, your journey, your honest results</li><li>Trust takes time but compounds — 1,000 loyal followers beats 100,000 random ones</li><li>Engage with comments, reply to DMs, show up as a genuine human being</li></ul></div></div>
+
+  <div class="step-card"><div class="step-num" style="background:var(--teal)">06</div><div class="step-body"><h4>Scale — Courses, Consulting, Passive Income</h4><ul class="step-pts"><li>Once you have skills + audience + income, create your own course or coaching offer</li><li>Add multiple affiliate streams and stack passive income sources</li><li>Now you have financial freedom — not just a job</li></ul></div></div>
+</section>
+
+<!-- COMMUNITY RESULTS -->
+<section id="guide-testi">
+  <div class="gt-header">
+    <div class="gt-label">REAL RESULTS</div>
+    <h2>What Our Community Is Achieving</h2>
+    <p>Students. Homemakers. Freshers. Regular people — building real income with digital skills.</p>
+  </div>
+
+  <!-- Row 1 — forward -->
+  <div class="gt-tape">
+    <div class="gt-inner">
+      <!-- Card 1 -->
+      <div class="gt-card">
+        <div class="gt-top">
+          <div class="gt-avatar" style="background:#C0182C;">SA</div>
+          <div><div class="gt-name">Shima Areej</div><div class="gt-tag">Student</div></div>
+        </div>
+        <div class="gt-quote">"I started with a small goal — creating an aesthetic study table. Small steps pave the way for bigger dreams. Hard work is the key to turning dreams into reality."</div>
+        <div class="gt-stat">⚡ ₹37,000 in 30 days</div>
+      </div>
+      <!-- Card 2 -->
+      <div class="gt-card">
+        <div class="gt-top">
+          <div class="gt-avatar" style="background:#7c3aed;">SK</div>
+          <div><div class="gt-name">Shazia Khan</div><div class="gt-tag">Student · 18 yrs</div></div>
+        </div>
+        <div class="gt-quote">"I'm an 18 year old student and I've earned ₹25,000 by learning proper skills. I'm so happy and grateful for this opportunity."</div>
+        <div class="gt-stat">⚡ ₹25,000 earned</div>
+      </div>
+      <!-- Card 3 -->
+      <div class="gt-card">
+        <div class="gt-top">
+          <div class="gt-avatar" style="background:#1565C0;">AA</div>
+          <div><div class="gt-name">Abdullah Ansari</div><div class="gt-tag">Student · Class 11</div></div>
+        </div>
+        <div class="gt-quote">"Today I gifted my little brother skates worth ₹2,000 with my own earnings. I'm so glad to be part of this amazing platform."</div>
+        <div class="gt-stat">🎁 First self-earned gift</div>
+      </div>
+      <!-- Card 4 -->
+      <div class="gt-card">
+        <div class="gt-top">
+          <div class="gt-avatar" style="background:#1B7A34;">KS</div>
+          <div><div class="gt-name">Kulsum Shaikh</div><div class="gt-tag">Student & Homemaker</div></div>
+        </div>
+        <div class="gt-quote">"I never thought I could earn staying at home. I gifted my sister a silver ring and bracelet from my own earnings. ₹33k in one month — Alhamdulillah!"</div>
+        <div class="gt-stat">⚡ ₹33,000 in 1 month</div>
+      </div>
+      <!-- Card 5 -->
+      <div class="gt-card">
+        <div class="gt-top">
+          <div class="gt-avatar" style="background:#C96000;">AM</div>
+          <div><div class="gt-name">Aamena</div><div class="gt-tag">Student · Karnataka</div></div>
+        </div>
+        <div class="gt-quote">"I had so many doubts before joining. Now my last 7 days earning is ₹4,000. Training is still going on and I'm so happy with the progress!"</div>
+        <div class="gt-stat">⚡ ₹4,000 in 7 days</div>
+      </div>
+      <!-- duplicates for seamless loop -->
+      <div class="gt-card">
+        <div class="gt-top">
+          <div class="gt-avatar" style="background:#C0182C;">SA</div>
+          <div><div class="gt-name">Shima Areej</div><div class="gt-tag">Student</div></div>
+        </div>
+        <div class="gt-quote">"I started with a small goal — creating an aesthetic study table. Small steps pave the way for bigger dreams. Hard work is the key to turning dreams into reality."</div>
+        <div class="gt-stat">⚡ ₹37,000 in 30 days</div>
+      </div>
+      <div class="gt-card">
+        <div class="gt-top">
+          <div class="gt-avatar" style="background:#7c3aed;">SK</div>
+          <div><div class="gt-name">Shazia Khan</div><div class="gt-tag">Student · 18 yrs</div></div>
+        </div>
+        <div class="gt-quote">"I'm an 18 year old student and I've earned ₹25,000 by learning proper skills. I'm so happy and grateful for this opportunity."</div>
+        <div class="gt-stat">⚡ ₹25,000 earned</div>
+      </div>
+      <div class="gt-card">
+        <div class="gt-top">
+          <div class="gt-avatar" style="background:#1565C0;">AA</div>
+          <div><div class="gt-name">Abdullah Ansari</div><div class="gt-tag">Student · Class 11</div></div>
+        </div>
+        <div class="gt-quote">"Today I gifted my little brother skates worth ₹2,000 with my own earnings. I'm so glad to be part of this amazing platform."</div>
+        <div class="gt-stat">🎁 First self-earned gift</div>
+      </div>
+      <div class="gt-card">
+        <div class="gt-top">
+          <div class="gt-avatar" style="background:#1B7A34;">KS</div>
+          <div><div class="gt-name">Kulsum Shaikh</div><div class="gt-tag">Student & Homemaker</div></div>
+        </div>
+        <div class="gt-quote">"I never thought I could earn staying at home. I gifted my sister a silver ring and bracelet from my own earnings. ₹33k in one month — Alhamdulillah!"</div>
+        <div class="gt-stat">⚡ ₹33,000 in 1 month</div>
+      </div>
+      <div class="gt-card">
+        <div class="gt-top">
+          <div class="gt-avatar" style="background:#C96000;">AM</div>
+          <div><div class="gt-name">Aamena</div><div class="gt-tag">Student · Karnataka</div></div>
+        </div>
+        <div class="gt-quote">"I had so many doubts before joining. Now my last 7 days earning is ₹4,000. Training is still going on and I'm so happy with the progress!"</div>
+        <div class="gt-stat">⚡ ₹4,000 in 7 days</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row 2 — reverse -->
+  <div class="gt-tape">
+    <div class="gt-inner rev">
+      <!-- Card 6 -->
+      <div class="gt-card">
+        <div class="gt-top">
+          <div class="gt-avatar" style="background:#0d9488;">SS</div>
+          <div><div class="gt-name">Subhalaxmi Sahoo</div><div class="gt-tag">Student · 19 yrs</div></div>
+        </div>
+        <div class="gt-quote">"I gifted myself boAt Airdopes with my own income. Now I support my family and manage my own expenses — all at 19. I feel elated and grateful."</div>
+        <div class="gt-stat">⚡ ₹14,000 in 30 days</div>
+      </div>
+      <!-- Card 7 -->
+      <div class="gt-card">
+        <div class="gt-top">
+          <div class="gt-avatar" style="background:#8B0A1A;">ML</div>
+          <div><div class="gt-name">Madiha Laiq</div><div class="gt-tag">MBA Student · Allahabad</div></div>
+        </div>
+        <div class="gt-quote">"I quit my HR job and joined this platform. In 2.5 months I earned ₹1 lakh+ as an FB Ads Marketer. IDP gave a 360° turn to my life."</div>
+        <div class="gt-stat">⚡ ₹1,00,000+ earned</div>
+      </div>
+      <!-- Card 8 -->
+      <div class="gt-card">
+        <div class="gt-top">
+          <div class="gt-avatar" style="background:#b45309;">SQ</div>
+          <div><div class="gt-name">Saina Quadri</div><div class="gt-tag">Student · Class 12 · Odisha</div></div>
+        </div>
+        <div class="gt-quote">"The Instagram growth course opened my eyes to new possibilities. I have 3 certificates and I feel so much more confident in my abilities now."</div>
+        <div class="gt-stat">🏆 3 Certificates earned</div>
+      </div>
+      <!-- Card 9 -->
+      <div class="gt-card">
+        <div class="gt-top">
+          <div class="gt-avatar" style="background:#4338ca;">MM</div>
+          <div><div class="gt-name">Misbah Masoodi</div><div class="gt-tag">Student</div></div>
+        </div>
+        <div class="gt-quote">"The biggest gift this platform gave me was Confidence. I used to struggle with presentations in college — now I feel like I can take on the world."</div>
+        <div class="gt-stat">🏆 Multiple certificates</div>
+      </div>
+      <!-- Card 10 -->
+      <div class="gt-card">
+        <div class="gt-top">
+          <div class="gt-avatar" style="background:#be185d;">BS</div>
+          <div><div class="gt-name">Bansita Sahu</div><div class="gt-tag">College Student</div></div>
+        </div>
+        <div class="gt-quote">"By investing my free time and applying freelancing skills, I gifted my dad a POCO smartphone. This journey has been beautiful."</div>
+        <div class="gt-stat">🎁 Gifted dad a smartphone</div>
+      </div>
+      <!-- duplicates -->
+      <div class="gt-card">
+        <div class="gt-top">
+          <div class="gt-avatar" style="background:#0d9488;">SS</div>
+          <div><div class="gt-name">Subhalaxmi Sahoo</div><div class="gt-tag">Student · 19 yrs</div></div>
+        </div>
+        <div class="gt-quote">"I gifted myself boAt Airdopes with my own income. Now I support my family and manage my own expenses — all at 19. I feel elated and grateful."</div>
+        <div class="gt-stat">⚡ ₹14,000 in 30 days</div>
+      </div>
+      <div class="gt-card">
+        <div class="gt-top">
+          <div class="gt-avatar" style="background:#8B0A1A;">ML</div>
+          <div><div class="gt-name">Madiha Laiq</div><div class="gt-tag">MBA Student · Allahabad</div></div>
+        </div>
+        <div class="gt-quote">"I quit my HR job and joined this platform. In 2.5 months I earned ₹1 lakh+ as an FB Ads Marketer. IDP gave a 360° turn to my life."</div>
+        <div class="gt-stat">⚡ ₹1,00,000+ earned</div>
+      </div>
+      <div class="gt-card">
+        <div class="gt-top">
+          <div class="gt-avatar" style="background:#b45309;">SQ</div>
+          <div><div class="gt-name">Saina Quadri</div><div class="gt-tag">Student · Class 12 · Odisha</div></div>
+        </div>
+        <div class="gt-quote">"The Instagram growth course opened my eyes to new possibilities. I have 3 certificates and I feel so much more confident in my abilities now."</div>
+        <div class="gt-stat">🏆 3 Certificates earned</div>
+      </div>
+      <div class="gt-card">
+        <div class="gt-top">
+          <div class="gt-avatar" style="background:#4338ca;">MM</div>
+          <div><div class="gt-name">Misbah Masoodi</div><div class="gt-tag">Student</div></div>
+        </div>
+        <div class="gt-quote">"The biggest gift this platform gave me was Confidence. I used to struggle with presentations in college — now I feel like I can take on the world."</div>
+        <div class="gt-stat">🏆 Multiple certificates</div>
+      </div>
+      <div class="gt-card">
+        <div class="gt-top">
+          <div class="gt-avatar" style="background:#be185d;">BS</div>
+          <div><div class="gt-name">Bansita Sahu</div><div class="gt-tag">College Student</div></div>
+        </div>
+        <div class="gt-quote">"By investing my free time and applying freelancing skills, I gifted my dad a POCO smartphone. This journey has been beautiful."</div>
+        <div class="gt-stat">🎁 Gifted dad a smartphone</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA + PRODUCTS -->
+<section id="cta">
+  <div class="cta-top">
+    <h2>You Have Read the Truth.</h2>
+    <h2 style="color:#FFD0D6;margin-top:4px;">Now Take the Next Step.</h2>
+    <p style="margin-top:14px;">If you want guidance on choosing the right skill, the right platform, and the exact steps for your situation — you can contact me. I will guide you.</p>
+  </div>
+  <div class="cta-body">
+    <div class="contact-row">
+      <a class="contact-box" href="https://wa.me/qr/E4YQN6NULZ7ZC1" target="_blank" style="border-color:#25D366;">
+        <div class="icon" style="background:#25D366;">WA</div>
+        <h4>WhatsApp Me</h4>
+        <p>1-on-1 personal guidance</p>
+      </a>
+      <a class="contact-box" href="https://instagram.com/icondivyanshi" target="_blank" style="border-color:var(--red);">
+        <div class="icon" style="background:var(--red);">IG</div>
+        <h4>@icondivyanshi</h4>
+        <p>Follow on Instagram</p>
+      </a>
+      <a class="contact-box" href="https://divyanshimahajan.in" target="_blank" style="border-color:var(--blue);">
+        <div class="icon" style="background:var(--blue);">WB</div>
+        <h4>divyanshimahajan.in</h4>
+        <p>Visit the website</p>
+      </a>
+    </div>
+    <div class="quote-block">
+      <p>"The only difference between where you are and where you want to be is the decision to start."</p>
+      <cite>— Divyanshi Mahajan</cite>
+    </div>
+
+    <div class="products-head">Ready to Go Deeper?</div>
+    <p class="products-sub">All packages are on iDigitalpreneur — trusted by 60,000+ students. I personally guide my students every step of the way.</p>
+
+    <!-- Premium Plus -->
+    <div class="pkg-card" style="border-color:var(--red);">
+      <div class="pkg-head" style="background:var(--red);">
+        <span class="tag">My Top Recommendation</span>
+        <a class="enroll" href="https://idigitalpreneur.com/buy-package/premium-plus?promocode=52080319845&countryId=101" target="_blank">See What's Inside →</a>
+      </div>
+      <div class="pkg-body">
+        <div class="pkg-info">
+          <h4>Premium Plus Package</h4>
+          <ul class="pkg-pts">
+            <li style="--c:var(--red)">15+ courses: digital marketing, affiliate, ads, funnels</li>
+            <li style="--c:var(--red)">Lifetime access + future course updates included</li>
+            <li style="--c:var(--red)">Affiliate marketing mastery, WhatsApp marketing, SEO</li>
+            <li style="--c:var(--red)">Most complete package for building a full digital income</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Premium -->
+    <div class="pkg-card" style="border-color:var(--blue);">
+      <div class="pkg-head" style="background:var(--blue);">
+        <span class="tag">Best Value Pack</span>
+        <a class="enroll" href="https://idigitalpreneur.com/buy-package/premium?promocode=52080319845&countryId=101" target="_blank">See What's Inside →</a>
+      </div>
+      <div class="pkg-body">
+        <div class="pkg-info">
+          <h4>Premium Package</h4>
+          <ul class="pkg-pts">
+            <li style="--c:var(--blue)">10+ courses covering core digital skills</li>
+            <li style="--c:var(--blue)">Social media marketing, branding, freelancing</li>
+            <li style="--c:var(--blue)">Great starting point for earning online</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Supreme -->
+    <div class="pkg-card" style="border-color:var(--green);">
+      <div class="pkg-head" style="background:var(--green);">
+        <span class="tag">Starter — 29+ Courses</span>
+        <a class="enroll" href="https://idigitalpreneur.com/buy-package/supreme?promocode=52080319845&countryId=101" target="_blank">See What's Inside →</a>
+      </div>
+      <div class="pkg-body">
+        <div class="pkg-info">
+          <h4>Supreme Package</h4>
+          <ul class="pkg-pts">
+            <li style="--c:var(--green)">29+ courses across 90+ hours of content</li>
+            <li style="--c:var(--green)">60,000+ students already enrolled</li>
+            <li style="--c:var(--green)">Digital, finance and creative skills — certificate included</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta-note"><strong>Not sure which to pick?</strong> Message me on WhatsApp or Instagram — I will guide you personally, and it is completely free.</div>
+  </div>
+</section>
+
+</div><!-- end #main -->
+
+<script>
+// ── LEAD GATE ─────────────────────────────────────────────────────────────────
+
+function submitLead(e) {
+  e.preventDefault();
+  var name  = document.getElementById('lead-name').value.trim();
+  var email = document.getElementById('lead-email').value.trim();
+  var phone = document.getElementById('lead-phone').value.trim();
+
+  if (!name || !email) return;
+
+  // Save lead to localStorage
+  var leads = JSON.parse(localStorage.getItem('ebook_leads') || '[]');
+  leads.push({
+    name: name,
+    email: email,
+    phone: phone || '—',
+    date: new Date().toLocaleString('en-IN', {
+      day:'2-digit', month:'short', year:'numeric',
+      hour:'2-digit', minute:'2-digit'
+    })
+  });
+  localStorage.setItem('ebook_leads', JSON.stringify(leads));
+
+  // Mark this device as accessed
+  localStorage.setItem('ebook_accessed', '1');
+
+  // Show success
+  document.querySelector('.gate-form').style.display = 'none';
+  document.getElementById('gate-success').style.display = 'block';
+
+  // Close gate after 1.5s
+  setTimeout(function() {
+    document.getElementById('lead-gate').classList.add('hidden');
+  }, 1500);
+}
+
+// Check if already accessed on this device
+window.addEventListener('DOMContentLoaded', function() {
+  if (localStorage.getItem('ebook_accessed') === '1') {
+    document.getElementById('lead-gate').classList.add('hidden');
+  }
+});
+
+// ── SIDEBAR & PROGRESS ────────────────────────────────────────────────────────
+
+function toggleMenu(){
+  document.getElementById('toc-sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('show');
+}
+function closeMenu(){
+  document.getElementById('toc-sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('show');
+}
+
+window.addEventListener('scroll', function(){
+  var st = window.scrollY;
+  var dh = document.body.scrollHeight - window.innerHeight;
+  var pct = dh > 0 ? (st / dh) * 100 : 0;
+  document.getElementById('progress').style.width = pct + '%';
+
+  var sections = document.querySelectorAll('[id]');
+  var links = document.querySelectorAll('#toc-sidebar a');
+  var cur = '';
+  sections.forEach(function(s){
+    if (s.getBoundingClientRect().top <= 80) cur = s.id;
+  });
+  links.forEach(function(l){
+    l.classList.remove('active');
+    if (l.getAttribute('href') === '#' + cur) l.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
