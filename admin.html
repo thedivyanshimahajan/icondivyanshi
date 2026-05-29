@@ -131,7 +131,7 @@
              onkeydown="if(event.key==='Enter')agSendOTP()"/>
       <div id="ag-sending" class="ag-sending">&#9201; Sending code to your email...</div>
       <button class="ag-btn" id="ag-send-btn" onclick="agSendOTP()">Send OTP &rarr;</button>
-      <p style="font-size:0.75rem;color:#ccc;text-align:center;margin-top:12px">Only authorised admin emails can log in.</p>
+      <p style="font-size:0.78rem;color:#bbb;text-align:center;margin-top:14px;cursor:pointer" onclick="agGoToPass()">Use password instead</p>
     </div>
 
     <!-- Step 2: OTP -->
@@ -155,7 +155,7 @@
       <input id="ag-pass" class="ag-input" type="password" placeholder="Enter password"
              onkeydown="if(event.key==='Enter')agVerifyPass()"/>
       <button class="ag-btn" onclick="agVerifyPass()">Enter Dashboard &rarr;</button>
-      <p class="ag-back" onclick="agShowOTP()">&larr; Back to OTP</p>
+      <p class="ag-back" onclick="agBackFromPass()">&larr; Back</p>
     </div>
   </div>
 </div>
@@ -283,6 +283,19 @@ function agBack() {
   document.getElementById('ag-otp').value = '';
 }
 
+function agGoToPass() {
+  var email = (document.getElementById('ag-email').value || '').trim().toLowerCase();
+  var err = document.getElementById('ag-err1');
+  err.style.display = 'none';
+  if (!email || !email.includes('@gmail.com')) { err.textContent = 'Enter your admin email first.'; err.style.display = 'block'; return; }
+  if (ADMIN_EMAILS.indexOf(email) === -1) { err.textContent = 'This email does not have admin access.'; err.style.display = 'block'; return; }
+  document.getElementById('ag-step1').style.display = 'none';
+  document.getElementById('ag-step3').style.display = 'block';
+  document.getElementById('ag-err3').style.display = 'none';
+  document.getElementById('ag-pass').value = '';
+  setTimeout(function(){ document.getElementById('ag-pass').focus(); }, 100);
+}
+
 function agShowPass() {
   document.getElementById('ag-step2').style.display = 'none';
   document.getElementById('ag-step3').style.display = 'block';
@@ -294,6 +307,12 @@ function agShowPass() {
 function agShowOTP() {
   document.getElementById('ag-step3').style.display = 'none';
   document.getElementById('ag-step2').style.display = 'block';
+}
+
+function agBackFromPass() {
+  document.getElementById('ag-step3').style.display = 'none';
+  document.getElementById('ag-step1').style.display = 'block';
+  document.getElementById('ag-err3').style.display = 'none';
 }
 
 function agVerifyPass() {

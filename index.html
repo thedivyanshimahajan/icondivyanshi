@@ -1821,10 +1821,16 @@ function sendOTP() {
   err.style.display = 'none';
   if (!email) { err.textContent = 'Please enter your Gmail address.'; err.style.display = 'block'; return; }
 
+  // Admin emails → go directly to admin portal
+  if (adminEmails.indexOf(email) !== -1) {
+    window.location.href = 'admin.html';
+    return;
+  }
+
   // Check if email is authorised
   var stored = JSON.parse(localStorage.getItem('sp_students') || '[]');
   var storedEmails = stored.map(function(s){ return typeof s === 'object' ? (s.email||'') : s; });
-  var allAllowed = adminEmails.concat(enrolledEmails).concat(storedEmails);
+  var allAllowed = enrolledEmails.concat(storedEmails);
   if (allAllowed.indexOf(email) === -1) {
     err.textContent = 'This email is not registered. Contact Divyanshi to get enrolled.';
     err.style.display = 'block'; return;
