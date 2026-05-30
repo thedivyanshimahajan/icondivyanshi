@@ -6,6 +6,8 @@
   <title>Admin — Icon Divyanshi</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
     :root{--red:#C0182C;--dark:#1A0608;--cream:#FAF7F7;--border:rgba(192,24,44,0.12)}
@@ -188,6 +190,7 @@
       <button class="ad-tab" onclick="adTab('students',this)">&#127891; Students</button>
       <button class="ad-tab" onclick="adTab('ebook',this)">&#128229; Ebook Leads</button>
       <button class="ad-tab" onclick="adTab('blog',this)">&#9997; Blog Manager</button>
+      <button class="ad-tab" onclick="adTab('settings',this)">&#9881; Settings</button>
     </div>
 
     <!-- Tab Panel -->
@@ -203,6 +206,40 @@ var EJS_KEY       = '2KQdxpDM9snNeR0QJ';
 var EJS_SERVICE   = 'service_044iism';
 var EJS_TEMPLATE  = 'template_eo5tb8g';
 var _otp = null;
+
+// ── FIREBASE SETUP ──────────────────────────────────────────
+var _fbConfig = {
+  apiKey: "AIzaSyDez1daYuu35DGSXJ972so7zSL97ri1igY",
+  authDomain: "icondivyanshi-8ce5d.firebaseapp.com",
+  databaseURL: "https://icondivyanshi-8ce5d-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "icondivyanshi-8ce5d",
+  storageBucket: "icondivyanshi-8ce5d.firebasestorage.app",
+  messagingSenderId: "852597983158",
+  appId: "1:852597983158:web:bf16c4612f46d1e96c2317"
+};
+if (!firebase.apps.length) firebase.initializeApp(_fbConfig);
+var _fbDb = firebase.database();
+var _fbStudentsCache = []; // [{key, email, date}]
+
+function fbEmailKey(e) { return e.replace(/\./g,',').replace(/@/g,'_at_'); }
+
+// Keep student list live — auto re-renders the panel if it's open
+_fbDb.ref('students').on('value', function(snap) {
+  _fbStudentsCache = [];
+  if (snap.exists()) {
+    snap.forEach(function(child) {
+      var v = child.val();
+      _fbStudentsCache.push({ key: child.key, email: v.email || '', date: v.date || '—' });
+    });
+  }
+  // If students tab is currently open, refresh it
+  var activeTab = document.querySelector('.ad-tab.active');
+  if (activeTab && activeTab.textContent.indexOf('Students') !== -1) {
+    var panel = document.getElementById('ad-panel');
+    if (panel) panel.innerHTML = renderStudentsPanel();
+  }
+  renderStats();
+});
 
 // ── INIT ────────────────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', function() {
@@ -390,6 +427,7 @@ function adTab(tab, el) {
   else if (tab === 'students') panel.innerHTML = renderStudentsPanel();
   else if (tab === 'ebook')    panel.innerHTML = renderEbookPanel();
   else if (tab === 'blog')     panel.innerHTML = renderBlogPanel();
+  else if (tab === 'settings') panel.innerHTML = renderSettingsPanel();
 }
 
 // ── STATS ────────────────────────────────────────────────────
@@ -398,11 +436,10 @@ function renderStats() {
   var visits   = parseInt(localStorage.getItem('id_visit_count')    || '0');
   var videos   = JSON.parse(localStorage.getItem('id_video_watches')|| '[]');
   var ebooks   = JSON.parse(localStorage.getItem('ebook_leads')     || '[]');
-  var students = JSON.parse(localStorage.getItem('sp_students')     || '[]');
   var stats = [
-    { n: leads.length,    label: 'Form Contacts' },
-    { n: ebooks.length,   label: 'Ebook Downloads' },
-    { n: students.length, label: 'Enrolled Students' },
+    { n: leads.length,              label: 'Form Contacts' },
+    { n: ebooks.length,             label: 'Ebook Downloads' },
+    { n: _fbStudentsCache.length,   label: 'Enrolled Students' },
     { n: visits,          label: 'Website Visits' },
     { n: videos.length,   label: 'Video Clicks' }
   ];
@@ -510,7 +547,7 @@ function downloadLeadsCSV() {
 // STUDENTS PANEL
 // ════════════════════════════════
 function renderStudentsPanel() {
-  var stored = JSON.parse(localStorage.getItem('sp_students') || '[]');
+  var stored = _fbStudentsCache;
 
   var html = '<div class="ad-card">'
     + '<h3>&#10133; Enroll a Student</h3>'
@@ -530,12 +567,10 @@ function renderStudentsPanel() {
     html += '<div class="ad-table-wrap"><table>'
       + '<tr><th>#</th><th>Email</th><th>Enrolled On</th><th>Action</th></tr>';
     stored.forEach(function(s, i) {
-      var email = typeof s === 'object' ? s.email : s;
-      var date  = typeof s === 'object' ? (s.date||'—') : '—';
       html += '<tr>'
         + '<td style="color:#ccc;font-size:0.73rem">'+(i+1)+'</td>'
-        + '<td style="font-weight:600">'+email+'</td>'
-        + '<td style="font-size:0.78rem;color:#aaa">'+date+'</td>'
+        + '<td style="font-weight:600">'+s.email+'</td>'
+        + '<td style="font-size:0.78rem;color:#aaa">'+s.date+'</td>'
         + '<td><button class="ad-btn ad-btn-light ad-btn-sm" onclick="removeStudent('+i+')">Remove</button></td>'
         + '</tr>';
     });
@@ -548,25 +583,19 @@ function enrollStudent() {
   var email = (document.getElementById('enroll-email').value || '').trim().toLowerCase();
   var msg = document.getElementById('enroll-msg');
   if (!email || !email.includes('@')) { msg.textContent = 'Enter a valid email address.'; return; }
-  var stored = JSON.parse(localStorage.getItem('sp_students') || '[]');
-  var emails = stored.map(function(s){ return typeof s==='object' ? s.email : s; });
-  if (emails.indexOf(email) !== -1) { msg.textContent = 'This student is already enrolled.'; return; }
-  stored.push({ email: email, date: new Date().toLocaleDateString('en-IN') });
-  localStorage.setItem('sp_students', JSON.stringify(stored));
+  var already = _fbStudentsCache.some(function(s){ return s.email === email; });
+  if (already) { msg.textContent = 'This student is already enrolled.'; return; }
+  _fbDb.ref('students/' + fbEmailKey(email)).set({ email: email, date: new Date().toLocaleDateString('en-IN') });
   msg.style.color = '#1B7A34';
-  msg.textContent = '✅ ' + email + ' enrolled successfully!';
+  msg.textContent = '✅ ' + email + ' enrolled! They can now log in from any device.';
   document.getElementById('enroll-email').value = '';
-  renderStats();
-  setTimeout(function(){ adTab('students', document.querySelector('.ad-tab.active')); }, 900);
 }
 
 function removeStudent(idx) {
   if (!confirm('Remove this student? They will lose access to the portal.')) return;
-  var stored = JSON.parse(localStorage.getItem('sp_students') || '[]');
-  stored.splice(idx, 1);
-  localStorage.setItem('sp_students', JSON.stringify(stored));
-  renderStats();
-  adTab('students', document.querySelector('.ad-tab.active'));
+  var s = _fbStudentsCache[idx];
+  if (!s) return;
+  _fbDb.ref('students/' + s.key).remove();
 }
 
 // ════════════════════════════════
@@ -704,6 +733,47 @@ function blogDelete(id) {
   localStorage.setItem('blog_posts', JSON.stringify(posts));
   window._blogEditId = null;
   adTab('blog', document.querySelector('.ad-tab.active'));
+}
+
+// ════════════════════════════════
+// SETTINGS PANEL
+// ════════════════════════════════
+function renderSettingsPanel() {
+  var hasCustomPass = !!localStorage.getItem('id_admin_pass');
+  return '<div class="ad-card">'
+    + '<h3>&#128274; Change Admin Password</h3>'
+    + '<p class="ad-card-sub">Change the password used to log in to this admin portal. Current password: <strong>' + (hasCustomPass ? 'Custom password set' : 'Default password') + '</strong></p>'
+    + '<div style="display:flex;flex-direction:column;gap:10px;max-width:340px;margin-top:16px">'
+    + '<input class="ad-finput" type="password" id="pass-current" placeholder="Current password" />'
+    + '<input class="ad-finput" type="password" id="pass-new" placeholder="New password (min 6 chars)" />'
+    + '<input class="ad-finput" type="password" id="pass-confirm" placeholder="Confirm new password" />'
+    + '<button class="ad-btn ad-btn-red" onclick="saveNewPassword()">Save New Password &rarr;</button>'
+    + '<p id="pass-msg" style="font-size:0.82rem;margin:0"></p>'
+    + '</div>'
+    + '</div>'
+    + '<div class="ad-card" style="margin-top:20px">'
+    + '<h3>&#128274; Reset to Default Password</h3>'
+    + '<p class="ad-card-sub">Remove your custom password and go back to the default password <strong>24bb4922</strong>.</p>'
+    + '<button class="ad-btn ad-btn-light" style="margin-top:12px" onclick="if(confirm(\'Reset to default password 24bb4922?\')){ localStorage.removeItem(\'id_admin_pass\'); alert(\'Password reset to default: 24bb4922\'); adTab(\'settings\', document.querySelector(\'.ad-tab.active\')); }">Reset to Default</button>'
+    + '</div>';
+}
+
+function saveNewPassword() {
+  var current = (document.getElementById('pass-current').value || '').trim();
+  var newPass  = (document.getElementById('pass-new').value    || '').trim();
+  var confirm  = (document.getElementById('pass-confirm').value|| '').trim();
+  var msg = document.getElementById('pass-msg');
+  var storedCustom = localStorage.getItem('id_admin_pass');
+  var validCurrent = (current === '24bb4922') || (storedCustom && current === storedCustom);
+  if (!validCurrent) { msg.style.color = '#C0182C'; msg.textContent = 'Current password is wrong.'; return; }
+  if (newPass.length < 6) { msg.style.color = '#C0182C'; msg.textContent = 'New password must be at least 6 characters.'; return; }
+  if (newPass !== confirm) { msg.style.color = '#C0182C'; msg.textContent = 'Passwords do not match.'; return; }
+  localStorage.setItem('id_admin_pass', newPass);
+  msg.style.color = '#1B7A34';
+  msg.textContent = 'Password updated successfully!';
+  document.getElementById('pass-current').value = '';
+  document.getElementById('pass-new').value = '';
+  document.getElementById('pass-confirm').value = '';
 }
 </script>
 </body>

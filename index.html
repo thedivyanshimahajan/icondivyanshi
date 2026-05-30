@@ -424,7 +424,7 @@ footer{background:#0D0D0D;color:#fff;padding:56px 6% 26px}
 .prod-card{background:#fff;border:1px solid rgba(192,24,44,0.1);border-radius:20px;overflow:hidden;transition:transform 0.3s,box-shadow 0.3s}
 .prod-card:hover{transform:translateY(-6px);box-shadow:0 12px 50px rgba(192,24,44,0.16)}
 .prod-img{width:100%;height:200px;background:linear-gradient(160deg,#f8e8ea,#fdf3f4);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
-.prod-img img{width:100%;height:100%;object-fit:cover}
+.prod-img img{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover}
 .prod-img-ph{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;width:100%;height:100%}
 .prod-img-ph span{font-size:2.5rem}
 .prod-img-ph p{font-size:0.76rem;color:#888;font-weight:500}
@@ -640,6 +640,8 @@ footer{background:#0D0D0D;color:#fff;padding:56px 6% 26px}
 .gt-stat{display:inline-flex;align-items:center;gap:6px;background:rgba(192,24,44,0.07);border-radius:50px;padding:5px 12px;font-size:11.5px;font-weight:700;color:#C0182C}
 </style>
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 </head>
 <body>
 
@@ -1790,10 +1792,40 @@ footer{background:#0D0D0D;color:#fff;padding:56px 6% 26px}
 <script>
 // ── STUDENT PORTAL ──
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// EMAILJS SETUP — fill in your 3 keys from emailjs.com
+// EMAILJS SETUP
 var EMAILJS_PUBLIC_KEY  = '2KQdxpDM9snNeR0QJ';
 var EMAILJS_SERVICE_ID  = 'service_044iism';
 var EMAILJS_TEMPLATE_ID = 'template_eo5tb8g';
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+// ── FIREBASE SETUP ──
+var _fbConfig = {
+  apiKey: "AIzaSyDez1daYuu35DGSXJ972so7zSL97ri1igY",
+  authDomain: "icondivyanshi-8ce5d.firebaseapp.com",
+  databaseURL: "https://icondivyanshi-8ce5d-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "icondivyanshi-8ce5d",
+  storageBucket: "icondivyanshi-8ce5d.firebasestorage.app",
+  messagingSenderId: "852597983158",
+  appId: "1:852597983158:web:bf16c4612f46d1e96c2317"
+};
+if (!firebase.apps.length) firebase.initializeApp(_fbConfig);
+var _fbDb = firebase.database();
+var _fbStudents = []; // live list of allowed emails from Firebase
+
+// Keep student list in sync across all devices in real time
+_fbDb.ref('students').on('value', function(snap) {
+  _fbStudents = [];
+  if (snap.exists()) {
+    snap.forEach(function(child) {
+      var v = child.val();
+      _fbStudents.push(typeof v === 'object' ? (v.email || '') : String(v));
+    });
+  }
+});
+
+function fbEmailKey(email) {
+  return email.replace(/\./g, ',').replace(/@/g, '_at_');
+}
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 // Both admin emails — both get full admin portal access
@@ -1828,10 +1860,8 @@ function sendOTP() {
     return;
   }
 
-  // Check if email is authorised
-  var stored = JSON.parse(localStorage.getItem('sp_students') || '[]');
-  var storedEmails = stored.map(function(s){ return typeof s === 'object' ? (s.email||'') : s; });
-  var allAllowed = enrolledEmails.concat(storedEmails);
+  // Check if email is authorised (uses Firebase live list)
+  var allAllowed = enrolledEmails.concat(_fbStudents);
   if (allAllowed.indexOf(email) === -1) {
     err.textContent = 'This email is not registered. Contact Divyanshi to get enrolled.';
     err.style.display = 'block'; return;
@@ -1925,10 +1955,9 @@ function portalLogout() {
 function addStudent(e) {
   e.preventDefault();
   var email = document.getElementById('new-student-email').value.trim().toLowerCase();
-  var stored = JSON.parse(localStorage.getItem('sp_students') || '[]');
-  if (stored.indexOf(email) === -1) { stored.push(email); }
-  localStorage.setItem('sp_students', JSON.stringify(stored));
-  document.getElementById('enrolled-count').textContent = enrolledEmails.concat(stored).length;
+  if (_fbStudents.indexOf(email) !== -1) { alert('This student is already enrolled.'); return; }
+  _fbDb.ref('students/' + fbEmailKey(email)).set({ email: email, date: new Date().toLocaleDateString('en-IN') });
+  document.getElementById('enrolled-count').textContent = enrolledEmails.concat(_fbStudents).length + 1;
   document.getElementById('new-student-email').value = '';
   alert('Student enrolled: ' + email + '\nThey can now log in with their Gmail OTP.');
 }
@@ -2204,17 +2233,14 @@ function renderBlogList(filterCat, filterTag) {
       + '<h2>' + f.title + '</h2><p>' + (f.intro||'') + '</p>'
       + '<a class="read-more">Read Article <span>→</span></a></div></div>';
   } else {
-    featEl.innerHTML = '<div class="feat-post" style="cursor:default"><div class="feat-img"><span class="feat-lbl">Featured</span><p class="feat-img-t">Your featured article will appear here</p></div><div class="feat-body"><p style="color:#aaa;margin:0">Write your first blog post from the admin panel (⚙ in the footer). Once published, it will appear right here.</p></div></div>';
+    featEl.innerHTML = '';
   }
 
   // Posts grid
   var colors = ['r', 'd', '', 'r', 'd', ''];
   if (regular.length === 0 && posts.length === 0 && !filterCat && !filterTag) {
     gridEl.innerHTML =
-      '<div class="post-card cs"><div class="pci r">🎯</div><div class="pcb"><div class="pmeta" style="margin-bottom:9px"><span class="pcat">Marketing</span></div><h3>The Real Reason Your Instagram Content Isn\'t Converting</h3><p>Your first article will go here — write it from the admin panel.</p></div></div>'
-      + '<div class="post-card cs"><div class="pci d">💡</div><div class="pcb"><div class="pmeta" style="margin-bottom:9px"><span class="pcat">Business</span></div><h3>What 3 Viral Brand Campaigns Have in Common</h3><p>Your second article will go here.</p></div></div>'
-      + '<div class="post-card cs"><div class="pci">🤝</div><div class="pcb"><div class="pmeta" style="margin-bottom:9px"><span class="pcat">Affiliate</span></div><h3>How to Recommend Products Without Sounding Like a Walking Ad</h3><p>Your third article will go here.</p></div></div>'
-      + '<div class="post-card cs"><div class="pci r">📊</div><div class="pcb"><div class="pmeta" style="margin-bottom:9px"><span class="pcat">Strategy</span></div><h3>The Mistake Every New Creator Makes in Their First 90 Days</h3><p>Your fourth article will go here.</p></div></div>';
+      '<p style="color:#aaa;font-size:0.9rem;grid-column:1/-1;padding:20px 0;text-align:center">Articles coming soon. Stay tuned!</p>';
   } else if (regular.length === 0) {
     gridEl.innerHTML = '<p style="color:#aaa;font-size:0.9rem;grid-column:1/-1;padding:20px 0">No more posts in this category yet.</p>';
   } else {
@@ -2224,7 +2250,7 @@ function renderBlogList(filterCat, filterTag) {
         + '<div class="pci' + (cls ? ' '+cls : '') + '">' + (p.emoji||'📝') + '</div>'
         + '<div class="pcb"><div class="pmeta" style="margin-bottom:9px"><span class="pcat">' + (p.category||'Article') + '</span><span class="pread">' + (p.readTime||'') + '</span></div>'
         + '<h3>' + p.title + '</h3>'
-        + '<p>' + (p.intro||'') + '</p>'
+        + '<p>' + (p.intro || (p.body ? p.body.replace(/[──\n]/g,' ').substring(0,110)+'...' : '')) + '</p>'
         + '<div class="pcf"><a class="read-more" style="font-size:0.83rem">Read →</a><span class="pdate">' + (p.date||'') + '</span></div>'
         + '</div></div>';
     }).join('');
@@ -2249,7 +2275,7 @@ function openBlogPost(id) {
     + '<div class="article-meta"><span style="font-size:0.85rem;color:#888">By <strong style="color:#C0182C">Icon Divyanshi</strong></span>'
     + (tagHtml ? '<span style="display:flex;gap:6px;flex-wrap:wrap">' + tagHtml + '</span>' : '')
     + '</div>'
-    + '<div class="article-body">' + blogFormatContent(post.content) + '</div>'
+    + '<div class="article-body">' + blogFormatContent(post.body || post.content || '') + '</div>'
     + '</div>';
   list.style.display = 'none';
   view.style.display = 'block';
