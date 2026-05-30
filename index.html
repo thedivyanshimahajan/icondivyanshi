@@ -2144,13 +2144,13 @@ function submitWaForm(e) {
   box.innerHTML =
     '<div style="text-align:center;padding:8px 0">' +
     '<div style="font-size:2rem;margin-bottom:10px">✅</div>' +
-    '<p style="font-family:Playfair Display,serif;font-size:1.1rem;font-weight:700;color:#1A0608;margin-bottom:6px">WhatsApp is opening!</p>' +
-    '<p style="font-size:0.84rem;color:#888;line-height:1.65;margin-bottom:16px">Copy the message below and <strong>paste it in the WhatsApp chat</strong> that just opened.</p>' +
-    '<textarea readonly style="width:100%;padding:12px 14px;border:2px solid rgba(192,24,44,0.15);border-radius:10px;font-family:Inter,sans-serif;font-size:0.82rem;line-height:1.7;height:190px;color:#1A0608;background:#faf7f7;resize:none">' + msg + '</textarea>' +
-    '<button onclick="navigator.clipboard.writeText(document.querySelector(\'#waForm textarea\').value).then(function(){this.textContent=\'Copied! ✓\';this.style.background=\'#1a6e2a\'}.bind(this))" style="margin-top:11px;padding:11px 26px;background:#f8e8ea;color:#C0182C;border:none;border-radius:9px;font-family:Inter,sans-serif;font-size:0.9rem;font-weight:600;cursor:pointer;width:100%">📋 Copy Message to Paste in WhatsApp</button>' +
-    '<p style="margin-top:12px;font-size:0.78rem;color:#aaa">You can close this window after copying.</p>' +
+    '<p style="font-family:Playfair Display,serif;font-size:1.1rem;font-weight:700;color:#1A0608;margin-bottom:6px">Details saved!</p>' +
+    '<p style="font-size:0.84rem;color:#888;line-height:1.65;margin-bottom:14px"><strong>Step 1:</strong> Copy the message below.<br/><strong>Step 2:</strong> Open WhatsApp and paste it.</p>' +
+    '<textarea id="wa-msg-box" readonly style="width:100%;padding:12px 14px;border:2px solid rgba(192,24,44,0.15);border-radius:10px;font-family:Inter,sans-serif;font-size:0.82rem;line-height:1.7;height:190px;color:#1A0608;background:#faf7f7;resize:none">' + msg + '</textarea>' +
+    '<button id="wa-copy-btn" onclick="navigator.clipboard.writeText(document.getElementById(\'wa-msg-box\').value).then(function(){ var b=document.getElementById(\'wa-copy-btn\'); b.textContent=\'✓ Copied!\'; b.style.background=\'#1a6e2a\'; b.style.color=\'#fff\'; })" style="margin-top:10px;padding:12px 26px;background:#f8e8ea;color:#C0182C;border:2px solid rgba(192,24,44,0.2);border-radius:9px;font-family:Inter,sans-serif;font-size:0.9rem;font-weight:600;cursor:pointer;width:100%">📋 Step 1 — Copy Message</button>' +
+    '<a href="https://wa.me/qr/E4YQN6NULZ7ZC1" target="_blank" style="display:block;margin-top:10px;padding:12px 26px;background:#25D366;color:#fff;border:none;border-radius:9px;font-family:Inter,sans-serif;font-size:0.9rem;font-weight:600;cursor:pointer;width:100%;text-decoration:none;box-sizing:border-box">💬 Step 2 — Open WhatsApp &amp; Paste</a>' +
+    '<p style="margin-top:12px;font-size:0.78rem;color:#aaa">Copy first, then open WhatsApp and paste the message.</p>' +
     '</div>';
-  window.open('https://wa.me/qr/E4YQN6NULZ7ZC1', '_blank');
 }
 
 // ── ADMIN PANEL ──
