@@ -1292,9 +1292,8 @@ function submitLead(e) {
 
   if (!name || !email) return;
 
-  // Save lead to localStorage
-  var leads = JSON.parse(localStorage.getItem('ebook_leads') || '[]');
-  leads.push({
+  // Save lead to Firebase
+  _cgFbDb.ref('ebook_leads').push({
     name: name,
     email: email,
     phone: phone || '—',
@@ -1303,7 +1302,6 @@ function submitLead(e) {
       hour:'2-digit', minute:'2-digit'
     })
   });
-  localStorage.setItem('ebook_leads', JSON.stringify(leads));
 
   // Mark this device as accessed
   localStorage.setItem('ebook_accessed', '1');
@@ -1353,6 +1351,17 @@ window.addEventListener('scroll', function(){
     if (l.getAttribute('href') === '#' + cur) l.classList.add('active');
   });
 });
+</script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script>
+var _cgFbApp = firebase.initializeApp({
+  apiKey:"AIzaSyDez1daYuu35DGSXJ972so7zSL97ri1igY",
+  authDomain:"icondivyanshi-8ce5d.firebaseapp.com",
+  databaseURL:"https://icondivyanshi-8ce5d-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId:"icondivyanshi-8ce5d"
+}, 'career-guide');
+var _cgFbDb = _cgFbApp.database();
 </script>
 </body>
 </html>

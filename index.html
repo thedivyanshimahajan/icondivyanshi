@@ -1801,7 +1801,7 @@ footer{background:#0D0D0D;color:#fff;padding:56px 6% 26px}
     <div class="fc"><h4>Legal</h4><ul><li><a onclick="openPolicy('privacy')" style="cursor:pointer">Privacy Policy</a></li><li><a onclick="openPolicy('disclaimer')" style="cursor:pointer">Disclaimer</a></li></ul></div>
   </div>
   <div class="fb-line">
-    <p>© 2025 Icon Divyanshi. All rights reserved.</p>
+    <p>© 2026 Icon Divyanshi. All rights reserved.</p>
     <div class="fsi"><a href="https://instagram.com/icondivyanshi" target="_blank"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1"/></svg></a></div>
   </div>
 </footer>
@@ -1867,6 +1867,46 @@ _fbDb.ref('students').on('value', function(snap) {
       _fbStudents.push(typeof v === 'object' ? (v.email || '') : String(v));
     });
   }
+});
+
+// ── FIREBASE LIVE LISTENERS FOR ALL DATA ──
+var _fbLeads = [];
+var _fbEbookLeads = [];
+var _fbBlogPosts = [];
+var _fbVisitCount = 0;
+
+_fbDb.ref('leads').on('value', function(snap) {
+  _fbLeads = [];
+  if (snap.exists()) {
+    snap.forEach(function(child) {
+      var v = child.val(); v._key = child.key; _fbLeads.push(v);
+    });
+    _fbLeads.reverse();
+  }
+});
+
+_fbDb.ref('ebook_leads').on('value', function(snap) {
+  _fbEbookLeads = [];
+  if (snap.exists()) {
+    snap.forEach(function(child) {
+      _fbEbookLeads.push(child.val());
+    });
+    _fbEbookLeads.reverse();
+  }
+});
+
+_fbDb.ref('blog_posts').on('value', function(snap) {
+  _fbBlogPosts = [];
+  if (snap.exists()) {
+    snap.forEach(function(child) {
+      _fbBlogPosts.push(child.val());
+    });
+    _fbBlogPosts.reverse();
+  }
+});
+
+_fbDb.ref('visits/count').on('value', function(snap) {
+  _fbVisitCount = snap.val() || 0;
 });
 
 function fbEmailKey(email) {
@@ -2077,24 +2117,15 @@ function subSubmit(e) {
 var ADMIN_PASS = '24bb4922';
 
 function saveLead(data) {
-  var leads = JSON.parse(localStorage.getItem('id_leads') || '[]');
   data.time = new Date().toLocaleString('en-IN');
   data.page = document.title;
-  leads.unshift(data);
-  localStorage.setItem('id_leads', JSON.stringify(leads));
+  _fbDb.ref('leads').push(data);
 }
 function trackVisit() {
-  var visits = JSON.parse(localStorage.getItem('id_visits') || '[]');
-  visits.unshift({ time: new Date().toLocaleString('en-IN'), page: window.location.href });
-  if (visits.length > 200) visits = visits.slice(0, 200);
-  localStorage.setItem('id_visits', JSON.stringify(visits));
-  var count = parseInt(localStorage.getItem('id_visit_count') || '0') + 1;
-  localStorage.setItem('id_visit_count', count);
+  _fbDb.ref('visits/count').transaction(function(c) { return (c || 0) + 1; });
 }
 function trackVideoWatch() {
-  var vw = JSON.parse(localStorage.getItem('id_video_watches') || '[]');
-  vw.unshift({ time: new Date().toLocaleString('en-IN') });
-  localStorage.setItem('id_video_watches', JSON.stringify(vw));
+  _fbDb.ref('video_watches').push({ time: new Date().toLocaleString('en-IN') });
 }
 trackVisit();
 
@@ -2257,7 +2288,7 @@ function blogFormatContent(text) {
 }
 
 function renderBlogList(filterCat, filterTag) {
-  var posts = JSON.parse(localStorage.getItem('blog_posts') || '[]');
+  var posts = _fbBlogPosts.slice();
   var featEl = document.getElementById('blog-feat-area');
   var gridEl = document.getElementById('blog-posts-grid');
   if (!featEl || !gridEl) return;
@@ -2307,7 +2338,7 @@ function filterBlogCat(cat) { renderBlogList(cat, ''); }
 function filterBlogTag(tag) { renderBlogList('', tag); }
 
 function openBlogPost(id) {
-  var posts = JSON.parse(localStorage.getItem('blog_posts') || '[]');
+  var posts = _fbBlogPosts.slice();
   var post = posts.find(function(p){ return p.id == id; });
   if (!post) return;
   var view = document.getElementById('blog-post-view');
@@ -2335,7 +2366,7 @@ function closeBlogPost() {
 }
 
 function renderBlogAdmin() {
-  var posts = JSON.parse(localStorage.getItem('blog_posts') || '[]');
+  var posts = _fbBlogPosts.slice();
   var editId = window._blogEditId || null;
   var editPost = editId ? posts.find(function(p){ return p.id == editId; }) : null;
   var ep = editPost || {};
@@ -2378,7 +2409,7 @@ function blogSavePost(editId) {
   var content = document.getElementById('blog-content').value.trim();
   if (!title) { alert('Please add a title for your article.'); return; }
   if (!content) { alert('Please write some content for your article.'); return; }
-  var posts = JSON.parse(localStorage.getItem('blog_posts') || '[]');
+  var posts = _fbBlogPosts.slice();
   var post = {
     id: (editId && editId !== '') ? editId : Date.now().toString(),
     title: title,
@@ -2391,13 +2422,7 @@ function blogSavePost(editId) {
     content: content,
     featured: document.getElementById('blog-featured').checked
   };
-  if (editId && editId !== '') {
-    var idx = posts.findIndex(function(p){ return p.id == editId; });
-    if (idx !== -1) posts[idx] = post; else posts.unshift(post);
-  } else {
-    posts.unshift(post);
-  }
-  localStorage.setItem('blog_posts', JSON.stringify(posts));
+  _fbDb.ref('blog_posts/' + post.id).set(post);
   window._blogEditId = null;
   alert(editId ? '✅ Post updated!' : '✅ Post published! Go to Blog in the nav to see it live.');
   renderAdmin();
@@ -2415,15 +2440,13 @@ function blogEditPost(id) {
 
 function blogDeletePost(id) {
   if (!confirm('Delete this post permanently?')) return;
-  var posts = JSON.parse(localStorage.getItem('blog_posts') || '[]');
-  posts = posts.filter(function(p){ return p.id != id; });
-  localStorage.setItem('blog_posts', JSON.stringify(posts));
+  _fbDb.ref('blog_posts/' + id).remove();
   window._blogEditId = null;
   renderAdmin();
 }
 
 function renderEbookLeads() {
-  var eLeads = JSON.parse(localStorage.getItem('ebook_leads') || '[]');
+  var eLeads = _fbEbookLeads;
   var html = '<div style="margin-top:36px;background:#fff;border-radius:14px;padding:22px;border:1px solid #d4edda;box-shadow:0 2px 8px rgba(0,0,0,0.04)">'
     + '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:6px">'
     + '<h3 style="font-family:Playfair Display,serif;margin:0;font-size:1rem;color:#1B7A34">📥 Ebook Leads — People Who Downloaded the Career Guide</h3>'
@@ -2454,7 +2477,7 @@ function renderEbookLeads() {
     html += '</table></div>'
       + '<div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">'
       + '<button onclick="downloadEbookCSV()" style="padding:9px 18px;background:#1B7A34;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:0.82rem;font-family:Inter,sans-serif">⬇ Download Ebook Leads CSV</button>'
-      + '<button onclick="if(confirm(\'Delete all ebook leads?\'))localStorage.removeItem(\'ebook_leads\');renderAdmin()" style="padding:9px 18px;background:#f0fff4;color:#1B7A34;border:1px solid #c8e6c9;border-radius:8px;cursor:pointer;font-size:0.82rem;font-family:Inter,sans-serif">🗑 Clear</button>'
+      + '<button onclick="if(confirm(\'Delete all ebook leads?\')){_fbDb.ref(\'ebook_leads\').remove();renderAdmin();}" style="padding:9px 18px;background:#f0fff4;color:#1B7A34;border:1px solid #c8e6c9;cursor:pointer;font-size:0.82rem;font-family:Inter,sans-serif;border-radius:8px">🗑 Clear</button>'
       + '</div>';
   }
   html += '</div>';
@@ -2462,7 +2485,7 @@ function renderEbookLeads() {
 }
 
 function downloadEbookCSV() {
-  var eLeads = JSON.parse(localStorage.getItem('ebook_leads') || '[]');
+  var eLeads = _fbEbookLeads;
   if (!eLeads.length) { alert('No ebook leads yet.'); return; }
   var csv = 'Name,Email,WhatsApp,Date\n';
   eLeads.forEach(function(l) {
@@ -2475,9 +2498,9 @@ function downloadEbookCSV() {
 }
 
 function renderAdmin() {
-  var leads = JSON.parse(localStorage.getItem('id_leads') || '[]');
-  var visits = parseInt(localStorage.getItem('id_visit_count') || '0');
-  var videos = JSON.parse(localStorage.getItem('id_video_watches') || '[]');
+  var leads = _fbLeads;
+  var visits = _fbVisitCount;
+  var videos = [];
   var html = '<div style="font-family:Inter,sans-serif;padding:28px;max-width:960px;margin:0 auto">'
     + '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;flex-wrap:wrap;gap:10px">'
     + '<h2 style="font-family:Playfair Display,serif;color:#C0182C;margin:0">Icon Divyanshi — My Dashboard</h2>'
@@ -2536,7 +2559,7 @@ function renderAdmin() {
         + '<td style="padding:9px 12px;border-bottom:1px solid #f9f0f0;max-width:180px;font-size:0.78rem;color:#666">' + (l.why||l.note||'—') + '</td>'
         + '<td style="padding:9px 12px;border-bottom:1px solid #f9f0f0"><span style="background:' + (status==='Contacted'?'#e8f5e9':status==='Not interested'?'#f5f5f5':'#f8e8ea') + ';color:' + statusColor + ';padding:3px 9px;border-radius:20px;font-size:0.75rem;font-weight:600">' + status + '</span></td>'
         + '<td style="padding:9px 12px;border-bottom:1px solid #f9f0f0;white-space:nowrap;font-size:0.78rem;color:#aaa">' + (l.time||'—') + '</td>'
-        + '<td style="padding:9px 12px;border-bottom:1px solid #f9f0f0"><select onchange="updateLeadStatus(' + i + ',this.value)" style="font-size:0.75rem;padding:4px 6px;border:1px solid #f0e0e2;border-radius:6px;cursor:pointer;font-family:Inter,sans-serif"><option>New</option><option' + (status==='Contacted'?' selected':'') + '>Contacted</option><option' + (status==='Not interested'?' selected':'') + '>Not interested</option></select></td>'
+        + '<td style="padding:9px 12px;border-bottom:1px solid #f9f0f0"><select onchange="updateLeadStatus(\'' + l._key + '\',this.value)" style="font-size:0.75rem;padding:4px 6px;border:1px solid #f0e0e2;border-radius:6px;cursor:pointer;font-family:Inter,sans-serif"><option>New</option><option' + (status==='Contacted'?' selected':'') + '>Contacted</option><option' + (status==='Not interested'?' selected':'') + '>Not interested</option></select></td>'
         + '</tr>';
     });
     html += '</table></div>';
@@ -2544,7 +2567,7 @@ function renderAdmin() {
 
   html += '<div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap">'
     + '<button onclick="downloadCSV()" style="padding:10px 20px;background:#C0182C;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:0.85rem;font-family:Inter,sans-serif">⬇ Download as Excel/CSV</button>'
-    + '<button onclick="if(confirm(\'This will delete ALL leads. Are you sure?\'))localStorage.removeItem(\'id_leads\');location.reload()" style="padding:10px 20px;background:#f8e8ea;color:#C0182C;border:none;border-radius:8px;cursor:pointer;font-size:0.85rem;font-family:Inter,sans-serif">🗑 Delete All Leads</button>'
+    + '<button onclick="if(confirm(\'This will delete ALL leads. Are you sure?\')){_fbDb.ref(\'leads\').remove();renderAdmin();}" style="padding:10px 20px;background:#f8e8ea;color:#C0182C;border:none;border-radius:8px;cursor:pointer;font-size:0.85rem;font-family:Inter,sans-serif">🗑 Delete All Leads</button>'
     + '</div>'
 
     // ── EBOOK LEADS SECTION ──
@@ -2749,22 +2772,18 @@ function changeAdminPass() {
   document.getElementById('changePassMsg').textContent = 'Password changed to: ' + np + ' — write it down!';
   document.getElementById('changePassMsg').style.color = '#1a6e2a';
 }
-function updateLeadStatus(i, val) {
-  var leads = JSON.parse(localStorage.getItem('id_leads') || '[]');
-  if (leads[i]) leads[i].status = val;
-  localStorage.setItem('id_leads', JSON.stringify(leads));
+function updateLeadStatus(key, val) {
+  _fbDb.ref('leads/' + key).update({ status: val });
 }
 function manualAddLead() {
   var n = document.getElementById('ml-name').value.trim();
   if (!n) { alert('Please enter at least a name.'); return; }
-  var leads = JSON.parse(localStorage.getItem('id_leads') || '[]');
-  leads.unshift({ name: n, email: document.getElementById('ml-email').value.trim(), phone: document.getElementById('ml-phone').value.trim(), city: document.getElementById('ml-city').value.trim(), note: document.getElementById('ml-note').value.trim(), time: new Date().toLocaleString('en-IN'), status: 'New', manual: true });
-  localStorage.setItem('id_leads', JSON.stringify(leads));
+  _fbDb.ref('leads').push({ name: n, email: document.getElementById('ml-email').value.trim(), phone: document.getElementById('ml-phone').value.trim(), city: document.getElementById('ml-city').value.trim(), note: document.getElementById('ml-note').value.trim(), time: new Date().toLocaleString('en-IN'), status: 'New', manual: true });
   alert('Person added!');
   renderAdmin();
 }
 function downloadCSV() {
-  var d = JSON.parse(localStorage.getItem('id_leads') || '[]');
+  var d = _fbLeads;
   var csv = 'Name,Email,Phone,City,Age,Note,Status,Date\n' + d.map(function(r) { return [r.name, r.email, r.phone, r.city, r.age, (r.why || r.note || '').replace(/,/g, ' '), r.status || 'New', r.time].join(','); }).join('\n');
   var a = document.createElement('a'); a.href = 'data:text/csv,' + encodeURIComponent(csv); a.download = 'my-leads.csv'; a.click();
 }
