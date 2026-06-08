@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Services — Divyanshi Mahajan | Web Design & Business Consulting</title>
+<meta name="description" content="Freelance web design and business consulting by Divyanshi Mahajan. Professional websites starting at ₹12,000. Real work, real results."/>
+<meta name="author" content="Divyanshi Mahajan"/>
+<link rel="icon" type="image/svg+xml" href="https://divyanshimahajan.in/favicon.svg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:#fff;color:#1A0608;overflow-x:hidden}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:#faf7f7}::-webkit-scrollbar-thumb{background:#C0182C;border-radius:3px}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;height:64px;padding:0 6%;display:flex;align-items:center;justify-content:space-between;background:#C0182C;box-shadow:0 2px 20px rgba(0,0,0,0.15)}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;color:#fff;text-decoration:none;letter-spacing:0.06em;text-transform:uppercase}
+.nav-back{font-size:0.82rem;font-weight:500;color:rgba(255,255,255,0.85);text-decoration:none;letter-spacing:0.05em;display:flex;align-items:center;gap:6px;transition:color 0.2s}
+.nav-back:hover{color:#fff}
+
+/* ── HERO ── */
+.srv-hero{min-height:54vh;padding:120px 6% 72px;background:linear-gradient(135deg,#8B0A1A 0%,#C0182C 100%);position:relative;overflow:hidden;display:flex;align-items:center}
+.srv-hero::before{content:'';position:absolute;top:-80px;right:-80px;width:380px;height:380px;border-radius:50%;background:rgba(255,255,255,0.05);pointer-events:none}
+.srv-hero-content{position:relative;z-index:1;max-width:660px}
+.srv-tag{display:inline-block;background:rgba(255,255,255,0.15);color:#fff;font-size:0.72rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;padding:7px 16px;border-radius:50px;margin-bottom:18px;border:1px solid rgba(255,255,255,0.2)}
+.srv-hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.4rem);font-weight:900;color:#fff;line-height:1.1;margin-bottom:18px}
+.srv-hero h1 span{opacity:0.85;font-style:italic}
+.srv-hero p{font-size:1.05rem;color:rgba(255,255,255,0.82);line-height:1.75;max-width:520px}
+
+/* ── SECTION BASE ── */
+section{padding:80px 6%}
+.sec-tag{display:inline-block;background:#f8e8ea;color:#C0182C;font-size:0.72rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;padding:7px 16px;border-radius:50px;margin-bottom:14px;border:1px solid rgba(192,24,44,0.15)}
+.sec-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:700;color:#1A0608;line-height:1.2;margin-bottom:12px}
+.sec-title span{color:#C0182C}
+.sec-sub{font-size:1rem;color:#888;line-height:1.75;max-width:560px}
+
+/* ── BANSURI DIVIDER ── */
+.bansuri-divider{display:flex;align-items:center;justify-content:center;padding:8px 6%;gap:18px}
+.bansuri-divider::before,.bansuri-divider::after{content:'';flex:1;height:1px;background:rgba(192,24,44,0.12)}
+@media(max-width:600px){.bansuri-divider{padding:6px 5%;gap:12px}.bansuri-divider svg{width:120px}}
+
+/* ── SERVICES GRID ── */
+#services{background:#fff}
+.srv-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:52px}
+.srv-card{background:#FAF7F7;border-radius:20px;padding:36px 30px;border:1px solid rgba(192,24,44,0.08);position:relative;transition:transform 0.3s,box-shadow 0.3s}
+.srv-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(192,24,44,0.1)}
+.srv-card.coming{opacity:0.65;cursor:default}
+.srv-card.coming:hover{transform:none;box-shadow:none}
+.srv-badge{display:inline-block;font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:4px 12px;border-radius:50px;margin-bottom:16px}
+.badge-live{background:#e8f5e9;color:#2e7d32}
+.badge-soon{background:#f3f3f3;color:#666}
+.srv-icon{font-size:2.2rem;margin-bottom:14px;display:block}
+.srv-card h3{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;margin-bottom:10px;color:#1A0608}
+.srv-card p{font-size:0.92rem;color:#666;line-height:1.75;margin-bottom:20px}
+.srv-card ul{list-style:none;margin-bottom:24px}
+.srv-card ul li{font-size:0.88rem;color:#444;padding:5px 0;padding-left:18px;position:relative;line-height:1.6}
+.srv-card ul li::before{content:'✓';position:absolute;left:0;color:#C0182C;font-weight:700;font-size:0.85rem}
+.srv-cta{display:inline-flex;align-items:center;gap:6px;background:#C0182C;color:#fff;padding:11px 24px;border-radius:50px;font-size:0.85rem;font-weight:600;text-decoration:none;transition:background 0.2s}
+.srv-cta:hover{background:#8B0A1A}
+.srv-cta-outline{display:inline-flex;align-items:center;gap:6px;background:transparent;color:#C0182C;padding:11px 24px;border-radius:50px;font-size:0.85rem;font-weight:600;text-decoration:none;border:2px solid #C0182C;transition:all 0.2s}
+.coming-label{font-size:0.82rem;color:#999;font-style:italic}
+.contact-btns{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.btn-wa{display:inline-flex;align-items:center;gap:7px;background:#25D366;color:#fff;padding:11px 20px;border-radius:50px;font-size:0.85rem;font-weight:600;text-decoration:none;transition:background 0.2s}
+.btn-wa:hover{background:#1ebe5d}
+.btn-ig{display:inline-flex;align-items:center;gap:7px;background:transparent;color:#C0182C;padding:11px 20px;border-radius:50px;font-size:0.85rem;font-weight:600;text-decoration:none;border:2px solid #C0182C;transition:all 0.2s}
+.btn-ig:hover{background:#C0182C;color:#fff}
+@media(max-width:480px){.contact-btns{flex-direction:column}.btn-wa,.btn-ig{width:100%;justify-content:center}}
+
+/* ── PRICING ── */
+#pricing{background:#FAF7F7}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:52px}
+.price-card{background:#fff;border-radius:20px;padding:36px 28px;border:1px solid rgba(192,24,44,0.08);text-align:center;position:relative;transition:transform 0.3s,box-shadow 0.3s}
+.price-card:hover{transform:translateY(-5px);box-shadow:0 12px 40px rgba(192,24,44,0.12)}
+.price-card.popular{border:2px solid #C0182C}
+.popular-tag{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:#C0182C;color:#fff;font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:4px 14px;border-radius:50px;white-space:nowrap}
+.price-name{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:#1A0608;margin-bottom:6px}
+.price-amount{font-size:2.4rem;font-weight:700;color:#C0182C;line-height:1;margin:16px 0 4px}
+.price-amount span{font-size:1rem;font-weight:500;color:#888;vertical-align:super;margin-right:2px}
+.price-sub{font-size:0.8rem;color:#aaa;margin-bottom:24px}
+.price-features{list-style:none;text-align:left;margin-bottom:28px}
+.price-features li{font-size:0.86rem;color:#444;padding:7px 0;padding-left:20px;position:relative;border-bottom:1px solid #f5f0f0;line-height:1.5}
+.price-features li:last-child{border-bottom:none}
+.price-features li::before{content:'✓';position:absolute;left:0;color:#C0182C;font-weight:700}
+.price-features li.no{color:#bbb}
+.price-features li.no::before{content:'✗';color:#ddd}
+.price-btn{display:block;width:100%;background:#C0182C;color:#fff;padding:12px;border-radius:50px;font-size:0.88rem;font-weight:600;text-decoration:none;transition:background 0.2s;text-align:center}
+.price-btn:hover{background:#8B0A1A}
+.price-btn.outline{background:transparent;color:#C0182C;border:2px solid #C0182C}
+.price-btn.outline:hover{background:#C0182C;color:#fff}
+.price-note{text-align:center;margin-top:28px;font-size:0.85rem;color:#aaa}
+.price-note strong{color:#C0182C}
+
+/* ── PORTFOLIO ── */
+#portfolio{background:#fff}
+.port-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:52px}
+.port-card{border-radius:18px;overflow:hidden;border:1px solid rgba(192,24,44,0.08);transition:transform 0.3s,box-shadow 0.3s}
+.port-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(192,24,44,0.1)}
+.port-img{width:100%;height:220px;object-fit:cover;display:block;background:linear-gradient(135deg,#f8e8ea,#fdf3f4)}
+.port-img-placeholder{width:100%;height:220px;display:flex;align-items:center;justify-content:center;font-size:2.5rem;background:linear-gradient(135deg,#f8e8ea,#fdf3f4)}
+.port-body{padding:22px 24px}
+.port-body h3{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;margin-bottom:6px;color:#1A0608}
+.port-body p{font-size:0.85rem;color:#888;line-height:1.6;margin-bottom:14px}
+.port-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.port-tag{background:#f8e8ea;color:#C0182C;font-size:0.72rem;font-weight:600;padding:3px 10px;border-radius:50px}
+.port-link{font-size:0.82rem;font-weight:600;color:#C0182C;text-decoration:none;display:inline-flex;align-items:center;gap:4px}
+.port-link:hover{text-decoration:underline}
+.port-card a:first-child{display:block;overflow:hidden;border-radius:18px 18px 0 0}
+.port-card a:first-child img{transition:transform 0.4s ease}
+.port-card:hover a:first-child img{transform:scale(1.03)}
+
+/* ── WHY ME ── */
+#why{background:#FAF7F7}
+.why-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:48px}
+.why-card{background:#fff;border-radius:16px;padding:26px 24px;border:1px solid rgba(192,24,44,0.07);display:flex;gap:16px;align-items:flex-start;transition:transform 0.3s,box-shadow 0.3s}
+.why-card:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(192,24,44,0.08)}
+.why-icon{font-size:1.8rem;flex-shrink:0;margin-top:2px}
+.why-card h4{font-family:'Playfair Display',serif;font-size:0.98rem;font-weight:700;margin-bottom:6px;color:#1A0608}
+.why-card p{font-size:0.85rem;color:#666;line-height:1.7}
+.why-truth{background:linear-gradient(135deg,#8B0A1A 0%,#C0182C 100%);border-radius:18px;padding:36px 32px;margin-top:28px;color:#fff}
+.why-truth h3{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;margin-bottom:18px;color:#fff}
+.why-truth ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.why-truth ul li{font-size:0.92rem;color:rgba(255,255,255,0.9);line-height:1.6;padding-left:18px;position:relative}
+.why-truth ul li::before{content:'→';position:absolute;left:0;color:rgba(255,255,255,0.6);font-weight:700}
+@media(max-width:700px){.why-grid{grid-template-columns:1fr}.why-truth{padding:28px 22px}}
+
+/* ── CTA BANNER ── */
+#hire{background:linear-gradient(135deg,#8B0A1A 0%,#C0182C 100%);text-align:center;padding:80px 6%;position:relative;overflow:hidden}
+#hire::before{content:'';position:absolute;top:-80px;right:-80px;width:300px;height:300px;border-radius:50%;background:rgba(255,255,255,0.05)}
+.hire-inner{position:relative;z-index:1;max-width:560px;margin:0 auto}
+.hire-inner h2{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3.5vw,2.5rem);font-weight:900;color:#fff;line-height:1.2;margin-bottom:14px}
+.hire-inner p{color:rgba(255,255,255,0.8);margin-bottom:32px;line-height:1.7;font-size:1rem}
+.hire-btns{display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+.btn-white{background:#fff;color:#C0182C;padding:13px 30px;border-radius:50px;font-weight:600;text-decoration:none;font-size:0.9rem;transition:all 0.2s;display:inline-block}
+.btn-white:hover{background:#f8e8ea}
+.btn-ghost{background:transparent;color:#fff;padding:13px 30px;border-radius:50px;font-weight:600;text-decoration:none;font-size:0.9rem;border:2px solid rgba(255,255,255,0.5);transition:all 0.2s;display:inline-block}
+.btn-ghost:hover{border-color:#fff;background:rgba(255,255,255,0.08)}
+
+/* ── FOOTER ── */
+footer{background:#0D0D0D;color:#fff;padding:32px 6%;text-align:center}
+footer p{font-size:0.82rem;color:rgba(255,255,255,0.3)}
+footer a{color:rgba(255,255,255,0.5);text-decoration:none}
+footer a:hover{color:#fff}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .srv-grid{grid-template-columns:1fr}
+  .pricing-grid{grid-template-columns:1fr;max-width:440px;margin-left:auto;margin-right:auto}
+  .port-grid{grid-template-columns:1fr}
+  .why-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:600px){
+  section{padding:56px 5%}
+  .srv-hero{padding:100px 5% 56px}
+  .why-grid{grid-template-columns:1fr}
+  .hire-btns{flex-direction:column;align-items:center}
+  .btn-white,.btn-ghost{width:100%;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">Icon Divyanshi</a>
+  <a href="index.html" class="nav-back">← Back to Home</a>
+</nav>
+
+<!-- HERO -->
+<div class="srv-hero">
+  <div class="srv-hero-content">
+    <div class="srv-tag">Services</div>
+    <h1>I Build Websites.<br/><span>You Focus on Your Business.</span></h1>
+    <p>Clean, professional, mobile-first websites for individuals and small businesses — built fast, built right. No agency markup. No unnecessary complexity. Just a website that works.</p>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div>
+    <div class="sec-tag">What I Offer</div>
+    <h2 class="sec-title">Services <span>Available</span></h2>
+    <p class="sec-sub">Right now I'm taking clients for web design. Business consulting is coming once I've built more — I'd rather be honest than overpromise.</p>
+  </div>
+  <div class="srv-grid">
+
+    <!-- Web Design — LIVE -->
+    <div class="srv-card">
+      <span class="srv-badge badge-live">Taking Clients</span>
+      <span class="srv-icon">🌐</span>
+      <h3>Website Design & Development</h3>
+      <p>A professional website built for your business — clean design, fast load, mobile-friendly, with a contact or booking form so clients can reach you directly.</p>
+      <ul>
+        <li>Custom design — no templates</li>
+        <li>Fully mobile responsive</li>
+        <li>Contact / booking form</li>
+        <li>SEO basics included</li>
+        <li>Fast delivery (5–10 days)</li>
+        <li>50% upfront, 50% on delivery</li>
+      </ul>
+      <div class="contact-btns">
+        <a href="https://wa.me/qr/E4YQN6NULZ7ZC1" target="_blank" class="btn-wa">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.557 4.123 1.528 5.855L.057 23.882l6.191-1.624A11.933 11.933 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.007-1.374l-.36-.214-3.724.977.993-3.63-.234-.373A9.818 9.818 0 012.182 12C2.182 6.58 6.58 2.182 12 2.182S21.818 6.58 21.818 12 17.42 21.818 12 21.818z"/></svg>
+          WhatsApp
+        </a>
+        <a href="https://ig.me/m/icondivyanshi" target="_blank" class="btn-ig">Instagram DM</a>
+      </div>
+    </div>
+
+    <!-- Consulting — COMING SOON -->
+    <div class="srv-card coming">
+      <span class="srv-badge badge-soon">Coming Soon</span>
+      <span class="srv-icon">🎯</span>
+      <h3>Business & Marketing Consultation</h3>
+      <p>1-on-1 sessions for business owners who want honest, research-backed advice on their brand, content strategy, and marketing moves.</p>
+      <ul>
+        <li>Brand positioning review</li>
+        <li>Content strategy roadmap</li>
+        <li>Competitor analysis</li>
+        <li>Growth action plan</li>
+      </ul>
+      <span class="coming-label">Not available yet — but coming soon.</span>
+    </div>
+
+  </div>
+</section>
+
+<div class="bansuri-divider"><svg width="160" height="20" viewBox="0 0 160 20" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="9" width="152" height="3" rx="1.5" fill="#C0182C" opacity="0.5"/><ellipse cx="7" cy="10.5" rx="5" ry="4" fill="#C0182C" opacity="0.4"/><circle cx="42" cy="10.5" r="3" fill="#fff" stroke="#C0182C" stroke-width="1.2" opacity="0.8"/><circle cx="58" cy="10.5" r="3" fill="#fff" stroke="#C0182C" stroke-width="1.2" opacity="0.8"/><circle cx="74" cy="10.5" r="3" fill="#fff" stroke="#C0182C" stroke-width="1.2" opacity="0.8"/><circle cx="90" cy="10.5" r="3" fill="#fff" stroke="#C0182C" stroke-width="1.2" opacity="0.8"/><circle cx="106" cy="10.5" r="3" fill="#fff" stroke="#C0182C" stroke-width="1.2" opacity="0.8"/><circle cx="122" cy="10.5" r="3" fill="#fff" stroke="#C0182C" stroke-width="1.2" opacity="0.8"/><path d="M150 9.2 Q157 10.5 150 11.8" stroke="#C0182C" stroke-width="1.5" fill="none" opacity="0.5"/></svg></div>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div style="text-align:center">
+    <div class="sec-tag">Transparent Pricing</div>
+    <h2 class="sec-title">No Hidden Costs. <span>No Surprises.</span></h2>
+    <p class="sec-sub" style="margin:0 auto">Three packages based on what your business actually needs. All prices in INR. International clients — rates are in USD, contact me.</p>
+  </div>
+  <div class="pricing-grid">
+
+    <!-- Basic -->
+    <div class="price-card">
+      <div class="price-name">Basic</div>
+      <div class="price-amount"><span>₹</span>12,000</div>
+      <div class="price-sub">Best for: freelancers, creators, solo businesses</div>
+      <ul class="price-features">
+        <li>Single page website</li>
+        <li>Mobile responsive design</li>
+        <li>Contact form</li>
+        <li>Basic SEO setup</li>
+        <li>5-day delivery</li>
+        <li class="no">Admin panel</li>
+        <li class="no">Database / backend</li>
+        <li class="no">Domain setup</li>
+      </ul>
+      <div class="contact-btns" style="flex-direction:column;gap:8px">
+        <a href="https://wa.me/qr/E4YQN6NULZ7ZC1" target="_blank" class="btn-wa" style="justify-content:center">💬 WhatsApp</a>
+        <a href="https://ig.me/m/icondivyanshi" target="_blank" class="btn-ig" style="justify-content:center">Instagram DM</a>
+      </div>
+    </div>
+
+    <!-- Standard -->
+    <div class="price-card">
+      <div class="price-name">Standard</div>
+      <div class="price-amount"><span>₹</span>18,000</div>
+      <div class="price-sub">Best for: small businesses, coaches, consultants</div>
+      <ul class="price-features">
+        <li>Multi-section website</li>
+        <li>Mobile responsive design</li>
+        <li>Contact / booking form</li>
+        <li>SEO basics + meta tags</li>
+        <li>7-day delivery</li>
+        <li>WhatsApp / social links</li>
+        <li class="no">Admin panel</li>
+        <li class="no">Database / backend</li>
+      </ul>
+      <div class="contact-btns" style="flex-direction:column;gap:8px">
+        <a href="https://wa.me/qr/E4YQN6NULZ7ZC1" target="_blank" class="btn-wa" style="justify-content:center">💬 WhatsApp</a>
+        <a href="https://ig.me/m/icondivyanshi" target="_blank" class="btn-ig" style="justify-content:center">Instagram DM</a>
+      </div>
+    </div>
+
+    <!-- Full — Popular -->
+    <div class="price-card popular">
+      <div class="popular-tag">Recommended</div>
+      <div class="price-name">Full</div>
+      <div class="price-amount"><span>₹</span>25,000</div>
+      <div class="price-sub">Best for: brands, stores, service businesses</div>
+      <ul class="price-features">
+        <li>Complete multi-page website</li>
+        <li>Mobile responsive design</li>
+        <li>Advanced forms + database</li>
+        <li>Full SEO setup</li>
+        <li>10-day delivery</li>
+        <li>Admin panel</li>
+        <li>Domain + hosting guidance</li>
+        <li>1 month free support</li>
+      </ul>
+      <div class="contact-btns" style="flex-direction:column;gap:8px">
+        <a href="https://wa.me/qr/E4YQN6NULZ7ZC1" target="_blank" class="btn-wa" style="justify-content:center">💬 WhatsApp</a>
+        <a href="https://ig.me/m/icondivyanshi" target="_blank" class="btn-ig" style="justify-content:center">Instagram DM</a>
+      </div>
+    </div>
+
+  </div>
+  <p class="price-note">All packages require <strong>50% upfront</strong> before work begins. Balance on delivery. International rates available on request.</p>
+</section>
+
+<div class="bansuri-divider"><svg width="160" height="20" viewBox="0 0 160 20" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="9" width="152" height="3" rx="1.5" fill="#C0182C" opacity="0.5"/><ellipse cx="7" cy="10.5" rx="5" ry="4" fill="#C0182C" opacity="0.4"/><circle cx="42" cy="10.5" r="3" fill="#fff" stroke="#C0182C" stroke-width="1.2" opacity="0.8"/><circle cx="58" cy="10.5" r="3" fill="#fff" stroke="#C0182C" stroke-width="1.2" opacity="0.8"/><circle cx="74" cy="10.5" r="3" fill="#fff" stroke="#C0182C" stroke-width="1.2" opacity="0.8"/><circle cx="90" cy="10.5" r="3" fill="#fff" stroke="#C0182C" stroke-width="1.2" opacity="0.8"/><circle cx="106" cy="10.5" r="3" fill="#fff" stroke="#C0182C" stroke-width="1.2" opacity="0.8"/><circle cx="122" cy="10.5" r="3" fill="#fff" stroke="#C0182C" stroke-width="1.2" opacity="0.8"/><path d="M150 9.2 Q157 10.5 150 11.8" stroke="#C0182C" stroke-width="1.5" fill="none" opacity="0.5"/></svg></div>
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <div>
+    <div class="sec-tag">My Work</div>
+    <h2 class="sec-title">Websites <span>I've Built</span></h2>
+    <p class="sec-sub">Every website below was designed and built by me — from scratch, no templates. This is the quality you can expect.</p>
+  </div>
+  <div class="port-grid">
+
+    <!-- Anaya Collection -->
+    <div class="port-card">
+      <a href="https://thedivyanshimahajan.github.io/anaya-collection/" target="_blank">
+        <img
+          src="https://s0.wp.com/mshots/v1/https%3A%2F%2Fthedivyanshimahajan.github.io%2Fanaya-collection%2F?w=800&h=500"
+          alt="Anaya Collection Website"
+          class="port-img"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        />
+        <div class="port-img-placeholder" style="display:none">👗</div>
+      </a>
+      <div class="port-body">
+        <h3>Anaya Collection</h3>
+        <p>A complete fashion e-commerce website for an ethnic & western wear brand — hero, collections, contact, and mobile-first design.</p>
+        <div class="port-tags">
+          <span class="port-tag">E-Commerce</span>
+          <span class="port-tag">Fashion</span>
+          <span class="port-tag">Mobile First</span>
+        </div>
+        <a href="https://thedivyanshimahajan.github.io/anaya-collection/" target="_blank" class="port-link">Visit Live Site →</a>
+      </div>
+    </div>
+
+    <!-- Icon Divyanshi Website -->
+    <div class="port-card">
+      <a href="https://divyanshimahajan.in" target="_blank">
+        <img
+          src="https://s0.wp.com/mshots/v1/https%3A%2F%2Fdivyanshimahajan.in%2F?w=800&h=500"
+          alt="Divyanshi Mahajan Website"
+          class="port-img"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        />
+        <div class="port-img-placeholder" style="display:none">🌐</div>
+      </a>
+      <div class="port-body">
+        <h3>Icon Divyanshi — Personal Brand Site</h3>
+        <p>My own personal brand website — full multi-section site with blog, courses, student portal, contact form, and Firebase backend.</p>
+        <div class="port-tags">
+          <span class="port-tag">Personal Brand</span>
+          <span class="port-tag">Full Stack</span>
+          <span class="port-tag">Firebase</span>
+        </div>
+        <a href="https://divyanshimahajan.in" target="_blank" class="port-link">Visit Live Site →</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="bansuri-divider"><svg width="160" height="20" viewBox="0 0 160 20" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="9" width="152" height="3" rx="1.5" fill="#C0182C" opacity="0.5"/><ellipse cx="7" cy="10.5" rx="5" ry="4" fill="#C0182C" opacity="0.4"/><circle cx="42" cy="10.5" r="3" fill="#fff" stroke="#C0182C" stroke-width="1.2" opacity="0.8"/><circle cx="58" cy="10.5" r="3" fill="#fff" stroke="#C0182C" stroke-width="1.2" opacity="0.8"/><circle cx="74" cy="10.5" r="3" fill="#fff" stroke="#C0182C" stroke-width="1.2" opacity="0.8"/><circle cx="90" cy="10.5" r="3" fill="#fff" stroke="#C0182C" stroke-width="1.2" opacity="0.8"/><circle cx="106" cy="10.5" r="3" fill="#fff" stroke="#C0182C" stroke-width="1.2" opacity="0.8"/><circle cx="122" cy="10.5" r="3" fill="#fff" stroke="#C0182C" stroke-width="1.2" opacity="0.8"/><path d="M150 9.2 Q157 10.5 150 11.8" stroke="#C0182C" stroke-width="1.5" fill="none" opacity="0.5"/></svg></div>
+
+<!-- WHY ME -->
+<section id="why">
+  <div style="text-align:center">
+    <div class="sec-tag">Why Choose Icon Divyanshi</div>
+    <h2 class="sec-title">10 Reasons to <span>Work With Me</span></h2>
+  </div>
+  <div class="why-grid">
+    <div class="why-card">
+      <div class="why-icon">💻</div>
+      <div>
+        <h4>100% Custom Coded — Not a Template</h4>
+        <p>Every website I build is written from scratch — real HTML, CSS and JavaScript. No Wix. No WordPress. No drag and drop. Your website looks exactly like YOUR brand — not like thousands of others using the same template.</p>
+      </div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">📱</div>
+      <div>
+        <h4>Works on Every Device — Perfectly</h4>
+        <p>Mobile, tablet, desktop, iPhone, MacBook, Android — your website will look beautiful on all of them. Buttons, text, images — everything adjusts automatically for every screen size.</p>
+      </div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">🌟</div>
+      <div>
+        <h4>Always Looks Right — Even in Dark Mode</h4>
+        <p>Most websites look broken when someone's phone is on dark mode. Every website I build is coded to always display correctly — exactly as designed, on every device, every setting.</p>
+      </div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">⚡</div>
+      <div>
+        <h4>Fast Delivery</h4>
+        <p>Basic website → 5 days &nbsp;·&nbsp; Standard → 7 days &nbsp;·&nbsp; Premium → 10 days.<br/>No months of waiting. No endless back and forth.</p>
+      </div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">🇮🇳</div>
+      <div>
+        <h4>Built for Indian Businesses</h4>
+        <p>I understand what Indian businesses actually need — WhatsApp order buttons, festive collection sections, local language support, category pages. Your website is built for YOUR customers, not some international market.</p>
+      </div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">🔒</div>
+      <div>
+        <h4>Simple & Safe Payment</h4>
+        <p>50% advance to start. Remaining 50% only after you see and approve the final website. You never pay the full amount without seeing the result first.</p>
+      </div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">👀</div>
+      <div>
+        <h4>See Before You Decide</h4>
+        <p>I have live demo websites ready for you to see — exactly how your website will look and work — before you spend a single rupee. No surprises.</p>
+      </div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">🎯</div>
+      <div>
+        <h4>Personal Service — Not an Agency</h4>
+        <p>You work directly with me — not an agency, not a junior team member, not a bot. One person who understands your business, answers your messages, and delivers what she promises.</p>
+      </div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">📊</div>
+      <div>
+        <h4>More Than Just a Website</h4>
+        <p>Logo guidance, visiting card design, pricing strategy, how to pitch your business online — I work with you on your complete digital presence, not just the website file.</p>
+      </div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">🏆</div>
+      <div>
+        <h4>Quality Over Quantity</h4>
+        <p>I take maximum 2–3 projects per month — so every client gets full attention and the best possible result. When there's a slot available, it goes to the client who's ready.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- The Simple Truth banner -->
+  <div class="why-truth">
+    <h3>The Simple Truth</h3>
+    <ul>
+      <li>Agencies charge ₹50,000–₹1,00,000 for the same work.</li>
+      <li>Freelance platforms take weeks and deliver templates.</li>
+      <li>I deliver custom-built, mobile-ready, professionally designed websites — starting at ₹12,000 — with a live demo you can see today.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- HIRE CTA -->
+<section id="hire">
+  <div class="hire-inner">
+    <div class="srv-tag" style="background:rgba(255,255,255,0.15);color:#fff;border-color:rgba(255,255,255,0.2)">Let's Work Together</div>
+    <h2>Ready to Get a Website<br/>That Actually Works?</h2>
+    <p>DM me on Instagram with a brief about your business and I'll get back to you within 24 hours. Let's build something real.</p>
+    <div class="hire-btns">
+      <a href="https://wa.me/qr/E4YQN6NULZ7ZC1" target="_blank" class="btn-white">💬 WhatsApp Me</a>
+      <a href="https://ig.me/m/icondivyanshi" target="_blank" class="btn-ghost">Instagram DM</a>
+    </div>
+    <p style="color:rgba(255,255,255,0.5);font-size:0.82rem;margin-top:16px">Either works — I reply within 24 hours.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 Divyanshi Mahajan — Icon Divyanshi &nbsp;|&nbsp; <a href="index.html">Home</a> &nbsp;·&nbsp; <a href="https://instagram.com/icondivyanshi" target="_blank">Instagram</a></p>
+</footer>
+
+</body>
+</html>
