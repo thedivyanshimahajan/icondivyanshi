@@ -708,6 +708,12 @@ footer{background:#0D0D0D;color:#fff;padding:56px 6% 26px}
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 </head>
 <body>
+<!-- Clean URL: remove /index.html from address bar on first load -->
+<script>
+  if (location.pathname.endsWith('/index.html')) {
+    history.replaceState(null, '', location.pathname.replace('/index.html', '/') + location.search + location.hash);
+  }
+</script>
 <!-- 🪷 Lotus loader — disappears after 1.2s -->
 <div id="lotus-loader">
   <div class="lotus-petals">
