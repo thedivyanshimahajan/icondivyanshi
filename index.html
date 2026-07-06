@@ -1582,7 +1582,7 @@ footer{background:#0D0D0D;color:#fff;padding:56px 6% 26px}
     <div class="prod-grid" style="grid-template-columns:repeat(2,1fr)">
 
       <!-- PREMIUM PLUS PACKAGE — BEST / MOST RECOMMENDED -->
-      <div class="prod-card" style="border:2px solid #C0182C;position:relative">
+      <div class="prod-card" id="prod-premium-plus" style="border:2px solid #C0182C;position:relative;scroll-margin-top:90px">
         <div class="prod-img" style="height:220px;background:#1a0e2e">
           <img src="premiumplus.jpg.png" style="width:100%;height:100%;object-fit:cover"/>
           <div class="prod-ribbon r1">⭐ Most Recommended</div>
@@ -1610,7 +1610,7 @@ footer{background:#0D0D0D;color:#fff;padding:56px 6% 26px}
       </div>
 
       <!-- PREMIUM PACKAGE — SECOND BEST -->
-      <div class="prod-card">
+      <div class="prod-card" id="prod-premium" style="scroll-margin-top:90px">
         <div class="prod-img" style="height:220px;background:#1a0e2e">
           <img src="premium.jpg.png" style="width:100%;height:100%;object-fit:cover"/>
           <div class="prod-ribbon r2">2nd Best</div>
@@ -1638,7 +1638,7 @@ footer{background:#0D0D0D;color:#fff;padding:56px 6% 26px}
       </div>
 
       <!-- SUPREME PACKAGE — ENTRY LEVEL -->
-      <div class="prod-card">
+      <div class="prod-card" id="prod-supreme" style="scroll-margin-top:90px">
         <div class="prod-img" style="height:220px;background:#1a0e2e">
           <img src="supreme.jpg.png" style="width:100%;height:100%;object-fit:cover"/>
           <div class="prod-ribbon r3">3rd Best</div>
@@ -1666,7 +1666,7 @@ footer{background:#0D0D0D;color:#fff;padding:56px 6% 26px}
       </div>
 
       <!-- EBOOK — FREE -->
-      <div class="prod-card">
+      <div class="prod-card" id="prod-ebook" style="scroll-margin-top:90px">
         <div class="prod-img" style="height:220px;background:#1A0608;padding:0;overflow:hidden">
           <img src="ebook-cover.svg" alt="Guide to Your Digital Future – Free Ebook by Icon Divyanshi" style="width:100%;height:100%;object-fit:cover;object-position:left top;display:block"/>
         </div>
@@ -2136,6 +2136,29 @@ function showPage(id) {
   if (titles[id]) document.title = titles[id];
   history.replaceState(null, '', '/');
 }
+
+// ── Deep links: let shareable links open a specific page/product ──
+// e.g. divyanshimahajan.in/#products  or  /#premium-plus  or  /#ebook
+function handleDeepLink() {
+  var h = (location.hash || '').replace('#', '').toLowerCase();
+  if (!h) return;
+  // direct page names
+  var pages = ['home','know-me','landing','blog','products','students'];
+  var aliases = { guidance: 'landing', 'know-me': 'know-me', knowme: 'know-me' };
+  if (aliases[h]) h = aliases[h];
+  if (pages.indexOf(h) !== -1) { showPage(h); return; }
+  // product cards → open Products page, then scroll to the card
+  var products = ['premium-plus','premium','supreme','ebook'];
+  if (products.indexOf(h) !== -1) {
+    showPage('products');
+    setTimeout(function() {
+      var card = document.getElementById('prod-' + h);
+      if (card) card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 350);
+  }
+}
+window.addEventListener('load', handleDeepLink);
+
 function toggleMenu() {
   document.getElementById('mobileMenu').classList.toggle('open');
 }
@@ -2258,7 +2281,7 @@ function openWaModal() {
   // If already registered — skip form, go directly to WhatsApp
   var existing = localStorage.getItem('id_registered');
   if (existing) {
-    window.open('https://wa.me/qr/E4YQN6NULZ7ZC1', '_blank');
+    window.open('https://wa.me/919719470075?text=' + encodeURIComponent('Hi Divyanshi! I want to know more. 🙏'), '_blank');
     return;
   }
   document.getElementById('waModal').classList.add('open');
@@ -2294,7 +2317,7 @@ function submitWaForm(e) {
     '<p style="font-size:0.84rem;color:#888;line-height:1.65;margin-bottom:14px"><strong>Step 1:</strong> Copy the message below.<br/><strong>Step 2:</strong> Open WhatsApp and paste it.</p>' +
     '<textarea id="wa-msg-box" readonly style="width:100%;padding:12px 14px;border:2px solid rgba(192,24,44,0.15);border-radius:10px;font-family:Inter,sans-serif;font-size:0.82rem;line-height:1.7;height:190px;color:#1A0608;background:#faf7f7;resize:none">' + msg + '</textarea>' +
     '<button id="wa-copy-btn" onclick="navigator.clipboard.writeText(document.getElementById(\'wa-msg-box\').value).then(function(){ var b=document.getElementById(\'wa-copy-btn\'); b.textContent=\'✓ Copied!\'; b.style.background=\'#1a6e2a\'; b.style.color=\'#fff\'; })" style="margin-top:10px;padding:12px 26px;background:#f8e8ea;color:#C0182C;border:2px solid rgba(192,24,44,0.2);border-radius:9px;font-family:Inter,sans-serif;font-size:0.9rem;font-weight:600;cursor:pointer;width:100%">📋 Step 1 — Copy Message</button>' +
-    '<a href="https://wa.me/qr/E4YQN6NULZ7ZC1" target="_blank" style="display:block;margin-top:10px;padding:12px 26px;background:#25D366;color:#fff;border:none;border-radius:9px;font-family:Inter,sans-serif;font-size:0.9rem;font-weight:600;cursor:pointer;width:100%;text-decoration:none;box-sizing:border-box">💬 Step 2 — Open WhatsApp &amp; Paste</a>' +
+    '<a href="https://wa.me/919719470075" target="_blank" style="display:block;margin-top:10px;padding:12px 26px;background:#25D366;color:#fff;border:none;border-radius:9px;font-family:Inter,sans-serif;font-size:0.9rem;font-weight:600;cursor:pointer;width:100%;text-decoration:none;box-sizing:border-box">💬 Step 2 — Open WhatsApp &amp; Paste</a>' +
     '<p style="margin-top:12px;font-size:0.78rem;color:#aaa">Copy first, then open WhatsApp and paste the message.</p>' +
     '</div>';
 }

@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Learn real digital marketing skills with Icon Divyanshi. Affiliate marketing, brand strategy, content creation — skills that actually earn." />
+  <meta name="keywords" content="digital skills India, learn marketing, affiliate marketing beginners, online income India, Icon Divyanshi" />
+  <title>Digital Skills — Icon Divyanshi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --red:#C0182C; --red-deep:#8B0A1A; --red-light:#E8192F; --red-muted:#f8e8ea; --white:#FFFFFF; --off-white:#FAF7F7; --cream:#F5F0F0; --black:#0D0D0D; --text-dark:#1A0608; --text-mid:#4A1020; --text-light:#888; --shadow:0 4px 30px rgba(192,24,44,0.12); --shadow-lg:0 12px 60px rgba(192,24,44,0.18); }
+    html { scroll-behavior: smooth; }
+    body { font-family:'Inter',sans-serif; background:#fff; color:#1A0608; line-height:1.6; overflow-x:hidden; }
+    ::-webkit-scrollbar { width:6px; } ::-webkit-scrollbar-track { background:#FAF7F7; } ::-webkit-scrollbar-thumb { background:#C0182C; border-radius:3px; }
+    nav { position:fixed; top:0; left:0; right:0; z-index:1000; padding:0 6%; height:66px; display:flex; align-items:center; justify-content:space-between; background:#C0182C; transition:box-shadow 0.3s; }
+    nav.scrolled { box-shadow:0 4px 24px rgba(0,0,0,0.25); }
+    .nav-logo { font-family:'Playfair Display',serif; font-size:1.35rem; font-weight:700; color:#FFFFFF; text-decoration:none; letter-spacing:0.02em; }
+    .nav-links { display:flex; gap:32px; list-style:none; align-items:center; }
+    .nav-links a { font-size:0.85rem; font-weight:500; color:rgba(255,255,255,0.85); text-decoration:none; letter-spacing:0.05em; text-transform:uppercase; position:relative; transition:color 0.2s; }
+    .nav-links a::after { content:''; position:absolute; bottom:-4px; left:0; width:0; height:2px; background:#fff; transition:width 0.3s; }
+    .nav-links a:hover { color:#fff; } .nav-links a:hover::after { width:100%; }
+    .nav-links a.active { color:#fff; } .nav-links a.active::after { width:100%; }
+    .nav-cta { background:#fff !important; color:#C0182C !important; padding:9px 22px !important; border-radius:50px !important; font-weight:600 !important; }
+    .nav-cta::after { display:none !important; }
+    .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; }
+    .hamburger span { width:24px; height:2px; background:#fff; border-radius:2px; }
+    .btn-primary { background:#C0182C; color:#fff; padding:14px 34px; border-radius:50px; font-size:0.95rem; font-weight:600; text-decoration:none; transition:background 0.3s,transform 0.2s; box-shadow:0 4px 20px rgba(192,24,44,0.3); display:inline-block; }
+    .btn-primary:hover { background:#8B0A1A; transform:translateY(-2px); }
+    .btn-white { background:#fff; color:#C0182C; padding:14px 34px; border-radius:50px; font-size:0.95rem; font-weight:600; text-decoration:none; transition:all 0.3s; display:inline-block; box-shadow:0 4px 20px rgba(0,0,0,0.15); }
+    .btn-white:hover { background:rgba(255,255,255,0.9); transform:translateY(-2px); }
+    section { padding:88px 6%; }
+    .section-tag { display:inline-block; background:#f8e8ea; color:#C0182C; font-size:0.74rem; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; padding:7px 16px; border-radius:50px; margin-bottom:14px; border:1px solid rgba(192,24,44,0.15); }
+    .section-tag.white { background:rgba(255,255,255,0.15); color:#fff; border:1px solid rgba(255,255,255,0.25); }
+    .section-title { font-family:'Playfair Display',serif; font-size:clamp(1.8rem,3.5vw,2.7rem); font-weight:700; line-height:1.2; color:#1A0608; margin-bottom:14px; }
+    .section-title span { color:#C0182C; }
+    .section-sub { font-size:1rem; color:#888; max-width:560px; line-height:1.7; }
+    .fade-up { animation: fadeUp 0.8s ease both; }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
+    footer { background:#0D0D0D; color:#fff; padding:60px 6% 28px; }
+    .footer-inner { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:48px; margin-bottom:44px; }
+    .footer-brand p { font-size:0.88rem; color:rgba(255,255,255,0.45); line-height:1.7; max-width:280px; }
+    .footer-col h4 { font-size:0.75rem; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:rgba(255,255,255,0.35); margin-bottom:18px; }
+    .footer-col ul { list-style:none; } .footer-col ul li { margin-bottom:10px; }
+    .footer-col ul li a { font-size:0.9rem; color:rgba(255,255,255,0.5); text-decoration:none; transition:color 0.2s; }
+    .footer-col ul li a:hover { color:#fff; }
+    .footer-bottom { border-top:1px solid rgba(255,255,255,0.08); padding-top:26px; display:flex; justify-content:space-between; align-items:center; }
+    .footer-bottom p { font-size:0.82rem; color:rgba(255,255,255,0.3); }
+    .footer-social { display:flex; gap:12px; }
+    .footer-social-icon { width:36px; height:36px; background:rgba(255,255,255,0.07); border-radius:50%; display:flex; align-items:center; justify-content:center; text-decoration:none; transition:background 0.3s; }
+    .footer-social-icon:hover { background:#C0182C; }
+    .footer-social-icon svg { width:15px; height:15px; fill:rgba(255,255,255,0.6); }
+    @media (max-width:900px) { .nav-links { display:none; } .hamburger { display:flex; } .nav-links.open { display:flex; flex-direction:column; position:fixed; top:66px; left:0; right:0; background:#8B0A1A; padding:24px 6%; gap:20px; } .footer-inner { grid-template-columns:1fr 1fr; gap:32px; } .footer-bottom { flex-direction:column; gap:14px; text-align:center; } }
+    @media (max-width:600px) { section { padding:64px 5%; } .footer-inner { grid-template-columns:1fr; } }
+  </style>
+  <style>
+    /* ── LANDING SPECIFIC ── */
+
+    /* HERO */
+    #landing-hero {
+      min-height: 100vh;
+      padding: 110px 6% 80px;
+      background: linear-gradient(160deg, var(--black) 0%, #1a0608 50%, #2d0810 100%);
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      text-align: center; position: relative; overflow: hidden;
+    }
+    #landing-hero::before {
+      content: ''; position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
+      width: 600px; height: 600px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(192,24,44,0.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    #landing-hero::after {
+      content: ''; position: absolute; bottom: -60px; right: -60px;
+      width: 300px; height: 300px; border-radius: 50%;
+      background: rgba(192,24,44,0.07); pointer-events: none;
+    }
+    .landing-hero-content { position: relative; z-index: 1; max-width: 820px; }
+    .hero-eyebrow {
+      display: inline-block;
+      background: rgba(192,24,44,0.2); color: var(--red-light);
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+      padding: 8px 18px; border-radius: 50px; margin-bottom: 26px;
+      border: 1px solid rgba(192,24,44,0.3);
+    }
+    #landing-hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 5.5vw, 4rem);
+      font-weight: 900; color: var(--white); line-height: 1.1; margin-bottom: 22px;
+    }
+    #landing-hero h1 span { color: var(--red-light); }
+    #landing-hero p {
+      font-size: 1.1rem; color: rgba(255,255,255,0.65);
+      max-width: 580px; margin: 0 auto 38px; line-height: 1.75;
+    }
+    .hero-ctas { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; margin-bottom: 56px; }
+    .btn-whatsapp {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: #25D366; color: var(--white);
+      padding: 15px 34px; border-radius: 50px;
+      font-size: 0.97rem; font-weight: 600; text-decoration: none;
+      letter-spacing: 0.03em;
+      transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.3);
+    }
+    .btn-whatsapp:hover { background: #1fba58; transform: translateY(-2px); box-shadow: 0 8px 30px rgba(37,211,102,0.4); }
+
+    .trust-bar {
+      display: flex; justify-content: center; gap: 36px; flex-wrap: wrap;
+      padding-top: 40px; border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .trust-item { display: flex; align-items: center; gap: 10px; }
+    .trust-item svg { opacity: 0.6; }
+    .trust-item span { font-size: 0.85rem; color: rgba(255,255,255,0.55); }
+
+    /* PAIN POINTS */
+    #pain {
+      background: var(--off-white);
+      text-align: center;
+    }
+    .pain-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 48px;
+    }
+    .pain-card {
+      background: var(--white); border-radius: 18px; padding: 30px 24px;
+      border: 1px solid rgba(192,24,44,0.08);
+      border-top: 3px solid var(--red);
+      text-align: left;
+    }
+    .pain-card .pain-emoji { font-size: 1.8rem; margin-bottom: 14px; display: block; }
+    .pain-card h3 { font-size: 1rem; font-weight: 700; color: var(--text-dark); margin-bottom: 8px; }
+    .pain-card p { font-size: 0.88rem; color: var(--text-light); line-height: 1.65; }
+
+    /* SOLUTION */
+    #solution {
+      background: var(--white);
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+    }
+    .solution-text .section-tag { margin-bottom: 14px; }
+    .solution-text h2 { margin-bottom: 20px; }
+    .solution-text p { color: var(--text-mid); line-height: 1.8; margin-bottom: 16px; }
+    .solution-points { list-style: none; margin: 24px 0; }
+    .solution-points li {
+      display: flex; align-items: flex-start; gap: 12px;
+      font-size: 0.95rem; color: var(--text-dark); margin-bottom: 14px; line-height: 1.6;
+    }
+    .check-icon {
+      width: 22px; height: 22px; background: var(--red); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px;
+    }
+    .check-icon svg { width: 11px; height: 11px; }
+
+    .solution-visual {
+      background: linear-gradient(160deg, var(--red-deep) 0%, var(--red) 100%);
+      border-radius: 24px; padding: 44px 36px;
+      color: var(--white); box-shadow: var(--shadow-lg);
+    }
+    .solution-visual h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem; font-weight: 700; margin-bottom: 28px; line-height: 1.3;
+    }
+    .skill-item {
+      display: flex; align-items: center; gap: 14px;
+      background: rgba(255,255,255,0.1); border-radius: 12px;
+      padding: 14px 18px; margin-bottom: 12px;
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+    .skill-item:last-child { margin-bottom: 0; }
+    .skill-icon { font-size: 1.4rem; }
+    .skill-item strong { display: block; font-size: 0.93rem; font-weight: 600; }
+    .skill-item span { font-size: 0.78rem; opacity: 0.7; }
+
+    /* HOW IT WORKS */
+    #how-it-works { background: var(--cream); text-align: center; }
+    .steps-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
+      margin-top: 52px; position: relative;
+    }
+    .steps-grid::before {
+      content: ''; position: absolute;
+      top: 36px; left: 12.5%; right: 12.5%; height: 2px;
+      background: linear-gradient(to right, var(--red), rgba(192,24,44,0.1));
+    }
+    .step-card { padding: 0 16px; position: relative; }
+    .step-number {
+      width: 72px; height: 72px; border-radius: 50%;
+      background: var(--red); color: var(--white);
+      font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px; box-shadow: 0 4px 16px rgba(192,24,44,0.3);
+    }
+    .step-card h3 { font-size: 0.98rem; font-weight: 700; margin-bottom: 8px; }
+    .step-card p { font-size: 0.84rem; color: var(--text-light); line-height: 1.6; }
+
+    /* WHAT YOU GET */
+    #what-you-get { background: var(--white); }
+    .get-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 48px; }
+    .get-card {
+      border-radius: 18px; padding: 30px 26px;
+      border: 1px solid rgba(192,24,44,0.09); background: var(--white);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .get-card:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
+    .get-card .get-icon { font-size: 2rem; margin-bottom: 16px; display: block; }
+    .get-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+    .get-card p { font-size: 0.87rem; color: var(--text-light); line-height: 1.65; }
+
+    /* TESTIMONIALS */
+    #landing-testimonials { background: var(--off-white); text-align: center; }
+    .landing-testi-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 48px;
+    }
+    .testi-card {
+      background: var(--white); border-radius: 18px; padding: 30px 24px;
+      text-align: left; border: 1px solid rgba(192,24,44,0.07);
+      transition: transform 0.3s;
+    }
+    .testi-card:hover { transform: translateY(-4px); }
+    .testi-stars { color: var(--red); font-size: 0.9rem; margin-bottom: 14px; }
+    .testi-card p { font-size: 0.92rem; color: var(--text-mid); line-height: 1.7; font-style: italic; margin-bottom: 20px; }
+    .testi-author { display: flex; align-items: center; gap: 11px; }
+    .testi-avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: var(--red-muted); display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--red);
+      flex-shrink: 0;
+    }
+    .testi-name { font-size: 0.87rem; font-weight: 600; }
+    .testi-role { font-size: 0.75rem; color: var(--text-light); }
+
+    /* FAQ */
+    #faq { background: var(--white); }
+    .faq-inner { max-width: 720px; margin: 0 auto; }
+    .faq-list { margin-top: 44px; }
+    .faq-item {
+      border-bottom: 1px solid rgba(192,24,44,0.1);
+      padding: 20px 0;
+      cursor: pointer;
+    }
+    .faq-item:last-child { border-bottom: none; }
+    .faq-question {
+      display: flex; justify-content: space-between; align-items: center; gap: 16px;
+    }
+    .faq-question h3 { font-size: 1rem; font-weight: 600; color: var(--text-dark); line-height: 1.4; }
+    .faq-toggle {
+      width: 32px; height: 32px; background: var(--red-muted); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      transition: background 0.3s, transform 0.3s;
+      font-size: 1.1rem; color: var(--red); font-weight: 700;
+    }
+    .faq-item.open .faq-toggle { background: var(--red); color: var(--white); transform: rotate(45deg); }
+    .faq-answer {
+      font-size: 0.93rem; color: var(--text-mid); line-height: 1.75;
+      max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.3s;
+    }
+    .faq-item.open .faq-answer { max-height: 300px; padding-top: 14px; }
+
+    /* FINAL CTA */
+    #final-cta {
+      background: linear-gradient(160deg, var(--black) 0%, #1a0608 60%, #2d0810 100%);
+      text-align: center; position: relative; overflow: hidden;
+    }
+    #final-cta::before {
+      content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+      width: 500px; height: 500px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(192,24,44,0.15) 0%, transparent 70%);
+    }
+    .final-cta-content { position: relative; z-index: 1; max-width: 620px; margin: 0 auto; }
+    #final-cta h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 900; color: var(--white);
+      line-height: 1.15; margin-bottom: 18px;
+    }
+    #final-cta h2 span { color: var(--red-light); }
+    #final-cta p { font-size: 1rem; color: rgba(255,255,255,0.6); margin-bottom: 36px; line-height: 1.7; max-width: 480px; margin-left: auto; margin-right: auto; }
+    .final-ctas { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
+    .final-note { margin-top: 22px; font-size: 0.82rem; color: rgba(255,255,255,0.35); }
+
+    @media (max-width: 1000px) {
+      .steps-grid { grid-template-columns: 1fr 1fr; }
+      .steps-grid::before { display: none; }
+    }
+    @media (max-width: 900px) {
+      #solution { grid-template-columns: 1fr; gap: 40px; }
+      .pain-grid { grid-template-columns: 1fr; }
+      .get-grid { grid-template-columns: 1fr 1fr; }
+      .landing-testi-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .steps-grid { grid-template-columns: 1fr; }
+      .get-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="navbar">
+    <a href="index.html" class="nav-logo">Icon Divyanshi</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="know-me.html">Know Me</a></li>
+      <li><a href="landing.html" class="active">Digital Skills</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="index.html#connect" class="nav-cta">Connect</a></li>
+    </ul>
+    <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="landing-hero">
+    <div class="landing-hero-content">
+      <div class="hero-eyebrow fade-up">Digital Skills · Real Income · No Fluff</div>
+      <h1 class="fade-up">Stop Scrolling.<br/>Start <span>Earning.</span></h1>
+      <p class="fade-up">You already spend hours online. What if those hours actually built your income? Real digital skills. Real results. I'll show you exactly how.</p>
+      <div class="hero-ctas fade-up">
+        <a href="https://wa.me/919719470075" target="_blank" class="btn-whatsapp">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          </svg>
+          Chat on WhatsApp
+        </a>
+        <a href="#what-you-get" class="btn-white">See What's Inside →</a>
+      </div>
+      <div class="trust-bar fade-up">
+        <div class="trust-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="2"><polyline points="20,6 9,17 4,12"/></svg>
+          <span>Zero investment needed to start</span>
+        </div>
+        <div class="trust-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="2"><polyline points="20,6 9,17 4,12"/></svg>
+          <span>Works from your phone</span>
+        </div>
+        <div class="trust-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="2"><polyline points="20,6 9,17 4,12"/></svg>
+          <span>Real skills, not get-rich schemes</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAIN POINTS -->
+  <section id="pain">
+    <div class="fade-up" style="text-align:center;">
+      <div class="section-tag">Sound Familiar?</div>
+      <h2 class="section-title">If You've Ever Thought <span>Any of This...</span></h2>
+      <p class="section-sub" style="margin:0 auto;">You're not alone. These are the exact problems most people face when they try to build income online — and why most of them give up.</p>
+    </div>
+    <div class="pain-grid">
+      <div class="pain-card fade-up">
+        <span class="pain-emoji">😤</span>
+        <h3>"I don't know where to even start."</h3>
+        <p>You've watched countless videos, read threads, but still have no clear path. Everyone says something different and it feels like you're going in circles.</p>
+      </div>
+      <div class="pain-card fade-up">
+        <span class="pain-emoji">💸</span>
+        <h3>"I can't invest money to make money."</h3>
+        <p>Every "opportunity" seems to need upfront investment — courses, tools, ads. You want to build something but you don't have capital to burn.</p>
+      </div>
+      <div class="pain-card fade-up">
+        <span class="pain-emoji">🕐</span>
+        <h3>"I've tried things but nothing worked."</h3>
+        <p>You've posted content, tried affiliate links, maybe even spent money on a course. But the results never came. And you don't know why.</p>
+      </div>
+      <div class="pain-card fade-up">
+        <span class="pain-emoji">🤔</span>
+        <h3>"Is this actually real, or another scam?"</h3>
+        <p>You're sceptical — and rightfully so. 90% of "make money online" content is either fake, outdated, or designed to sell you the next product.</p>
+      </div>
+      <div class="pain-card fade-up">
+        <span class="pain-emoji">📱</span>
+        <h3>"I'm good at social media but earning nothing."</h3>
+        <p>You create content, you understand platforms, but that knowledge isn't converting into any kind of income. You know there has to be a bridge — you just haven't found it.</p>
+      </div>
+      <div class="pain-card fade-up">
+        <span class="pain-emoji">🇮🇳</span>
+        <h3>"Most of this stuff isn't designed for India."</h3>
+        <p>Payment processors, platform access, audience expectations — it all feels like it was built for someone in the US, not someone sitting in India with Indian realities.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOLUTION -->
+  <section id="solution">
+    <div class="solution-text fade-up">
+      <div class="section-tag">The Solution</div>
+      <h2 class="section-title">Here's What I <span>Actually Teach</span></h2>
+      <p>I'm not selling a dream. I'm showing you a skill set — one that I'm building myself, in real time, from India, with no budget and no shortcuts.</p>
+      <p>Digital skills are the most accessible path to income that exists right now. You don't need a degree. You don't need capital. You need knowledge, consistency, and someone who will be honest with you about what works.</p>
+      <ul class="solution-points">
+        <li>
+          <div class="check-icon"><svg viewBox="0 0 12 12" fill="white"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" fill="none"/></svg></div>
+          How to build a content presence that actually attracts the right audience
+        </li>
+        <li>
+          <div class="check-icon"><svg viewBox="0 0 12 12" fill="white"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" fill="none"/></svg></div>
+          How affiliate marketing works — and how to do it without sounding fake
+        </li>
+        <li>
+          <div class="check-icon"><svg viewBox="0 0 12 12" fill="white"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" fill="none"/></svg></div>
+          Brand strategy basics that make your online presence look credible from day one
+        </li>
+        <li>
+          <div class="check-icon"><svg viewBox="0 0 12 12" fill="white"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" fill="none"/></svg></div>
+          What platforms and tools are actually worth your time (and which ones to ignore)
+        </li>
+        <li>
+          <div class="check-icon"><svg viewBox="0 0 12 12" fill="white"><polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" fill="none"/></svg></div>
+          A realistic roadmap — week by week — for someone starting with zero
+        </li>
+      </ul>
+      <a href="https://wa.me/919719470075" target="_blank" class="btn-primary" style="margin-top:8px;">
+        I Want to Learn — WhatsApp Me →
+      </a>
+    </div>
+
+    <div class="solution-visual fade-up">
+      <h3>Skills You'll Walk Away With</h3>
+      <div class="skill-item">
+        <span class="skill-icon">📱</span>
+        <div><strong>Content Strategy</strong><span>Know what to post, when, and why</span></div>
+      </div>
+      <div class="skill-item">
+        <span class="skill-icon">🤝</span>
+        <div><strong>Affiliate Marketing</strong><span>Earn by recommending products you trust</span></div>
+      </div>
+      <div class="skill-item">
+        <span class="skill-icon">🎯</span>
+        <div><strong>Brand Building</strong><span>Position yourself to be taken seriously</span></div>
+      </div>
+      <div class="skill-item">
+        <span class="skill-icon">📊</span>
+        <div><strong>Analytics Basics</strong><span>Understand what's working and what's not</span></div>
+      </div>
+      <div class="skill-item">
+        <span class="skill-icon">💬</span>
+        <div><strong>Audience Psychology</strong><span>Why people follow, buy, and trust</span></div>
+      </div>
+      <div class="skill-item">
+        <span class="skill-icon">🌐</span>
+        <div><strong>Digital Presence</strong><span>Build your corner of the internet</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how-it-works">
+    <div class="fade-up">
+      <div class="section-tag">The Process</div>
+      <h2 class="section-title">How This <span>Works</span></h2>
+      <p class="section-sub" style="margin:0 auto;">Four simple steps from zero to building real digital income. No fluff, no filler.</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card fade-up">
+        <div class="step-number">1</div>
+        <h3>Message Me on WhatsApp</h3>
+        <p>Start the conversation. Tell me where you are, what you've tried, and what you want to build. I reply personally.</p>
+      </div>
+      <div class="step-card fade-up">
+        <div class="step-number">2</div>
+        <h3>Get a Personalised Roadmap</h3>
+        <p>Based on your situation, I'll tell you exactly what skills to focus on and in what order. No generic advice.</p>
+      </div>
+      <div class="step-card fade-up">
+        <div class="step-number">3</div>
+        <h3>Learn & Apply</h3>
+        <p>Access the content, tools, and guidance you need. Start applying immediately — not after a 40-hour course.</p>
+      </div>
+      <div class="step-card fade-up">
+        <div class="step-number">4</div>
+        <h3>Build & Earn</h3>
+        <p>Put the skills to work. Track your progress. Ask questions. Stay consistent — and watch things start to move.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT YOU GET -->
+  <section id="what-you-get">
+    <div class="fade-up">
+      <div class="section-tag">What's Included</div>
+      <h2 class="section-title">Everything You <span>Get</span></h2>
+    </div>
+    <div class="get-grid">
+      <div class="get-card fade-up">
+        <span class="get-icon">🗺️</span>
+        <h3>Personalised Learning Path</h3>
+        <p>Not a one-size-fits-all curriculum. Based on your starting point, I'll tell you exactly what to learn and in what sequence.</p>
+      </div>
+      <div class="get-card fade-up">
+        <span class="get-icon">📲</span>
+        <h3>Direct WhatsApp Access</h3>
+        <p>Ask questions as you go. No waiting for a reply in 5 days. Real-time guidance from someone who's actively doing this.</p>
+      </div>
+      <div class="get-card fade-up">
+        <span class="get-icon">📚</span>
+        <h3>Curated Resources</h3>
+        <p>No random YouTube rabbit holes. I point you to exactly the resources that matter — saving you weeks of searching.</p>
+      </div>
+      <div class="get-card fade-up">
+        <span class="get-icon">🔍</span>
+        <h3>Brand & Content Reviews</h3>
+        <p>Share your content or profile and I'll give you honest, actionable feedback on what to improve and why.</p>
+      </div>
+      <div class="get-card fade-up">
+        <span class="get-icon">🤝</span>
+        <h3>Affiliate Recommendations</h3>
+        <p>Access to digital products I've personally vetted — so you can start your affiliate journey with products that actually convert.</p>
+      </div>
+      <div class="get-card fade-up">
+        <span class="get-icon">🌱</span>
+        <h3>Growing Community Access</h3>
+        <p>You're not learning alone. Connect with others on the same path — share wins, ask questions, stay accountable.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="landing-testimonials">
+    <div class="fade-up">
+      <div class="section-tag">What They Say</div>
+      <h2 class="section-title">People Who've <span>Started</span></h2>
+    </div>
+    <div class="landing-testi-grid">
+      <div class="testi-card fade-up">
+        <div class="testi-stars">★★★★★</div>
+        <p>"I had no idea where to start with affiliate marketing. Divyanshi broke it down in a way that actually made sense for where I am — not some American creator's reality."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">S</div>
+          <div><div class="testi-name">Sneha R.</div><div class="testi-role">Student, Mumbai</div></div>
+        </div>
+      </div>
+      <div class="testi-card fade-up">
+        <div class="testi-stars">★★★★★</div>
+        <p>"I wasted so much money on courses before. This is the first time someone just told me what to actually do — without trying to sell me the next thing."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">K</div>
+          <div><div class="testi-name">Kavya T.</div><div class="testi-role">Freelancer, Bangalore</div></div>
+        </div>
+      </div>
+      <div class="testi-card fade-up">
+        <div class="testi-stars">★★★★★</div>
+        <p>"The content strategy advice alone was worth it. My Instagram went from random posts to something that actually feels intentional. Still early days but I can see the difference."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">M</div>
+          <div><div class="testi-name">Mehak J.</div><div class="testi-role">Content Creator, Delhi</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="faq-inner">
+      <div class="fade-up" style="text-align:center;">
+        <div class="section-tag">FAQs</div>
+        <h2 class="section-title">Questions People <span>Always Ask</span></h2>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item fade-up" onclick="toggleFaq(this)">
+          <div class="faq-question">
+            <h3>Do I need any prior experience or knowledge?</h3>
+            <span class="faq-toggle">+</span>
+          </div>
+          <p class="faq-answer">Zero. Genuinely. I start with the assumption that you're starting from scratch. If you have some existing knowledge, great — we'll build on it. But you don't need any background in marketing, business, or tech to get started.</p>
+        </div>
+        <div class="faq-item fade-up" onclick="toggleFaq(this)">
+          <div class="faq-question">
+            <h3>Is there any cost involved?</h3>
+            <span class="faq-toggle">+</span>
+          </div>
+          <p class="faq-answer">Starting the conversation is completely free. I share resources and guidance at no charge. Some of the affiliate products I recommend have their own costs — but I'll always tell you upfront what's paid and what's free, and I'll never recommend something I don't genuinely believe is worth it.</p>
+        </div>
+        <div class="faq-item fade-up" onclick="toggleFaq(this)">
+          <div class="faq-question">
+            <h3>How quickly can I start earning?</h3>
+            <span class="faq-toggle">+</span>
+          </div>
+          <p class="faq-answer">I'll be honest with you: this isn't instant. Building real digital income takes time, consistency, and learning. Most people start seeing meaningful traction within 2–4 months of consistent effort. Anyone who promises you income in days is lying to you.</p>
+        </div>
+        <div class="faq-item fade-up" onclick="toggleFaq(this)">
+          <div class="faq-question">
+            <h3>Does this work if I'm a student or don't have much time?</h3>
+            <span class="faq-toggle">+</span>
+          </div>
+          <p class="faq-answer">Yes — this is actually designed for people who are building alongside other commitments. You don't need to go full-time. Even 30–60 minutes a day, done consistently and with the right focus, can build something real over time.</p>
+        </div>
+        <div class="faq-item fade-up" onclick="toggleFaq(this)">
+          <div class="faq-question">
+            <h3>Is this relevant for people in India specifically?</h3>
+            <span class="faq-toggle">+</span>
+          </div>
+          <p class="faq-answer">Completely. I'm building this from India myself. I understand the platform access issues, the payment gateway realities, the audience differences. Everything I share is filtered through an Indian context — not just copy-pasted from US creators.</p>
+        </div>
+        <div class="faq-item fade-up" onclick="toggleFaq(this)">
+          <div class="faq-question">
+            <h3>Why WhatsApp? Why not a course or a group?</h3>
+            <span class="faq-toggle">+</span>
+          </div>
+          <p class="faq-answer">Because generic courses don't answer your specific questions. I'd rather talk to you directly, understand exactly where you are, and give you guidance that actually fits your situation. WhatsApp keeps it personal and real — which is exactly what most people need but rarely get.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section id="final-cta">
+    <div class="final-cta-content">
+      <div class="fade-up">
+        <div class="section-tag white">Ready to Start?</div>
+        <h2>One Message.<br/>Real <span>Direction.</span></h2>
+        <p>Stop overthinking it. Message me on WhatsApp, tell me where you are, and I'll tell you exactly what to do next. No commitment. No catch.</p>
+        <div class="final-ctas">
+          <a href="https://wa.me/919719470075" target="_blank" class="btn-whatsapp">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+            Message Me on WhatsApp
+          </a>
+          <a href="index.html#connect" class="btn-white">Send a Message Instead</a>
+        </div>
+        <p class="final-note">I respond to every message personally. Usually within 24 hours.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo">Icon Divyanshi</a>
+        <p>Real marketing insights, honest business strategy, and a community that grows together. No fluff — just what actually works.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Pages</h4>
+        <ul>
+          <li><a href="know-me.html">Know Me</a></li>
+          <li><a href="landing.html">Digital Skills</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="index.html#connect">Connect</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Follow</h4>
+        <ul>
+          <li><a href="https://instagram.com/icondivyanshi" target="_blank">Instagram</a></li>
+          <li><a href="mailto:YOUR_EMAIL_HERE">Email</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Disclaimer</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Icon Divyanshi. All rights reserved.</p>
+      <div class="footer-social">
+        <a href="https://instagram.com/icondivyanshi" target="_blank" class="footer-social-icon">
+          <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1"/></svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 40));
+    function toggleMenu() { document.getElementById('navLinks').classList.toggle('open'); }
+    document.querySelectorAll('.nav-links a').forEach(l => l.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open')));
+    const obs = new IntersectionObserver((entries) => { entries.forEach((e,i) => { if(e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i*80); }); }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+    function toggleFaq(item) {
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    }
+  </script>
+</body>
+</html>
