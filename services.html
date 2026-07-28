@@ -16,11 +16,22 @@ html{scroll-behavior:smooth}
 body{font-family:'Inter',sans-serif;background:#fff;color:#1A0608;overflow-x:hidden}
 ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:#faf7f7}::-webkit-scrollbar-thumb{background:#C0182C;border-radius:3px}
 
-/* ── NAV ── */
+/* ── NAV (matches main site) ── */
 nav{position:fixed;top:0;left:0;right:0;z-index:1000;height:64px;padding:0 6%;display:flex;align-items:center;justify-content:space-between;background:#C0182C;box-shadow:0 2px 20px rgba(0,0,0,0.15)}
-.nav-logo{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;color:#fff;text-decoration:none;letter-spacing:0.06em;text-transform:uppercase}
-.nav-back{font-size:0.82rem;font-weight:500;color:rgba(255,255,255,0.85);text-decoration:none;letter-spacing:0.05em;display:flex;align-items:center;gap:6px;transition:color 0.2s}
-.nav-back:hover{color:#fff}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;color:#fff;text-decoration:none;cursor:pointer;letter-spacing:0.06em;text-transform:uppercase}
+.nav-links{display:flex;gap:28px;list-style:none;align-items:center;margin:0;padding:0}
+.nav-links a{font-size:0.82rem;font-weight:500;color:rgba(255,255,255,0.82);text-decoration:none;letter-spacing:0.05em;text-transform:uppercase;cursor:pointer;transition:color 0.2s;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:#fff;transition:width 0.3s}
+.nav-links a:hover,.nav-links a.active{color:#fff}
+.nav-links a:hover::after,.nav-links a.active::after{width:100%}
+.nav-cta{background:#fff!important;color:#C0182C!important;padding:8px 20px!important;border-radius:50px!important;font-weight:700!important}
+.nav-cta::after{display:none!important}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
+.hamburger span{width:22px;height:2px;background:#fff;border-radius:2px;display:block;transition:0.3s}
+.mobile-menu{display:none;position:fixed;top:64px;left:0;right:0;background:#8B0A1A;z-index:999;padding:20px 6%;flex-direction:column;gap:16px}
+.mobile-menu.open{display:flex}
+.mobile-menu a{font-size:0.95rem;color:rgba(255,255,255,0.9);text-decoration:none;text-transform:uppercase;letter-spacing:0.06em;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.1);cursor:pointer}
+@media(max-width:900px){.nav-links{display:none}.hamburger{display:flex}}
 
 /* ── HERO ── */
 .srv-hero{min-height:54vh;padding:120px 6% 72px;background:linear-gradient(135deg,#8B0A1A 0%,#C0182C 100%);position:relative;overflow:hidden;display:flex;align-items:center}
@@ -165,7 +176,6 @@ footer a:hover{color:#fff}
 @media(max-width:420px){
   nav{padding:0 4%}
   .nav-logo{font-size:1rem}
-  .nav-back{font-size:0.75rem}
   .srv-hero h1{font-size:1.7rem}
   .sec-title{font-size:1.6rem}
   .price-amount{font-size:2rem}
@@ -176,11 +186,31 @@ footer a:hover{color:#fff}
 </head>
 <body>
 
-<!-- NAV -->
+<!-- NAV (same 3-line menu as main site) -->
 <nav>
   <a href="/" class="nav-logo">Icon Divyanshi</a>
-  <a href="/" class="nav-back">← Back to Home</a>
+  <ul class="nav-links">
+    <li><a href="/know-me">Know Me</a></li>
+    <li><a href="services.html" class="active">Services</a></li>
+    <li><a href="/guidance">Guidance</a></li>
+    <li><a href="/blog">Blog</a></li>
+    <li><a href="/products">Products</a></li>
+    <li><a href="/students">Students</a></li>
+    <li><a href="/" class="nav-cta">Home</a></li>
+  </ul>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="/know-me">Know Me</a>
+  <a href="services.html" class="active">Services</a>
+  <a href="/guidance">Guidance</a>
+  <a href="/blog">Blog</a>
+  <a href="/products">Products</a>
+  <a href="/students">Students</a>
+  <a href="/">Home</a>
+</div>
 
 <!-- HERO -->
 <div class="srv-hero">
@@ -490,6 +520,11 @@ footer a:hover{color:#fff}
 <footer>
   <p>© 2026 Divyanshi Mahajan — Icon Divyanshi &nbsp;|&nbsp; <a href="/">Home</a> &nbsp;·&nbsp; <a href="https://instagram.com/icondivyanshi" target="_blank">Instagram</a></p>
 </footer>
+
+<script>
+  function toggleMenu(){ document.getElementById('mobileMenu').classList.toggle('open'); }
+  function closeMenu(){ document.getElementById('mobileMenu').classList.remove('open'); }
+</script>
 
 </body>
 </html>

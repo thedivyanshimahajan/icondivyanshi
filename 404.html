@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Divyanshi Mahajan — Icon Divyanshi</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+<!--
+  This page runs whenever someone opens a clean URL like
+  divyanshimahajan.in/know-me directly (reload or shared link).
+  GitHub Pages has no real file there, so it serves this page.
+  We remember the path they wanted, then send them to the homepage,
+  where the site opens that exact page — with a clean URL, no hashtag.
+-->
+<script>
+  try {
+    sessionStorage.setItem('spa_redirect', location.pathname + location.search);
+  } catch (e) {}
+  location.replace('/');
+</script>
+<style>
+  body{font-family:'Inter',Arial,sans-serif;background:#fff;color:#C0182C;display:flex;align-items:center;justify-content:center;height:100vh;margin:0}
+  .m{text-align:center}
+  .d{width:56px;height:56px;border-radius:12px;background:#C0182C;color:#fff;font-family:Georgia,serif;font-size:32px;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 14px}
+</style>
+</head>
+<body>
+  <div class="m">
+    <div class="d">D</div>
+    <p>Loading…</p>
+  </div>
+</body>
+</html>
